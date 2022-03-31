@@ -5,7 +5,7 @@ import wandb
 import yaml
 from yaml import SafeLoader
 
-from trainer import run_sweep, run_single
+from trainer import run_wandb_sweep, run_single
 
 parser = argparse.ArgumentParser(description="Run trainer")
 parser.add_argument('--gpu', action='store_true', default=False)
@@ -24,7 +24,7 @@ if __name__ == '__main__':
             config = yaml.load(f, Loader=SafeLoader)
             wandb.login()
             sweep_id = wandb.sweep(config, project=args.sweep_name)
-            wandb.agent(sweep_id, function=run_sweep, count=2)
+            wandb.agent(sweep_id, function=run_wandb_sweep, count=2)
     else:
         with open('single.yaml') as f:
             config = yaml.load(f, Loader=SafeLoader)
