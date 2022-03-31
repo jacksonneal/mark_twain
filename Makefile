@@ -11,16 +11,16 @@ NUM_WORKERS = 4
 # ------------------------------
 
 single:
-	python trainer.py --num_workers ${num_workers}
+	python main.py --num_workers ${num_workers}
 
 single-gpu:
-	python trainer.py --gpu --num_workers ${num_workers}
+	python main.py --gpu --num_workers ${num_workers}
 
 sweep:
-	python trainer.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers}
+	python main.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers}
 
 sweep-gpu:
-	python trainer.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu --num_workers ${num_workers}
+	python main.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu --num_workers ${num_workers}
 
 tb-logs:
 	python tb_logs.py --num_workers ${num_workers}
