@@ -55,7 +55,7 @@ def run_single(run_conf=None):
     torch.cuda.empty_cache()
 
 
-def run_wandb_sweep(run_conf=None):
+def run_sweep(run_conf=None):
     with wandb.init(project=args.sweep_name, config=run_conf):
         run_conf = wandb.config
         run_single(run_conf)
