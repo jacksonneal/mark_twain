@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, DataLoader
 
 from constants import TARGET_COL
 from napi_utils import load_data, download_current_data
-from trainer import NUM_WORKERS
+from main import NUM_WORKERS
 
 
 class NumeraiDataset(Dataset):
