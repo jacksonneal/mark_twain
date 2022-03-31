@@ -17,9 +17,12 @@ from model import NumeraiModel
 parser = argparse.ArgumentParser(description="Run trainer")
 parser.add_argument('--gpu', action='store_true', default=False)
 parser.add_argument('--run_sweep', action='store_true', default=False)
-parser.add_argument('--sweep_name', type=str)
-parser.add_argument('--sweep_count', type=int)
+parser.add_argument('--sweep_name', type=str, default="mark_twain_sweep")
+parser.add_argument('--sweep_count', type=int, default=1)
+parser.add_argument('--num_workers', type=int, default=1)
 args = parser.parse_args()
+
+NUM_WORKERS = args.num_workers
 
 
 def run(run_conf=None):

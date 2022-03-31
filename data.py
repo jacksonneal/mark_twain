@@ -2,8 +2,9 @@ import torch
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import Dataset, DataLoader
 
-from constants import TARGET_COL, NUM_WORKERS
+from constants import TARGET_COL
 from napi_utils import load_data, download_current_data
+from trainer import NUM_WORKERS
 
 
 class NumeraiDataset(Dataset):
