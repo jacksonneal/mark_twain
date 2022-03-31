@@ -1,0 +1,14 @@
+# data config
+feature_set: SMALL
+sample_4th_era: True
+aux_target_cols:
+  - target_nomi_60
+  - target_william_20
+batch_size: 4000
+# model config
+dropout: 0
+initial_bn: True
+learning_rate: 0.002
+wd: 0.05
+# trainer config
+max_epochs: 1

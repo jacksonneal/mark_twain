@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Numerai Datasets
+datasets/
+
+# Pytorch Lightning logs
+lightning_logs/
+
+# wandb logs
+wandb/
+mark_twain_sweep/
+
+# IDEA
+.idea/
