@@ -42,7 +42,8 @@ def run(run_conf=None):
         checkpoint_callback = ModelCheckpoint(monitor="val/sharpe", mode="max")
         early_stopping_callback = EarlyStopping("val_loss", patience=3, mode="min")
         callbacks = [model_summary_callback, checkpoint_callback, early_stopping_callback]
-        trainer = Trainer(gpus=args.gpus,
+        gpus = 1 if args.gpu else 0
+        trainer = Trainer(gpus=gpus,
                           max_epochs=run_conf['max_epochs'],
                           callbacks=callbacks)
         if args.run_sweep:
