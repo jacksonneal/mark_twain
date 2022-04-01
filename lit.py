@@ -22,7 +22,7 @@ def evaluate(outputs):
 
 
 class NumeraiLit(LightningModule, ABC):
-    def __init__(self, model=None, model_name=None, feature_set="SMALL", aux_target_cols=None, dropout=0,
+    def __init__(self, model=None, model_name=None, feature_set="small", aux_target_cols=None, dropout=0,
                  initial_bn=False, learning_rate=0.003, wd=5e-2):
         super().__init__()
         # Save for repeated runs, ignore the model itself

@@ -62,10 +62,12 @@ def load_data(mode: str, feature_set, aux_target_cols, sample_4th_era: bool = Fa
 
     if feature_set is not None:
         print(f"Reading feature set {feature_set}")
-        path = features_path if feature_set == "SMALL" else custom_features_path
+        path = features_path if feature_set == "small" else custom_features_path
         with open(path, "r") as f:
             feature_metadata = json.load(f)
-        features = feature_metadata["feature_sets"]["small"]
+        if feature_set == "small":
+            feature_metadata = feature_metadata["feature_sets"]
+        features = feature_metadata[feature_set]
         # read in small feature set with meta, target, and aux target cols
         read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL] + aux_target_cols
         df = pd.read_parquet(file_path, columns=read_columns)

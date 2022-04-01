@@ -7,7 +7,7 @@ from napi_utils import load_data, download_current_data
 
 
 class NumeraiDataset(Dataset):
-    def __init__(self, name="train", feature_set="SMALL", sample_4th_era=True, aux_target_cols=None):
+    def __init__(self, name="train", feature_set="small", sample_4th_era=True, aux_target_cols=None):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []
@@ -35,7 +35,7 @@ class NumeraiDataset(Dataset):
 
 
 class NumeraiDataModule(LightningDataModule):
-    def __init__(self, feature_set="SMALL", sample_4th_era=True, aux_target_cols=None, batch_size=1000):
+    def __init__(self, feature_set="small", sample_4th_era=True, aux_target_cols=None, batch_size=1000):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []

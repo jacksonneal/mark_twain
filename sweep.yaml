@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   feature_set:
-    value: SMALL
+    value: small
   sample_4th_era:
     value: True
   aux_target_cols:
