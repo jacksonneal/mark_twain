@@ -1,3 +1,5 @@
+from abc import ABC
+
 import torch
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import Dataset, DataLoader
@@ -34,7 +36,7 @@ class NumeraiDataset(Dataset):
         return self.inputs[idx].float(), self.targets[idx].float(), self.aux_targets[idx].float()
 
 
-class NumeraiDataModule(LightningDataModule):
+class NumeraiDataModule(LightningDataModule, ABC):
     def __init__(self, feature_set="small", sample_4th_era=True, aux_target_cols=None, batch_size=1000):
         super().__init__()
         if aux_target_cols is None:
