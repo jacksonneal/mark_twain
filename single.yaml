@@ -1,5 +1,6 @@
 # data config
-feature_set: small
+feature_set: top_250_features_with_target
+num_features: 250
 sample_4th_era: True
 aux_target_cols:
   - target_nomi_60

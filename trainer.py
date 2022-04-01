@@ -28,6 +28,7 @@ class MarkTwainTrainer:
                                             batch_size=run_conf['batch_size'])
             model = NumeraiLit(model_name=run_conf['model_name'],
                                feature_set=run_conf['feature_set'],
+                               num_features=run_conf['num_features'],
                                aux_target_cols=run_conf['aux_target_cols'],
                                dropout=run_conf['dropout'],
                                initial_bn=run_conf['initial_bn'],

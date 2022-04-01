@@ -7,6 +7,8 @@ parameters:
   # data config
   feature_set:
     value: small
+  num_features:
+    value: 38
   sample_4th_era:
     value: True
   aux_target_cols:

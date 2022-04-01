@@ -5,8 +5,8 @@ def build_model(params):
     if params.model_name == "BASE":
         layers = []
 
-        if params.feature_set == "small":
-            num_features = [38, 20, 10]
+        if params.feature_set is not None:
+            num_features = [params.num_features, 20, 10]
         else:
             num_features = [1050, 200, 100]
 
