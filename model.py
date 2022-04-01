@@ -74,6 +74,7 @@ class NumeraiModel(LightningModule):
 
         self.log("train_loss", loss)
         self.log("train_loss_aux", aux_loss)
+        self.log("train_corr", corr)
 
         return {'loss': loss + aux_loss, 'corr': corr}
 
@@ -97,6 +98,7 @@ class NumeraiModel(LightningModule):
         loss = self.loss(preds[:, 0], targets)
 
         self.log("val_loss", loss)
+        self.log("val_corr", corr)
 
         return {'loss': loss, 'corr': corr}
 
