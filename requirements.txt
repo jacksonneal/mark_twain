@@ -6,3 +6,4 @@ PyYAML==6.0
 tensorboard==2.8.0
 numerapi==2.11.0
 pyarrow==5.0.0
+pytorch-lightning==1.5.10

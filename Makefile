@@ -7,7 +7,7 @@ sweep_name = "mark_twain_sweep"
 # number of wandb runs to explore during sweep
 sweep_count = 2
 # Workers used for parallel processing
-num_workers = 4
+num_workers = 28
 # ------------------------------
 
 single:
