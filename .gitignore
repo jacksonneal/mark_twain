@@ -140,3 +140,7 @@ mark_twain_sweep/
 
 # IDEA
 .idea/
+
+# Discovery cluster
+srun
+module
