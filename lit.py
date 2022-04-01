@@ -1,8 +1,12 @@
+from abc import ABC
+
 import numpy as np
 import pandas as pd
 import torch
 from pytorch_lightning import LightningModule
 from torch import nn, optim
+
+from model.model_factory import build_model
 
 
 def evaluate(outputs):
@@ -17,42 +21,16 @@ def evaluate(outputs):
     return mae, payout, spearman, sharpe
 
 
-class NumeraiModel(LightningModule):
-    def __init__(self, model=None, feature_set="SMALL", aux_target_cols=None, dropout=0, initial_bn=False,
-                 learning_rate=0.003, wd=5e-2):
+class NumeraiLit(LightningModule, ABC):
+    def __init__(self, model=None, model_name=None, feature_set="SMALL", aux_target_cols=None, dropout=0,
+                 initial_bn=False, learning_rate=0.003, wd=5e-2):
         super().__init__()
         # Save for repeated runs, ignore the model itself
         if aux_target_cols is None:
             aux_target_cols = []
         self.save_hyperparameters(ignore="model")
-        self.model = model or self.build_model()
+        self.model = model or build_model(self.hparams)
         self.loss = nn.MSELoss()
-
-    def build_model(self):
-        layers = []
-
-        if self.hparams.feature_set == "SMALL":
-            num_features = [38, 20, 10]
-        else:
-            num_features = [1050, 200, 100]
-
-        if self.hparams.initial_bn:
-            layers.append(nn.BatchNorm1d(num_features[0]))
-
-        for i in range(len(num_features) - 1):
-            layers += [
-                nn.Linear(num_features[i], num_features[i + 1], bias=False),
-                nn.ReLU(inplace=True),
-                nn.BatchNorm1d(num_features[i + 1])
-            ]
-
-            if self.hparams.dropout > 0:
-                layers.append(nn.Dropout(p=self.hparams.dropout))
-
-        layers.append(nn.Linear(num_features[-1], 1 + len(self.hparams.aux_target_cols)))
-        layers.append(nn.Sigmoid())
-
-        return nn.Sequential(*layers)
 
     def forward(self, x):
         return self.model(x)

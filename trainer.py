@@ -9,7 +9,7 @@ import gc
 import wandb
 
 from data import NumeraiDataModule
-from model import NumeraiModel
+from lit import NumeraiLit
 
 
 class MarkTwainTrainer:
@@ -26,12 +26,13 @@ class MarkTwainTrainer:
                                             sample_4th_era=run_conf['sample_4th_era'],
                                             aux_target_cols=run_conf['aux_target_cols'],
                                             batch_size=run_conf['batch_size'])
-            model = NumeraiModel(feature_set=run_conf['feature_set'],
-                                 aux_target_cols=run_conf['aux_target_cols'],
-                                 dropout=run_conf['dropout'],
-                                 initial_bn=run_conf['initial_bn'],
-                                 learning_rate=run_conf['learning_rate'],
-                                 wd=run_conf['wd'])
+            model = NumeraiLit(model_name=run_conf['model_name'],
+                               feature_set=run_conf['feature_set'],
+                               aux_target_cols=run_conf['aux_target_cols'],
+                               dropout=run_conf['dropout'],
+                               initial_bn=run_conf['initial_bn'],
+                               learning_rate=run_conf['learning_rate'],
+                               wd=run_conf['wd'])
             model_summary_callback = ModelSummary(max_depth=25)
             checkpoint_callback = ModelCheckpoint(monitor="val/sharpe", mode="max")
             early_stopping_callback = EarlyStopping("val_loss", patience=3, mode="min")

@@ -58,11 +58,12 @@ def load_data(mode: str, feature_set, aux_target_cols, sample_4th_era: bool = Fa
     else:
         raise Exception(f"unsupported mode: {mode}")
     features_path = f"{dir_path}/features.json"
+    custom_features_path = "custom_features.json"
 
-    if feature_set == "SMALL":
-        print('Reading small feature set')
-        # read the feature metadata and get the "small" feature set
-        with open(features_path, "r") as f:
+    if feature_set is not None:
+        print(f"Reading feature set {feature_set}")
+        path = features_path if feature_set == "SMALL" else custom_features_path
+        with open(path, "r") as f:
             feature_metadata = json.load(f)
         features = feature_metadata["feature_sets"]["small"]
         # read in small feature set with meta, target, and aux target cols

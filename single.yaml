@@ -6,6 +6,7 @@ aux_target_cols:
   - target_william_20
 batch_size: 4000
 # model config
+model_name: BASE
 dropout: 0
 initial_bn: True
 learning_rate: 0.002

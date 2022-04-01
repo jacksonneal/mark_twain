@@ -16,6 +16,8 @@ parameters:
   batch_size:
     value: 4000
   # model config
+  model_name:
+    value: BASE
   dropout:
     min: 0.0
     max: 0.3
