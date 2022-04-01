@@ -43,7 +43,7 @@ Execution
 > make single-gpu
 ```
 
-3. View Tensorboard logs in [lightning_logs](lightning_logs)
+3. View Tensorboard logs in `lightning_logs`
 
 ```bash
 > make tb-logs
