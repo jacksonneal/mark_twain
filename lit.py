@@ -59,10 +59,10 @@ class NumeraiLit(LightningModule, ABC):
     def training_epoch_end(self, outputs):
         mae, payout, spearman, sharpe = evaluate(outputs)
 
-        self.log('train/mae', mae, on_step=False, on_epoch=True)
-        self.log('train/payout', payout, on_step=False, on_epoch=True)
-        self.log('train/spearman', spearman, on_step=False, on_epoch=True)
-        self.log('train/sharpe', sharpe, on_step=False, on_epoch=True)
+        self.log('train/mae', mae)
+        self.log('train/payout', payout)
+        self.log('train/spearman', spearman)
+        self.log('train/sharpe', sharpe)
 
     def validation_step(self, batch, batch_nb):
         inputs, targets, _ = batch
