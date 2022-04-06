@@ -1,0 +1,16 @@
+# data config
+feature_set: top_250_features_with_target
+num_features: 250
+sample_4th_era: True
+aux_target_cols:
+  - target_nomi_60
+  - target_william_20
+batch_size: 4000
+# model config
+model_name: NNBasic
+dropout: 0
+initial_bn: True
+learning_rate: 0.002
+wd: 0.05
+# trainer config
+max_epochs: 1
