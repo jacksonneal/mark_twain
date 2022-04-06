@@ -40,4 +40,6 @@ class NN_Basic(nn.Module):
         x = self.dropout(x)
 
         x = self.layer_out(x)
+        ## TODO: Use sigmoid function at the end
+
         return x
