@@ -1,4 +1,5 @@
 from torch import nn
+from nn_basic import NN_Basic
 
 
 def build_model(params):
@@ -27,5 +28,12 @@ def build_model(params):
         layers.append(nn.Sigmoid())
 
         return nn.Sequential(*layers)
+
+    elif params.model_name == "NNBasic":
+        return NN_Basic(params.num_features, 20, 10, 1)
+
+    elif params.model_name == "LSTMBasic":
+        pass
+
     else:
         raise Exception(f"unsupported model name {params.model_name}")
