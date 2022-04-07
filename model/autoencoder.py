@@ -29,8 +29,8 @@ class AutoEncoder(nn.Module):
 
         self.decoder += [nn.Linear(self.hidden, self.hidden)]
         self.decoder += [nn.BatchNorm1d(self.hidden)]
-        self.decoder += [nn.SilU()]
-        self.decoder += [nn.Dropout(self.dropout)]
+        self.decoder += [nn.SiLU()]
+        self.decoder += [nn.Dropout(p=.2)]
         self.decoder += [nn.Linear(self.hidden, self.out_dim)]
         ## TODO: DropOut to be added in the forward
 
@@ -39,15 +39,17 @@ class AutoEncoder(nn.Module):
 
 
 
-        auto = nn.BatchNorm1d(x)
+        batch1 = nn.BatchNorm1d(self.num_features)
+        auto = batch1(x)
 
-        ## TODO 2: Gaussian Noise
 
 
-        ## Noise example Not sure if I will use
+        ## Guasssian Noise, Can add Param for variance
+        variance = .1
+        auto = auto + (variance ** 0.5) * torch.randn(auto.shape)
 
-        sampled_noise = self.noise.repeat(*x.size()).normal_()
-        auto = auto + sampled_noise
+        # sampled_noise = self.noise.repeat(*x.size()).normal_()
+        # auto = auto + sampled_noise
 
         encode = nn.Sequential(*self.encoder)
 
@@ -72,4 +74,18 @@ class AutoEncoder(nn.Module):
         return out
 
     #
+
+
+## Basic Testing
+
+## grab the data
+
+input = torch.randn(20, 100)
+
+
+
+auto = AutoEncoder(100, 4, 1, .2)
+final = auto.forward(input)
+
+print(final)
 
