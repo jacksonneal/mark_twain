@@ -1,14 +1,14 @@
 # data config
-feature_set: small
+feature_set: top_250_features_with_target_corr
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000
 # model config
-model_name: BASE
-dimensions: [ 38, 20, 20, 20, 10 ]
+model_name: AE
+dimensions: [ 250, 100, 100, 100, 100, 100 ]
 dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
 wd: 0.05
 # trainer config
-max_epochs: 1
+max_epochs: 5

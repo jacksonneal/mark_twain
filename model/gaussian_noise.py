@@ -1,5 +1,5 @@
 import torch
-from torch import nn, device
+from torch import nn
 
 """
 Shamelessly taken from PyTorch forum discussion https://discuss.pytorch.org/t/where-is-the-noise-layer-in-pytorch/2887
@@ -25,7 +25,7 @@ class GaussianNoise(nn.Module):
         super().__init__()
         self.sigma = sigma
         self.is_relative_detach = is_relative_detach
-        self.noise = torch.tensor(0).to(device)
+        self.noise = torch.tensor(0).to('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     def forward(self, x):
         if self.training and self.sigma != 0:

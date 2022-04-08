@@ -24,7 +24,7 @@ class AE(nn.Module):
         ae_layers.append(nn.Linear(dimensions[2], 1 + len(params.aux_target_cols)))
         ae_layers.append(nn.Sigmoid())
 
-        mlp_layers = [nn.Linear(dimensions[0] + dimensions[1], dimensions[3]), nn.BatchNorm1d(dimensions[4]),
+        mlp_layers = [nn.Linear(dimensions[0] + dimensions[1], dimensions[3]), nn.BatchNorm1d(dimensions[3]),
                       nn.SiLU(inplace=True)]
         for i in range(3, len(dimensions) - 1):
             mlp_layers.append(nn.Linear(dimensions[i], dimensions[i + 1]))
@@ -44,7 +44,7 @@ class AE(nn.Module):
 
     def forward(self, x):
         if self.initial_bn:
-            x = nn.BatchNorm1d(self.num_features)
+            x = nn.BatchNorm1d(self.num_features)(x)
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         ae_out = self.ae(decoded)
