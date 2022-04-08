@@ -12,6 +12,8 @@ class AE(nn.Module):
 
         encoder_layers = [GaussianNoise(), nn.Linear(dimensions[0], dimensions[1]), nn.BatchNorm1d(dimensions[1]),
                           nn.SiLU(inplace=True)]
+        if params.dropout > 0:
+            encoder_layers.append(nn.Dropout(p=params.dropout))
 
         decoder_layers = []
         if params.dropout > 0:
@@ -26,6 +28,8 @@ class AE(nn.Module):
 
         mlp_layers = [nn.Linear(dimensions[0] + dimensions[1], dimensions[3]), nn.BatchNorm1d(dimensions[3]),
                       nn.SiLU(inplace=True)]
+        if params.dropout > 0:
+            mlp_layers.append(nn.Dropout(p=params.dropout))
         for i in range(3, len(dimensions) - 1):
             mlp_layers.append(nn.Linear(dimensions[i], dimensions[i + 1]))
             mlp_layers.append(nn.BatchNorm1d(dimensions[i + 1]))
