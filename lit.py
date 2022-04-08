@@ -22,12 +22,14 @@ def evaluate(outputs):
 
 
 class NumeraiLit(LightningModule, ABC):
-    def __init__(self, model=None, model_name=None, feature_set="small", num_features=38, aux_target_cols=None,
+    def __init__(self, model=None, model_name=None, feature_set="small", dimensions=None, aux_target_cols=None,
                  dropout=0, initial_bn=False, learning_rate=0.003, wd=5e-2):
         super().__init__()
-        # Save for repeated runs, ignore the model itself
+        if dimensions is None:
+            dimensions = [38, 20, 10]
         if aux_target_cols is None:
             aux_target_cols = []
+        # Save for repeated runs, ignore the model itself
         self.save_hyperparameters(ignore="model")
         self.model = model or build_model(self.hparams)
         self.loss = nn.MSELoss()

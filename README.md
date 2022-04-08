@@ -13,14 +13,18 @@ GPU Access
 1. SSH to `login.discovery.neu.edu`
 2. Request GPU partition
 ```bash
-> srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
+srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
 ```
 4. Activate *pytorch_env_training* environment
 ```bash
-> module load anaconda3/2022.01
-> module load cuda/11.1
-> source activate pytorch_env_training
+module load anaconda3/2022.01
 ```
+```bash
+module load cuda/11.1
+```
+```bash
+source activate pytorch_env_training
+````
 
 Installation
 ------------

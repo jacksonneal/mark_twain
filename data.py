@@ -41,6 +41,7 @@ class NumeraiDataModule(LightningDataModule, ABC):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []
+        # Save for repeated runs
         self.save_hyperparameters()
         self.train_data = None
         self.val_data = None
