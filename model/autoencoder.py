@@ -48,16 +48,10 @@ class AutoEncoder(nn.Module):
         variance = .1
         auto = auto + (variance ** 0.5) * torch.randn(auto.shape)
 
-        # sampled_noise = self.noise.repeat(*x.size()).normal_()
-        # auto = auto + sampled_noise
-
         encode = nn.Sequential(*self.encoder)
-
         auto = encode(auto)
-
         decode = nn.Sequential(*self.decoder)
-
-        out = decode(auto)
+        auto = decode(auto)
 
 
         ##TODO: 3: Prepare Input for number of hidden
@@ -67,11 +61,13 @@ class AutoEncoder(nn.Module):
         # x = tf.keras.layers.BatchNormalization()(x)
         # x = tf.keras.layers.Dropout(dropout_rates[3])(x)
 
+        print(auto.shape)
 
 
 
 
-        return out
+
+        return auto
 
     #
 
@@ -87,5 +83,5 @@ input = torch.randn(20, 100)
 auto = AutoEncoder(100, 4, 1, .2)
 final = auto.forward(input)
 
-print(final)
+
 
