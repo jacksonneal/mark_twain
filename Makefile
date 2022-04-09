@@ -13,14 +13,11 @@ num_workers = 28
 gpu:
 	srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
 
-source:
-	source /etc/profile.d/modules.sh
+anaconda:
+	sh module load anaconda3/2022.01
 
-anaconda: source
-	module load anaconda3/2022.01
-
-cuda: source
-	module load cuda/11.1
+cuda:
+	sh module load cuda/11.1
 
 env: anaconda cuda
 	source activate pytorch_env_training
