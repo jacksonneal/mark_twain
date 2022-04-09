@@ -20,7 +20,7 @@ cuda:
 	sh module load cuda/11.1
 
 env: anaconda cuda
-	source activate pytorch_env_training
+	sh source activate pytorch_env_training
 
 single:
 	python main.py --num_workers ${num_workers}
