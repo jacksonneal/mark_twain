@@ -1,10 +1,13 @@
+from abc import ABC
+
 import torch
+from pytorch_lightning import LightningModule
 from torch import nn
 
 from model.gaussian_noise import GaussianNoise
 
 
-class AE(nn.Module):
+class AE(LightningModule, ABC):
 
     def __init__(self, params):
         super().__init__()
