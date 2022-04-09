@@ -1,12 +1,14 @@
+from abc import ABC
+
 import torch
-from torch import nn
+from pytorch_lightning import LightningModule
 
 """
 Shamelessly taken from PyTorch forum discussion https://discuss.pytorch.org/t/where-is-the-noise-layer-in-pytorch/2887
 """
 
 
-class GaussianNoise(nn.Module):
+class GaussianNoise(LightningModule, ABC):
     """
     Gaussian noise regularization.
 
@@ -25,7 +27,7 @@ class GaussianNoise(nn.Module):
         super().__init__()
         self.sigma = sigma
         self.is_relative_detach = is_relative_detach
-        self.noise = torch.tensor(0).to('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.noise = torch.tensor(0)
 
     def forward(self, x):
         if self.training and self.sigma != 0:

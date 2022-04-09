@@ -4,7 +4,7 @@ import torch
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import Dataset, DataLoader
 
-from constants import TARGET_COL, NUM_WORKERS
+from constants import TARGET_COL
 from napi_utils import load_data, download_current_data
 
 
@@ -37,15 +37,16 @@ class NumeraiDataset(Dataset):
 
 
 class NumeraiDataModule(LightningDataModule, ABC):
-    def __init__(self, feature_set="small", sample_4th_era=True, aux_target_cols=None, batch_size=1000):
+    def __init__(self, feature_set="small", sample_4th_era=True, aux_target_cols=None, batch_size=1000, num_workers=1):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []
         # Save for repeated runs
-        self.save_hyperparameters()
+        self.save_hyperparameters(ignore="num_workers")
         self.train_data = None
         self.val_data = None
         self.test_data = None
+        self.num_workers = num_workers
 
     def prepare_data(self) -> None:
         download_current_data()
@@ -69,10 +70,10 @@ class NumeraiDataModule(LightningDataModule, ABC):
             raise Exception(f"unsupported stage: {stage}")
 
     def train_dataloader(self):
-        return DataLoader(self.train_data, batch_size=self.hparams.batch_size, num_workers=NUM_WORKERS)
+        return DataLoader(self.train_data, batch_size=self.hparams.batch_size, num_workers=self.num_workers)
 
     def val_dataloader(self):
-        return DataLoader(self.val_data, batch_size=self.hparams.batch_size, num_workers=NUM_WORKERS)
+        return DataLoader(self.val_data, batch_size=self.hparams.batch_size, num_workers=self.num_workers)
 
     def test_dataloader(self):
-        return DataLoader(self.test_data, batch_size=self.hparams.batch_size, num_workers=NUM_WORKERS)
+        return DataLoader(self.test_data, batch_size=self.hparams.batch_size, num_workers=self.num_workers)
