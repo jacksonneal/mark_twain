@@ -1,5 +1,5 @@
 # data config
-feature_set: top_250_features_with_target_corr
+feature_set: small
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000

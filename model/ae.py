@@ -55,5 +55,5 @@ class AE(LightningModule, ABC):
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         ae_out = self.ae(decoded)
-        mlp_out = self.mlp(torch.cat((x, encoded), dim=1), device=self.device)
+        mlp_out = self.mlp(torch.cat((x, encoded), dim=1).to(self.device))
         return decoded, ae_out, mlp_out
