@@ -42,11 +42,11 @@ class AE(LightningModule, ABC):
         mlp_layers.append(nn.Linear(dimensions[-1], 1 + len(params.aux_target_cols)))
         mlp_layers.append(nn.Sigmoid())
 
+        self.num_features = dimensions[0]
         if params.initial_bn:
             self.initial_bn = nn.BatchNorm1d(self.num_features)
         else:
             self.initial_bn = None
-        self.num_features = dimensions[0]
         self.encoder = nn.Sequential(*encoder_layers)
         self.decoder = nn.Sequential(*decoder_layers)
         self.ae = nn.Sequential(*ae_layers)
