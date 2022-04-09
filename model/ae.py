@@ -13,7 +13,7 @@ class AE(LightningModule, ABC):
         super().__init__()
         dimensions = params.dimensions
 
-        encoder_layers = [nn.Linear(dimensions[0], dimensions[1]), nn.BatchNorm1d(dimensions[1]),
+        encoder_layers = [GaussianNoise(), nn.Linear(dimensions[0], dimensions[1]), nn.BatchNorm1d(dimensions[1]),
                           nn.SiLU(inplace=True)]
         if params.dropout > 0:
             encoder_layers.append(nn.Dropout(p=params.dropout))
