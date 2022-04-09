@@ -4,7 +4,7 @@ sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000
 # model config
-model_name: BASE
+model_name: AE
 dimensions: [ 250, 100, 100, 100, 100, 100 ]
 dropout: 0.001
 initial_bn: True

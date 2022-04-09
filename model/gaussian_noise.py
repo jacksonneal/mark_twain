@@ -27,7 +27,7 @@ class GaussianNoise(LightningModule, ABC):
         super().__init__()
         self.sigma = sigma
         self.is_relative_detach = is_relative_detach
-        self.noise = torch.tensor(0)
+        self.noise = torch.tensor(0, device=self.device)
 
     def forward(self, x):
         if self.training and self.sigma != 0:
