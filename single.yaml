@@ -11,4 +11,4 @@ initial_bn: True
 learning_rate: 0.002
 wd: 0.05
 # trainer config
-max_epochs: 5
+max_epochs: 1
