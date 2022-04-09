@@ -10,17 +10,19 @@ sweep_count = 2
 num_workers = 28
 # ------------------------------
 
+SHELL := /bin/bash
+
 gpu:
 	srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
 
 anaconda:
-	sh module load anaconda3/2022.01
+	module load anaconda3/2022.01
 
 cuda:
-	sh module load cuda/11.1
+	module load cuda/11.1
 
 env: anaconda cuda
-	. activate pytorch_env_training
+	source activate pytorch_env_training
 
 single:
 	python main.py --num_workers ${num_workers}
