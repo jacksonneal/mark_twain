@@ -7,8 +7,6 @@ parameters:
   # data config
   feature_set:
     value: small
-  num_features:
-    value: 38
   sample_4th_era:
     value: True
   aux_target_cols:
@@ -20,6 +18,8 @@ parameters:
   # model config
   model_name:
     value: BASE
+  dimensions:
+    value: [ 250, 20, 10 ]
   dropout:
     min: 0.0
     max: 0.3
