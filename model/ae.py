@@ -42,7 +42,10 @@ class AE(LightningModule, ABC):
         mlp_layers.append(nn.Linear(dimensions[-1], 1 + len(params.aux_target_cols)))
         mlp_layers.append(nn.Sigmoid())
 
-        self.initial_bn = params.initial_bn
+        if params.initial_bn:
+            self.initial_bn = nn.BatchNorm1d(self.num_features)
+        else:
+            self.initial_bn = None
         self.num_features = dimensions[0]
         self.encoder = nn.Sequential(*encoder_layers)
         self.decoder = nn.Sequential(*decoder_layers)
@@ -50,8 +53,8 @@ class AE(LightningModule, ABC):
         self.mlp = nn.Sequential(*mlp_layers)
 
     def forward(self, x):
-        if self.initial_bn:
-            x = nn.BatchNorm1d(self.num_features)(x)
+        if self.initial_bn is not None:
+            x = self.initial_bn(x)
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         ae_out = self.ae(decoded)
