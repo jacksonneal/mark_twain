@@ -23,15 +23,15 @@ class GaussianNoise(LightningModule, ABC):
             network to generate vectors with smaller values.
     """
 
-    def __init__(self, sigma=0.1, is_relative_detach=False):
+    def __init__(self, sigma=0.1, is_relative_detach=True):
         super().__init__()
         self.sigma = sigma
         self.is_relative_detach = is_relative_detach
-        self.noise = torch.tensor(0, device=self.device)
+        self.register_buffer("noise", torch.tensor(0))
 
     def forward(self, x):
-        # if self.training and self.sigma != 0:
-        #     scale = self.sigma * x.detach() if self.is_relative_detach else self.sigma * x
-        #     sampled_noise = self.noise.repeat(*x.size()).float().normal_() * scale
-        #     x = x + sampled_noise
+        if self.training and self.sigma != 0:
+            scale = self.sigma * x.detach() if self.is_relative_detach else self.sigma * x
+            sampled_noise = self.noise.repeat(*x.size()).float().normal_() * scale
+            x = x + sampled_noise
         return x
