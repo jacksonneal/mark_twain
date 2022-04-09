@@ -13,10 +13,13 @@ num_workers = 28
 gpu:
 	srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
 
-anaconda:
+source:
+	source /etc/profile.d/modules.sh
+
+anaconda: source
 	module load anaconda3/2022.01
 
-cuda:
+cuda: source
 	module load cuda/11.1
 
 env: anaconda cuda
