@@ -8,4 +8,4 @@ TARGET_COL = "target_nomi_20"
 DATA_DIR = './datasets'
 
 # Workers used for parallel processing
-NUM_WORKERS = 1
+NUM_WORKERS = 28
