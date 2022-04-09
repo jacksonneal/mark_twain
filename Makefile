@@ -22,7 +22,6 @@ cuda:
 	module load cuda/11.1
 
 env: anaconda cuda
-	echo "anaconda and cuda loaded"
 
 init:
 	pip install -r requirements.txt
