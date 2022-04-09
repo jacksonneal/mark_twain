@@ -12,7 +12,7 @@ num_workers = 28
 
 SHELL := /bin/bash
 
-gpu:
+req-gpu:
 	srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
 
 anaconda:
@@ -22,7 +22,7 @@ cuda:
 	module load cuda/11.1
 
 env: anaconda cuda
-	source activate pytorch_env_training
+	echo "anaconda and cuda loaded"
 
 single:
 	python main.py --num_workers ${num_workers}
