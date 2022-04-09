@@ -8,7 +8,7 @@ Jackson Neal
 
 GPU Access
 ------------
-> __NOTE__: GPU configuration is optional but may be necessary for compute intensive jobs.
+> __NOTE__: GPU configuration is optional but recommended for compute intensive jobs.
 
 1. SSH to `login.discovery.neu.edu`
 2. Request GPU partition
@@ -36,7 +36,7 @@ Installation
 ------------
 
 ```bash
-pip install -r requirements.txt
+make init
 ```
 
 Execution
