@@ -3,17 +3,17 @@ from sklearn.decomposition import PCA
 from os.path import exists
 
 
-def pca_dataframe(df, num_feature_comp):
+def pca_dataframe(df: pd.DataFrame, num_feature_comp: int, filename: str) -> pd.DataFrame:
     # check if file exists
-    filepath = './' + 'pca_{}_components.parquet'.format(num_feature_comp)
+    filepath = './' + filename
     if exists(filepath):
-        pca_df = pd.read_parquet('pca_{}_components.parquet'.format(num_feature_comp))
+        pca_df = pd.read_parquet()
         return pca_df
 
     # Calculate PCA and return dataframe
     else:
 
-        print('Calculating PCA for {} components'.format(num_feature_comp))
+        print('Calculating PCA...')
         principal = PCA(n_components=num_feature_comp)
         principal.fit(df)
         x = principal.transform(df)
@@ -24,8 +24,7 @@ def pca_dataframe(df, num_feature_comp):
         pca_df.set_index('id', inplace=True)
 
         # Create .parquet file
-        file_name = 'pca_{}_components.parquet'.format(num_feature_comp)
-        pca_df.to_parquet(file_name, index=True)
-        print('{} component file created!'.format(num_feature_comp))
+        pca_df.to_parquet(filename, index=True)
+        print('File created!')
 
         return pca_df
