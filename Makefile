@@ -24,6 +24,9 @@ cuda:
 env: anaconda cuda
 	echo "anaconda and cuda loaded"
 
+init:
+	pip install -r requirements.txt
+
 single:
 	python main.py --num_workers ${num_workers}
 
