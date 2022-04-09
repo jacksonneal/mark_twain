@@ -14,10 +14,10 @@ GPU Access
 2. Request GPU partition
 
 ```bash
-srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
+make req-gpu
 ```
 
-4. Activate *pytorch_env_training* environment
+3. Load anaconda and cuda modules
 
 ```bash
 module load anaconda3/2022.01
@@ -27,6 +27,7 @@ module load anaconda3/2022.01
 module load cuda/11.1
 ```
 
+4. Activate *pytorch_env_training* environment
 ```bash
 source activate pytorch_env_training
 ````
@@ -73,6 +74,7 @@ make tb-logs
 # no GPU
 make sweep
 ```
+
 ```bash
 # use GPU
 make sweep-gpu
