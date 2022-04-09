@@ -30,8 +30,8 @@ class GaussianNoise(LightningModule, ABC):
         self.noise = torch.tensor(0, device=self.device)
 
     def forward(self, x):
-        if self.training and self.sigma != 0:
-            scale = self.sigma * x.detach() if self.is_relative_detach else self.sigma * x
-            sampled_noise = self.noise.repeat(*x.size()).float().normal_() * scale
-            x = x + sampled_noise
+        # if self.training and self.sigma != 0:
+        #     scale = self.sigma * x.detach() if self.is_relative_detach else self.sigma * x
+        #     sampled_noise = self.noise.repeat(*x.size()).float().normal_() * scale
+        #     x = x + sampled_noise
         return x
