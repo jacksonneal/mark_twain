@@ -10,6 +10,9 @@ sweep_count = 2
 num_workers = 28
 # ------------------------------
 
+gpu:
+	srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2:1 --ntasks=1 --mem=4GB --time=08:00:00 /bin/bash
+
 single:
 	python main.py --num_workers ${num_workers}
 
