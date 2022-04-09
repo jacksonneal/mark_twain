@@ -5,7 +5,6 @@ import wandb
 import yaml
 from yaml import SafeLoader
 
-import constants
 from trainer import MarkTwainTrainer
 
 parser = argparse.ArgumentParser(description="Run trainer")
@@ -15,8 +14,6 @@ parser.add_argument('--sweep_name', type=str, default="mark_twain_sweep")
 parser.add_argument('--sweep_count', type=int, default=1)
 parser.add_argument('--num_workers', type=int, default=1)
 args = parser.parse_args()
-
-constants.NUM_WORKERS = args.num_workers
 
 if __name__ == '__main__':
     torch.multiprocessing.freeze_support()

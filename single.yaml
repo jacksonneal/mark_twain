@@ -1,14 +1,12 @@
 # data config
-feature_set: top_250_features_with_target
-num_features: 250
+feature_set: small
 sample_4th_era: True
-aux_target_cols:
-  - target_nomi_60
-  - target_william_20
+aux_target_cols: [ ]
 batch_size: 4000
 # model config
-model_name: BASE
-dropout: 0
+model_name: AE
+dimensions: [ 38, 20, 38, 50, 50, 50 ]
+dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
 wd: 0.05
