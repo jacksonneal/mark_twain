@@ -20,7 +20,7 @@ parameters:
   model_name:
     value: AE
   dimensions:
-    value: [ 250, 100, 20, 50, 50, 50 ]
+    value: [ 250, 100, 50, 50, 50, 50 ]
   dropout:
     min: 0.2
     max: 0.3
@@ -29,11 +29,11 @@ parameters:
       - True
       - False
   learning_rate:
-    min: 0.001
+    min: 0.002
     max: 0.003
   wd:
-    min: 0.01
-    max: 0.1
+    min: 0.04
+    max: 0.06
   # trainer config
   max_epochs:
-    value: 5
+    value: 20
