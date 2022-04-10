@@ -22,7 +22,7 @@ parameters:
   dimensions:
     value: [ 250, 100, 20, 50, 50, 50 ]
   dropout:
-    min: 0.0
+    min: 0.4
     max: 0.5
   initial_bn:
     values:
@@ -36,4 +36,4 @@ parameters:
     max: 0.1
   # trainer config
   max_epochs:
-    value: 10
+    value: 5
