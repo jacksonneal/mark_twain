@@ -25,10 +25,11 @@ class MarkTwainTrainer:
             data_module = NumeraiDataModule(feature_set=run_conf['feature_set'],
                                             sample_4th_era=run_conf['sample_4th_era'],
                                             aux_target_cols=run_conf['aux_target_cols'],
-                                            batch_size=run_conf['batch_size'])
+                                            batch_size=run_conf['batch_size'],
+                                            num_workers=self.args.num_workers)
             model = NumeraiLit(model_name=run_conf['model_name'],
                                feature_set=run_conf['feature_set'],
-                               num_features=run_conf['num_features'],
+                               dimensions=run_conf['dimensions'],
                                aux_target_cols=run_conf['aux_target_cols'],
                                dropout=run_conf['dropout'],
                                initial_bn=run_conf['initial_bn'],

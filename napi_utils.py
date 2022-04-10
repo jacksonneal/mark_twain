@@ -58,7 +58,7 @@ def load_data(mode: str, feature_set, aux_target_cols, sample_4th_era: bool = Fa
     else:
         raise Exception(f"unsupported mode: {mode}")
     features_path = f"{dir_path}/features.json"
-    custom_features_path = "custom_features.json"
+    custom_features_path = "feature_sets.json"
 
     if feature_set is not None:
         print(f"Reading feature set {feature_set}")
