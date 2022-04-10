@@ -1,27 +1,21 @@
-import matplotlib
-import numpy as np
-import pandas as pd
-from numerapi import NumerAPI
-import random
+
+from abc import ABC
+
 import torch
-import math
-from tqdm.notebook import tqdm
+from pytorch_lightning import LightningModule
+from torch import nn
 nn = torch.nn
 
 
-class AutoEncoder(nn.Module):
+class AutoEncoder(LightningModule, ABC):
 
-    def __init__(self, num_features, hidden,  out_dim, dropout):
+    def __init__(self, params):
+        super().__init__()
         self.encoder = []
         self.decoder = []
-        self.num_features = num_features
-        self.out_dim = out_dim
-        self.hidden = hidden
-        self.buildEncoderDecoder()
-        self.dropout = dropout
-
-    def buildEncoderDecoder(self):
-
+        self.num_features = params.dimensions[0]
+        self.out_dim = params.dimensions[2]
+        self.hidden = params.dimensions[1]
         self.encoder += [nn.Linear(self.num_features, self.hidden)]
         self.encoder += [nn.BatchNorm1d(self.hidden)]
         self.encoder += [nn.SiLU()]
@@ -31,7 +25,8 @@ class AutoEncoder(nn.Module):
         self.decoder += [nn.SiLU()]
         self.decoder += [nn.Dropout(p=.2)]
         self.decoder += [nn.Linear(self.hidden, self.out_dim)]
-        ## TODO: DropOut to be added in the forward
+        # self.dropout = dropout
+
 
 
     def forward(self, x):
@@ -60,7 +55,7 @@ class AutoEncoder(nn.Module):
         # x = tf.keras.layers.BatchNormalization()(x)
         # x = tf.keras.layers.Dropout(dropout_rates[3])(x)
 
-        print(auto.shape)
+
 
 
 
@@ -75,12 +70,7 @@ class AutoEncoder(nn.Module):
 
 ## grab the data
 
-input = torch.randn(20, 100)
 
-
-
-auto = AutoEncoder(100, 4, 1, .2)
-final = auto.forward(input)
 
 
 
