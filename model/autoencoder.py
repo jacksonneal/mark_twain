@@ -11,11 +11,12 @@ class AutoEncoder(LightningModule, ABC):
 
     def __init__(self, params):
         super().__init__()
+        dimensions = params.dimensions
         self.encoder = []
         self.decoder = []
-        self.num_features = params.dimensions[0]
-        self.out_dim = params.dimensions[2]
-        self.hidden = params.dimensions[1]
+        self.num_features = dimensions[0]
+        self.out_dim = dimensions[2]
+        self.hidden = dimensions[1]
         self.encoder += [nn.Linear(self.num_features, self.hidden)]
         self.encoder += [nn.BatchNorm1d(self.hidden)]
         self.encoder += [nn.SiLU()]

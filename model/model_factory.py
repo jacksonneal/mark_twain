@@ -10,6 +10,7 @@ def build_model(params):
     elif params.model_name == "AE":
         return AE(params)
     elif params.model_name == "AUTO":
-        return AE(params)
+        print('IN BUILD')
+        return AutoEncoder(params)
     else:
         raise Exception(f"unsupported model name {params.model_name}")
