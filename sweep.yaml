@@ -13,16 +13,17 @@ parameters:
     value:
       - target_nomi_60
       - target_william_20
+      - target
   batch_size:
     value: 4000
   # model config
   model_name:
     value: AE
   dimensions:
-    value: [ 250, 20, 38, 50, 50, 50 ]
+    value: [ 250, 100, 20, 50, 50, 50 ]
   dropout:
     min: 0.0
-    max: 0.3
+    max: 0.5
   initial_bn:
     values:
       - True
