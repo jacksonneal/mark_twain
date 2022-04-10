@@ -27,6 +27,8 @@ class AutoEncoder(LightningModule, ABC):
         self.decoder += [nn.Dropout(p=.2)]
         self.decoder += [nn.Linear(self.hidden, self.out_dim)]
         # self.dropout = dropout
+        self.encode = nn.Sequential(*self.encoder)
+        self.decode = nn.Sequential(*self.decoder)
 
 
 
@@ -43,33 +45,11 @@ class AutoEncoder(LightningModule, ABC):
         variance = .1
         auto = auto + (variance ** 0.5) * torch.randn(auto.shape)
 
-        encode = nn.Sequential(*self.encoder)
-        auto = encode(auto)
-        decode = nn.Sequential(*self.decoder)
-        auto = decode(auto)
+        encoded = self.encode(auto)
+        auto = self.decode(encoded)
 
+        return auto
 
-        ##TODO: 3: Prepare Input for number of hidden
-        ## This process will be done after we have the regular encoder - decoder working
-
-        # x = tf.keras.layers.Concatenate()([x0, encoder])
-        # x = tf.keras.layers.BatchNormalization()(x)
-        # x = tf.keras.layers.Dropout(dropout_rates[3])(x)
-
-
-
-
-
-
-
-        return decode, auto
-
-    #
-
-
-## Basic Testing
-
-## grab the data
 
 
 
