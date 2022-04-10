@@ -17,7 +17,7 @@ parameters:
     value: 4000
   # model config
   model_name:
-    value: BASE
+    value: AE
   dimensions:
     value: [ 250, 20, 10 ]
   dropout:
@@ -35,4 +35,4 @@ parameters:
     max: 0.1
   # trainer config
   max_epochs:
-    value: 2
+    value: 5
