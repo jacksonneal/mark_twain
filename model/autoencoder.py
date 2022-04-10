@@ -62,7 +62,7 @@ class AutoEncoder(LightningModule, ABC):
 
 
 
-        return auto
+        return decode, auto
 
     #
 
