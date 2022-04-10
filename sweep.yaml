@@ -6,19 +6,18 @@ metric:
 parameters:
   # data config
   feature_set:
-    value: top_250_features_with_target_corr
+    value: small
   sample_4th_era:
     value: True
   aux_target_cols:
     value:
-      - target
   batch_size:
     value: 4000
   # model config
   model_name:
     value: AE
   dimensions:
-    value: [ 250, 100, 50,  25, 20, 25, 50, 50, 50]
+    value: [38,20,38,50,50,50]
   dropout:
     min: 0.2
     max: 0.3

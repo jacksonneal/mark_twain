@@ -26,7 +26,6 @@ class AutoEncoder(nn.Module):
         self.encoder += [nn.BatchNorm1d(self.hidden)]
         self.encoder += [nn.SiLU()]
 
-
         self.decoder += [nn.Linear(self.hidden, self.hidden)]
         self.decoder += [nn.BatchNorm1d(self.hidden)]
         self.decoder += [nn.SiLU()]
