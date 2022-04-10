@@ -31,7 +31,7 @@ parameters:
     max: 0.003
   wd:
     min: 0.04
-    max: 0.06
+    max: 0.045
   # trainer config
   max_epochs:
     value: 20
