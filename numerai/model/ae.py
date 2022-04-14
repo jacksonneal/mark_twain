@@ -4,7 +4,7 @@ import torch
 from pytorch_lightning import LightningModule
 from torch import nn
 
-from model.gaussian_noise import GaussianNoise
+from numerai.model.gaussian_noise import GaussianNoise
 
 
 class AE(LightningModule, ABC):
@@ -12,6 +12,7 @@ class AE(LightningModule, ABC):
     def __init__(self, params):
         super().__init__()
         dimensions = params.dimensions
+        dimensions.insert(0, params.num_features)
 
         encoder_layers = [GaussianNoise(), nn.Linear(dimensions[0], dimensions[1]), nn.BatchNorm1d(dimensions[1]),
                           nn.SiLU(inplace=True)]

@@ -2,6 +2,10 @@
 
 # Custom Training configurations
 # ------------------------------
+# File used for single run
+single_conf = "single.yaml"
+# File used for sweep run
+sweep_conf = "sweep.yaml"
 # Name used for wandb sweep
 sweep_name = "mark_twain_sweep_milestone_2"
 # number of wandb runs to explore during sweep
@@ -19,16 +23,18 @@ init:
 	pip install -r requirements.txt
 
 single:
-	python main.py --num_workers ${num_workers}
+	python numerai --num_workers ${num_workers} --config ${single_conf}
 
 single-gpu:
-	python main.py --gpu --num_workers ${num_workers}
+	python numerai --gpu --num_workers ${num_workers} --config ${single_conf}
 
 sweep:
-	python main.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers}
+	python numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers} \
+		--config ${sweep_conf}
 
 sweep-gpu:
-	python main.py --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu --num_workers ${num_workers}
+	python numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu \
+		--num_workers ${num_workers} --config ${sweep_conf}
 
 tb-logs:
-	python tb_logs.py --num_workers ${num_workers}
+	python numerai/log --num_workers ${num_workers}

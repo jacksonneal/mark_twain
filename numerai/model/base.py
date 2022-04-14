@@ -6,6 +6,7 @@ class Base(nn.Module):
     def __init__(self, params):
         super().__init__()
         dimensions = params.dimensions
+        dimensions.insert(0, params.num_features)
         layers = []
         if params.initial_bn:
             layers.append(nn.BatchNorm1d(dimensions[0]))

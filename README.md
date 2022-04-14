@@ -67,7 +67,7 @@ make tb-logs
 
 > __NOTE__: Executing sweep runs requires an api key
 
-1. Modify sweep run hyperparameters in [sweep.yaml](sweep.yaml)
+1. Modify sweep run hyperparameters in [sweep.yaml](numerai/config/sweep.yaml)
 2. Run trainer with on of:
 
 ```bash
