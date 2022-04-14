@@ -2,9 +2,11 @@
 
 CS7150 Deep Learning Final Project
 
-Code author
+Code authors
 ------------
-Jackson Neal
+Jackson Neal  
+Rohit Barve  
+Quay Dragon
 
 GPU Access
 ------------
