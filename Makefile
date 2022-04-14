@@ -23,18 +23,18 @@ init:
 	pip install -r requirements.txt
 
 single:
-	python numerai --num_workers ${num_workers} --config ${single_conf}
+	python -m numerai --num_workers ${num_workers} --config ${single_conf}
 
 single-gpu:
-	python numerai --gpu --num_workers ${num_workers} --config ${single_conf}
+	python -m numerai --gpu --num_workers ${num_workers} --config ${single_conf}
 
 sweep:
-	python numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers} \
+	python -m numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers} \
 		--config ${sweep_conf}
 
 sweep-gpu:
-	python numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu \
+	python -m numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu \
 		--num_workers ${num_workers} --config ${sweep_conf}
 
 tb-logs:
-	python numerai/log --num_workers ${num_workers}
+	python -m numerai/log --num_workers ${num_workers}
