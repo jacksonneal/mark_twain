@@ -1,9 +1,11 @@
 from tensorboard import program
 
+from numerai.definitions import LOG_DIR
+
 
 def run_tensor_board():
     tb = program.TensorBoard()
-    tb.configure(argv=[None, '--logdir', "lightning_logs"])
+    tb.configure(argv=[None, '--logdir', LOG_DIR])
     url = tb.launch()
     print(f"TensorBoard listening on {url}")
 
