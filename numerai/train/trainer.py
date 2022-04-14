@@ -1,3 +1,4 @@
+import os
 import pprint
 import traceback
 import torch
@@ -65,6 +66,6 @@ class MarkTwainTrainer:
         torch.cuda.empty_cache()
 
     def run_sweep(self, run_conf=None):
-        with wandb.init(project=self.args.sweep_name, config=run_conf):
+        with wandb.init(project=self.args.sweep_name, config=run_conf, dir=WANDB_LOG_DIR):
             run_conf = wandb.config
             self.run_single(run_conf)

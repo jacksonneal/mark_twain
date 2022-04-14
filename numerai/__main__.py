@@ -6,7 +6,7 @@ import wandb
 import yaml
 from yaml import SafeLoader
 
-from numerai.definitions import CONF_DIR
+from numerai.definitions import CONF_DIR, WANDB_LOG_DIR
 from numerai.train.trainer import MarkTwainTrainer
 
 
@@ -30,6 +30,9 @@ def main():
     with open(fp) as f:
         config = yaml.load(f, Loader=SafeLoader)
         if args.run_sweep:
+            os.environ["WANDB_DIR"] = os.path.abspath(WANDB_LOG_DIR)
+            if not os.path.isdir(WANDB_LOG_DIR):
+                os.makedirs(WANDB_LOG_DIR)
             wandb.login()
             sweep_id = wandb.sweep(config, project=args.sweep_name)
             wandb.agent(sweep_id, function=trainer.run_sweep, count=args.sweep_count)
