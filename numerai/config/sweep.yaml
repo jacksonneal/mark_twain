@@ -19,7 +19,7 @@ parameters:
   model_name:
     value: BASE
   dimensions:
-    value: [ 480, 480, 1920, 1920, 1920, 960 ]
+    value: [ 1920, 1920, 1920, 960 ]
   dropout:
     min: 0.0
     max: 0.3
