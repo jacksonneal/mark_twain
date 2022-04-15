@@ -1,6 +1,6 @@
 # data config
 pca: null
-feature_set: top_250_features_with_target
+feature_set: full
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000

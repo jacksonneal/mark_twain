@@ -6,20 +6,20 @@ metric:
 parameters:
   # data config
   pca:
-    value: null
+    values: [ null, 200 ]
   feature_set:
-    value: small
+    value: medium
   sample_4th_era:
     value: True
   aux_target_cols:
     value: [ ]
   batch_size:
-    value: 4000
+    value: 5000
   # model config
   model_name:
     value: AE
   dimensions:
-    value: [ 20, 38, 50, 50, 50 ]
+    value: [ 96, 96, 896, 448, 448, 256 ]
   dropout:
     min: 0.0
     max: 0.3
@@ -35,4 +35,4 @@ parameters:
     max: 0.1
   # trainer config
   max_epochs:
-    value: 1
+    value: 10
