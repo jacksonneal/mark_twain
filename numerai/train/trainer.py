@@ -42,7 +42,7 @@ class MarkTwainTrainer:
                                learning_rate=run_conf['learning_rate'],
                                wd=run_conf['wd'])
             model_summary_callback = ModelSummary(max_depth=25)
-            checkpoint_callback = ModelCheckpoint(monitor="val/sharpe", mode="max")
+            checkpoint_callback = ModelCheckpoint(monitor="val/spearman", mode="max")
             early_stopping_callback = EarlyStopping("val_corr", patience=3, mode="max")
             callbacks = [model_summary_callback, checkpoint_callback, early_stopping_callback]
             gpus = 1 if self.args.gpu else 0
