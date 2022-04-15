@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   pca:
-    values: [ null, 500 ]
+    value: null
   feature_set:
     value: full
   sample_4th_era:
@@ -19,7 +19,7 @@ parameters:
   model_name:
     value: AE
   dimensions:
-    value: [ 96, 96, 896, 448, 448, 256 ]
+    value: [ 480, 480, 1920, 1920, 1920, 960 ]
   dropout:
     min: 0.0
     max: 0.3
