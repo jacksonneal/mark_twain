@@ -17,7 +17,7 @@ parameters:
     value: 5000
   # model config
   model_name:
-    value: AE
+    value: BASE
   dimensions:
     value: [ 480, 480, 1920, 1920, 1920, 960 ]
   dropout:
