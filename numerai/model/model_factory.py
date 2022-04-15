@@ -1,5 +1,5 @@
-from model.ae import AE
-from model.base import Base
+from numerai.model.ae import AE
+from numerai.model.base import Base
 
 
 def build_model(params):

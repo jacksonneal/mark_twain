@@ -129,14 +129,16 @@ dmypy.json
 .pyre/
 
 # Numerai Datasets
-datasets/
+datasets/numerai_dataset_*
+datasets/*.parquet
+datasets/features.json
+datasets/pca/
 
 # Pytorch Lightning logs
 lightning_logs/
 
 # wandb logs
-wandb/
-mark_twain_sweep/
+wandb_logs/
 
 # IDEA
 .idea/

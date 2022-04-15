@@ -1,15 +1,18 @@
+import os
 import pprint
 import traceback
 import torch
 from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning.loggers import WandbLogger, TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, ModelSummary
 from pytorch_lightning.utilities.seed import seed_everything
 import gc
 import wandb
 
-from data import NumeraiDataModule
-from lit import NumeraiLit
+from numerai.data.data_module import NumeraiDataModule
+from numerai.data.preprocessing import get_num_features
+from numerai.definitions import LOG_DIR, WANDB_LOG_DIR
+from numerai.model.lit import NumeraiLit
 
 
 class MarkTwainTrainer:
@@ -26,9 +29,13 @@ class MarkTwainTrainer:
                                             sample_4th_era=run_conf['sample_4th_era'],
                                             aux_target_cols=run_conf['aux_target_cols'],
                                             batch_size=run_conf['batch_size'],
-                                            num_workers=self.args.num_workers)
+                                            num_workers=self.args.num_workers,
+                                            pca=run_conf['pca'])
+            data_module.prepare_data()
+            num_features = get_num_features(run_conf['feature_set']) if run_conf['pca'] is None else run_conf['pca']
             model = NumeraiLit(model_name=run_conf['model_name'],
                                feature_set=run_conf['feature_set'],
+                               num_features=num_features,
                                dimensions=run_conf['dimensions'],
                                aux_target_cols=run_conf['aux_target_cols'],
                                dropout=run_conf['dropout'],
@@ -43,9 +50,8 @@ class MarkTwainTrainer:
             trainer = Trainer(gpus=gpus,
                               max_epochs=run_conf['max_epochs'],
                               callbacks=callbacks)
-            if self.args.run_sweep:
-                wandb_logger = WandbLogger()
-                trainer.logger = wandb_logger
+            logger = WandbLogger(save_dir=WANDB_LOG_DIR) if self.args.run_sweep else TensorBoardLogger(save_dir=LOG_DIR)
+            trainer.logger = logger
             trainer.fit(model, datamodule=data_module)
         except Exception as e:
             print(e)
@@ -54,13 +60,12 @@ class MarkTwainTrainer:
         del model_summary_callback
         del checkpoint_callback
         del early_stopping_callback
-        if self.args.run_sweep:
-            del wandb_logger
+        del logger
         del trainer
         gc.collect()
         torch.cuda.empty_cache()
 
     def run_sweep(self, run_conf=None):
-        with wandb.init(project=self.args.sweep_name, config=run_conf):
+        with wandb.init(project=self.args.sweep_name, config=run_conf, dir=WANDB_LOG_DIR):
             run_conf = wandb.config
             self.run_single(run_conf)
