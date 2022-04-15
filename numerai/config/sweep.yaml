@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   pca:
-    values: [ null, 200 ]
+    values: [ null, 500 ]
   feature_set:
     value: full
   sample_4th_era:
