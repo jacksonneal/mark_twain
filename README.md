@@ -46,7 +46,7 @@ Execution
 
 ### Single Run Configuration
 
-1. Modify single run hyperparameters in [single.yaml](single.yaml)
+1. Modify single run hyperparameters in [single.yaml](numerai/config/single.yaml)
 2. Run trainer with one of:
 
 ```bash
