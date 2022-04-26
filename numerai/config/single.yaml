@@ -1,11 +1,11 @@
 # data config
 pca: 0.95
-feature_set: small
+feature_set: medium
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000
 # model config
-model_name: AE
+model_name: AE-MLP
 dimensions: [ 20, 38, 50, 50, 50 ]
 dropout: 0.001
 initial_bn: True

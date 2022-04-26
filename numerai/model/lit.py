@@ -33,7 +33,7 @@ class NumeraiLit(LightningModule, ABC):
         self.save_hyperparameters(ignore="model")
         self.model = model or build_model(self.hparams)
         self.loss = nn.MSELoss()
-        self.ae_architecture = model_name == "AE"
+        self.ae_mlp_architecture = model_name == "AE-MLP"
 
     def forward(self, x):
         return self.model(x)
@@ -43,7 +43,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine correlation of preds to targets
         preds = self.model(inputs)
-        if self.ae_architecture:
+        if self.ae_mlp_architecture:
             decoded, ae_out, preds = preds
         else:
             decoded = None
@@ -54,13 +54,13 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine primary and auxiliary target loss
         loss = self.loss(preds[:, 0], targets)
-        if self.ae_architecture:
+        if self.ae_mlp_architecture:
             loss += self.loss(ae_out[:, 0], targets)
             loss += self.loss(decoded, inputs)
         aux_loss = 0.0
         for i in range(len(self.hparams.aux_target_cols)):
             aux_loss += self.loss(preds[:, i + 1], aux_targets[:, i])
-            if self.ae_architecture:
+            if self.ae_mlp_architecture:
                 aux_loss += self.loss(ae_out[:, i + 1], aux_targets[:, i])
 
         self.log("train_loss", loss)
@@ -78,19 +78,31 @@ class NumeraiLit(LightningModule, ABC):
         self.log('train/sharpe', sharpe)
 
     def validation_step(self, batch, batch_nb):
-        inputs, targets, _ = batch
+        inputs, targets, aux_targets = batch
 
         # Determine correlation of pred to targets
         preds = self.model(inputs)
-        if self.ae_architecture:
-            _, _, preds = preds
+        if self.ae_mlp_architecture:
+            decoded, ae_out, preds = preds
+        else:
+            decoded = None
+            ae_out = None
         rank_pred = pd.Series(preds[:, 0].cpu()).rank(pct=True, method='first')
         corr = np.corrcoef(targets.cpu(), rank_pred)[0, 1]
 
-        # Determine primary target loss
+        # Determine primary and auxiliary target loss
         loss = self.loss(preds[:, 0], targets)
+        if self.ae_mlp_architecture:
+            loss += self.loss(ae_out[:, 0], targets)
+            loss += self.loss(decoded, inputs)
+        aux_loss = 0.0
+        for i in range(len(self.hparams.aux_target_cols)):
+            aux_loss += self.loss(preds[:, i + 1], aux_targets[:, i])
+            if self.ae_mlp_architecture:
+                aux_loss += self.loss(ae_out[:, i + 1], aux_targets[:, i])
 
         self.log("val_loss", loss)
+        self.log("val_loss_aux", aux_loss)
         self.log("val_corr", corr)
 
         return {'loss': loss, 'corr': corr}

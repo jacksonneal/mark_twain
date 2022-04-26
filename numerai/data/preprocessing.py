@@ -58,7 +58,7 @@ def load_data(mode: str, feature_set="small", aux_target_cols=None, sample_4th_e
     :param feature_set: feature set to use
     :param aux_target_cols: auxiliary targets to load
     :param sample_4th_era: avoid overlapping eras by sampling every 4th during training
-    :param pca: percent of variance to account
+    :param pca: number of components or percent of variance to account
     :return: A tuple containing the datasets (train, val, test)
     """
     if aux_target_cols is None:
