@@ -8,7 +8,7 @@ parameters:
   pca:
     value: 0.95
   feature_set:
-    value: full
+    value: medium
   sample_4th_era:
     value: True
   aux_target_cols:

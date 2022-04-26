@@ -8,8 +8,8 @@ from pytorch_lightning.utilities.seed import seed_everything
 import gc
 import wandb
 
+from numerai.data import preprocessing
 from numerai.data.data_module import NumeraiDataModule
-from numerai.data.preprocessing import get_num_features
 from numerai.definitions import LOG_DIR, WANDB_LOG_DIR
 from numerai.model.lit import NumeraiLit
 
@@ -31,12 +31,9 @@ class MarkTwainTrainer:
                                             num_workers=self.args.num_workers,
                                             pca=run_conf['pca'])
             data_module.prepare_data()
-            num_features = get_num_features(feature_set=run_conf['feature_set'],
-                                            sample_4th_era=run_conf['sample_4th_era'],
-                                            pca=run_conf['pca'])
             model = NumeraiLit(model_name=run_conf['model_name'],
                                feature_set=run_conf['feature_set'],
-                               num_features=num_features,
+                               num_features=data_module.num_features,
                                dimensions=run_conf['dimensions'],
                                aux_target_cols=run_conf['aux_target_cols'],
                                dropout=run_conf['dropout'],
