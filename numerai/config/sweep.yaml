@@ -19,7 +19,7 @@ parameters:
   model_name:
     value: AE-MLP
   dimensions:
-    value: [ 1000, 1000, 1000, 500 ]
+    value: [ 20, 38, 50, 50, 50 ]
   dropout:
     min: 0.0
     max: 0.3
