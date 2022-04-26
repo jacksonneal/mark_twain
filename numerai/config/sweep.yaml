@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   pca:
-    value: null
+    value: 0.95
   feature_set:
     value: full
   sample_4th_era:
@@ -17,9 +17,9 @@ parameters:
     value: 5000
   # model config
   model_name:
-    value: BASE
+    value: AE-MLP
   dimensions:
-    value: [ 1920, 1920, 1920, 960 ]
+    value: [ 1000, 1000, 1000, 500 ]
   dropout:
     min: 0.0
     max: 0.3
@@ -35,4 +35,4 @@ parameters:
     max: 0.1
   # trainer config
   max_epochs:
-    value: 10
+    value: 3

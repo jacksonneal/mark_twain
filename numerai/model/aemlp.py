@@ -7,7 +7,7 @@ from torch import nn
 from numerai.model.gaussian_noise import GaussianNoise
 
 
-class AE(LightningModule, ABC):
+class AEMLP(LightningModule, ABC):
 
     def __init__(self, params):
         super().__init__()
