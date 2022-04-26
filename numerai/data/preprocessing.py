@@ -50,14 +50,15 @@ def download_current_data():
             napi.download_dataset(file, dest_path=os.path.join(DATA_DIR, file))
 
 
-def load_data(mode: str, feature_set="small", aux_target_cols=None, sample_4th_era=False, pca: Optional[int] = None) -> pd.DataFrame:
+def load_data(mode: str, feature_set="small", aux_target_cols=None, sample_4th_era=False,
+              pca: Optional[float] = None) -> pd.DataFrame:
     """
     Load data from file for current round.
     :param mode: data file to load
     :param feature_set: feature set to use
     :param aux_target_cols: auxiliary targets to load
     :param sample_4th_era: avoid overlapping eras by sampling every 4th during training
-    :param pca: number of components
+    :param pca: percent of variance to account
     :return: A tuple containing the datasets (train, val, test)
     """
     if aux_target_cols is None:
@@ -156,21 +157,21 @@ def create_feature_sets(corr=True, volatile=True):
             print('Custom feature sets created!')
 
 
-def to_pca(df: pd.DataFrame, num_feature_comp: int, fp: str) -> pd.DataFrame:
+def to_pca(df: pd.DataFrame, feature_comp: float, fp: str) -> pd.DataFrame:
     if os.path.isfile(fp):
         print("PCA already computed, loading file!")
         temp = pd.read_parquet(fp)
     else:
-        print(f"Computing PCA for {num_feature_comp} components")
+        print(f"Computing PCA {feature_comp}")
         features = [c for c in df if c.startswith("feature_")]
         df_features = df[features]
         scalar = StandardScaler()
         scalar.fit(df_features)
         scaled_df = scalar.transform(df_features)
-        principal = PCA(n_components=num_feature_comp)
+        principal = PCA(n_components=feature_comp)
         principal.fit(scaled_df)
         df_principal = principal.transform(scaled_df)
-        temp = pd.DataFrame(data=df_principal, columns=[f"feature_{i}" for i in range(num_feature_comp)])
+        temp = pd.DataFrame(data=df_principal, columns=[f"feature_{i}" for i in range(df_principal.shape[1])])
 
     targets = [c for c in df if c.startswith("target_")]
     meta_cols = [ERA_COL] + targets
@@ -187,16 +188,22 @@ def to_pca(df: pd.DataFrame, num_feature_comp: int, fp: str) -> pd.DataFrame:
     return df_pca
 
 
-def get_num_features(feature_set: str) -> int:
-    if feature_set == "full":
-        num_features = 1050
+def get_num_features(feature_set: str, sample_4th_era: bool = False, pca: Optional[float] = None) -> int:
+    if pca is None:
+        if feature_set == "full":
+            num_features = 1050
+        else:
+            using_provided = feature_set in PROVIDED_FEATURE_SETS
+            file = PROVIDED_FEATURES_FILE if using_provided else CUSTOM_FEATURES_FILE
+            with open(file, "r") as f:
+                feature_metadata = json.load(f)
+            if using_provided:
+                feature_metadata = feature_metadata["feature_sets"]
+            num_features = len(feature_metadata[feature_set])
+        print(f"Feature set {feature_set} has {num_features} features")
     else:
-        using_provided = feature_set in PROVIDED_FEATURE_SETS
-        file = PROVIDED_FEATURES_FILE if using_provided else CUSTOM_FEATURES_FILE
-        with open(file, "r") as f:
-            feature_metadata = json.load(f)
-        if using_provided:
-            feature_metadata = feature_metadata["feature_sets"]
-        num_features = len(feature_metadata[feature_set])
-    print(f"Feature set {feature_set} has {num_features} features")
+        df = load_data(mode="train", feature_set=feature_set, sample_4th_era=sample_4th_era, pca=pca)
+        num_features = len([c for c in df if c.startswith("feature_")])
+        print(f"Feature set {feature_set} with PCA {pca} has {num_features} features")
+
     return num_features

@@ -10,7 +10,7 @@ from numerai.data.dataset import NumeraiDataset
 
 class NumeraiDataModule(LightningDataModule, ABC):
     def __init__(self, feature_set="small", sample_4th_era=True, aux_target_cols=None, batch_size=1000, num_workers=1,
-                 pca: Optional[int] = None):
+                 pca: Optional[float] = None):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []

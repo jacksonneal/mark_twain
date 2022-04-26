@@ -9,7 +9,7 @@ from numerai.definitions import TARGET_COL
 
 class NumeraiDataset(Dataset):
     def __init__(self, name="train", feature_set="small", sample_4th_era=True, aux_target_cols=None,
-                 pca: Optional[int] = None):
+                 pca: Optional[float] = None):
         super().__init__()
         if aux_target_cols is None:
             aux_target_cols = []
