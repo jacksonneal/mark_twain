@@ -31,7 +31,9 @@ class MarkTwainTrainer:
                                             num_workers=self.args.num_workers,
                                             pca=run_conf['pca'])
             data_module.prepare_data()
-            num_features = get_num_features(run_conf['feature_set']) if run_conf['pca'] is None else run_conf['pca']
+            num_features = get_num_features(feature_set=run_conf['feature_set'],
+                                            sample_4th_era=run_conf['sample_4th_era'],
+                                            pca=run_conf['pca'])
             model = NumeraiLit(model_name=run_conf['model_name'],
                                feature_set=run_conf['feature_set'],
                                num_features=num_features,
