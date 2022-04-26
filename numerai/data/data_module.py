@@ -19,13 +19,14 @@ class NumeraiDataModule(LightningDataModule, ABC):
         self.val_data = None
         self.test_data = None
         self.num_workers = num_workers
+        self.num_features = None
 
     def prepare_data(self) -> None:
         preprocessing.download_current_data()
         preprocessing.create_feature_sets()
-        # self.num_features = preprocessing.get_num_features(feature_set=self.hparams.feature_set,
-        #                                                    sample_4th_era=self.hparams.sample_4th_era,
-        #                                                    pca=self.hparams.pca)
+        self.num_features = preprocessing.get_num_features(feature_set=self.hparams.feature_set,
+                                                           sample_4th_era=self.hparams.sample_4th_era,
+                                                           pca=self.hparams.pca)
 
     def setup(self, stage=None) -> None:
         if stage == "fit" or stage is None:
@@ -34,7 +35,7 @@ class NumeraiDataModule(LightningDataModule, ABC):
                                              sample_4th_era=self.hparams.sample_4th_era,
                                              aux_target_cols=self.hparams.aux_target_cols,
                                              pca=self.hparams.pca)
-            val_pca = self.train_data.num_features if self.hparams.pca is not None else None
+            val_pca = self.num_features if self.hparams.pca is not None else None
             self.val_data = NumeraiDataset("val",
                                            feature_set=self.hparams.feature_set,
                                            sample_4th_era=self.hparams.sample_4th_era,

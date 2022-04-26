@@ -26,7 +26,6 @@ class NumeraiDataset(Dataset):
         # extract feature col names
         feature_cols = [c for c in self.df if c.startswith("feature_")]
 
-        self.num_features = len(feature_cols)
         self.inputs = torch.tensor(self.df[feature_cols].values)
         self.targets = torch.tensor(self.df[TARGET_COL].values)
         self.aux_targets = torch.tensor(self.df[aux_target_cols].values)
