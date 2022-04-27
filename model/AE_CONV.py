@@ -13,8 +13,8 @@ class AEConv(LightningModule, ABC):
         super().__init__()
         print(params)
         self.num_features = params.dimensions[0]
-        # self.ae = AutoEncoder(params)
-        self.ae = AE(params)
+        self.ae = AutoEncoder(params)
+        # self.ae = AE(params)
         self.params = params
 
         """
@@ -29,7 +29,15 @@ class AEConv(LightningModule, ABC):
     def forward(self, x):
 
         # batch1 = nn.BatchNorm1d(self.num_features)
-        decoded, out, mlp = self.ae(x)
+        # decoded, out, mlp = self.ae(x)
+
+        out = self.ae(x)
+
+        # print("*"*20)
+        # print(decoded.shape)
+        # print(out.shape())
+        #
+        # print("*" * 20)
 
 
 
