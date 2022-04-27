@@ -15,7 +15,7 @@ parameters:
     value: 4000
   # model config
   model_name:
-    value: AE_CONV
+    value: AECONV
   dimensions:
     value: [250,5, 1]
   dropout:
@@ -33,4 +33,4 @@ parameters:
     max: 0.06
   # trainer config
   max_epochs:
-    value: 50
+    value: 5

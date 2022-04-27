@@ -29,7 +29,9 @@ class AEConv(LightningModule, ABC):
     def forward(self, x):
 
         # batch1 = nn.BatchNorm1d(self.num_features)
-        out = self.ae(x)
+        decoded, out, mlp = self.ae(x)
+
+
 
         out = 0
 
