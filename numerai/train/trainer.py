@@ -62,7 +62,7 @@ class MarkTwainTrainer:
             else:
                 predictions = trainer.predict(model, datamodule=data_module)
                 if run_conf['model_name'] == 'AE-MLP':
-                    _, _, predictions = predictions
+                    predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df
                 out_df.loc[:, "prediction"] = predictions
