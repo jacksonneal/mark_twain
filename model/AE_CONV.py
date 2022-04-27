@@ -33,7 +33,7 @@ class AEConv(LightningModule, ABC):
 
 
 
-        out = 0
+
 
         return out
 
