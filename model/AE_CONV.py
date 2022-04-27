@@ -23,10 +23,10 @@ class AEConv(LightningModule, ABC):
         The idea is to go around the dimensions
         The dimensions should dip down in the middle and then output 1
         """
-
+        self.num_feats = self.dimensions[0]
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(38, 40, 1)
+        self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
         # Second Down
