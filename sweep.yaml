@@ -17,6 +17,7 @@ parameters:
   model_name:
     value: AECONV
   dimensions:
+    ## must be multiples of 3
     value: [250,20, 20, 5, 20, 20, 20]
   dropout:
     min: 0.2

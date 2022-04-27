@@ -9,7 +9,7 @@ nn = torch.nn
 
 class AutoEncoder(LightningModule, ABC):
 
-    def __init__(self, params):
+    def __init__(self, input, hidden, out):
         super().__init__()
         dimensions = params.dimensions
         self.encoder = []
