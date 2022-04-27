@@ -37,6 +37,8 @@ sweep-gpu:
 		--num_workers ${num_workers} --config ${sweep_conf}
 
 predict:
+	# ckpt: path relative to log dir to checkpoint .ckpt file
+	# hparams: path relative to log dir to hyperparameter .yaml file
 	python -m numerai --predict $(ckpt) --config $(hparams)
 
 predict-gpu:
