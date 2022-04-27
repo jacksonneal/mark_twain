@@ -1,10 +1,12 @@
 from abc import ABC
+from typing import Any, Optional
 
 import numpy as np
 import pandas as pd
 import torch
 from pytorch_lightning import LightningModule
 from torch import nn, optim
+import torch.nn.functional as F
 
 from numerai.model.model_factory import build_model
 
@@ -31,8 +33,8 @@ class NumeraiLit(LightningModule, ABC):
             aux_target_cols = []
         # Save for repeated runs, ignore the model itself
         self.save_hyperparameters(ignore="model")
-        self.model = model or build_model(self.hparams)
-        self.loss = nn.MSELoss()
+        self.model = build_model(self.hparams)
+        self.loss = F.mse_loss
         self.ae_mlp_architecture = model_name == "AE-MLP"
 
     def forward(self, x):
@@ -114,6 +116,9 @@ class NumeraiLit(LightningModule, ABC):
         self.log('val/payout', payout)
         self.log('val/spearman', spearman)
         self.log('val/sharpe', sharpe)
+
+    def predict_step(self, batch: Any, batch_idx: int, dataloader_idx: Optional[int] = None) -> Any:
+        return self(batch)
 
     def configure_optimizers(self):
         return optim.AdamW(

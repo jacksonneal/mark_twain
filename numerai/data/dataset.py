@@ -1,8 +1,6 @@
 from typing import Optional
-
 import torch
 from torch.utils.data import Dataset
-
 from numerai.data import preprocessing
 from numerai.definitions import TARGET_COL
 
@@ -26,6 +24,7 @@ class NumeraiDataset(Dataset):
         # extract feature col names
         feature_cols = [c for c in self.df if c.startswith("feature_")]
 
+        self.name = name
         self.inputs = torch.tensor(self.df[feature_cols].values)
         self.targets = torch.tensor(self.df[TARGET_COL].values)
         self.aux_targets = torch.tensor(self.df[aux_target_cols].values)
@@ -34,4 +33,7 @@ class NumeraiDataset(Dataset):
         return len(self.inputs)
 
     def __getitem__(self, idx):
-        return self.inputs[idx].float(), self.targets[idx].float(), self.aux_targets[idx].float()
+        if self.name == "test":
+            return self.inputs[idx].float()
+        else:
+            return self.inputs[idx].float(), self.targets[idx].float(), self.aux_targets[idx].float()

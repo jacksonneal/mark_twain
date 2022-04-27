@@ -2,6 +2,7 @@ from abc import ABC
 from typing import Optional
 
 from pytorch_lightning import LightningDataModule
+from pytorch_lightning.utilities.types import EVAL_DATALOADERS
 from torch.utils.data import DataLoader
 
 from numerai.data import preprocessing
@@ -41,12 +42,13 @@ class NumeraiDataModule(LightningDataModule, ABC):
                                            sample_4th_era=self.hparams.sample_4th_era,
                                            aux_target_cols=self.hparams.aux_target_cols,
                                            pca=val_pca)
-        elif stage == "test":
+        elif stage == "predict":
+            test_pca = self.num_features if self.hparams.pca is not None else None
             self.test_data = NumeraiDataset("test",
                                             feature_set=self.hparams.feature_set,
-                                            sample_4th_era=self.hparams.sample_4th_era,
-                                            aux_target_cols=self.hparams.aux_target_cols,
-                                            pca=self.hparams.pca)
+                                            sample_4th_era=False,
+                                            aux_target_cols=[],
+                                            pca=test_pca)
         else:
             raise Exception(f"unsupported stage: {stage}")
 
@@ -56,5 +58,5 @@ class NumeraiDataModule(LightningDataModule, ABC):
     def val_dataloader(self):
         return DataLoader(self.val_data, batch_size=self.hparams.batch_size, num_workers=self.num_workers)
 
-    def test_dataloader(self):
+    def predict_dataloader(self) -> EVAL_DATALOADERS:
         return DataLoader(self.test_data, batch_size=self.hparams.batch_size, num_workers=self.num_workers)

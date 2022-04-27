@@ -36,5 +36,13 @@ sweep-gpu:
 	python -m numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --gpu \
 		--num_workers ${num_workers} --config ${sweep_conf}
 
+predict:
+	# ckpt: path relative to log dir to checkpoint .ckpt file
+	# hparams: path relative to log dir to hyperparameter .yaml file
+	python -m numerai --predict $(ckpt) --config $(hparams)
+
+predict-gpu:
+	python -m numerai --gpu --predict $(ckpt) --config $(hparams)
+
 tb-logs:
 	python -m numerai/log --num_workers ${num_workers}

@@ -19,6 +19,8 @@ CUSTOM_FEATURES_FILE = os.path.join(DATA_DIR, 'custom_feature_sets.json')
 CONF_DIR = os.path.join(ROOT_DIR, 'config')
 # Saved PCA computation directory
 PCA_DIR = os.path.join(DATA_DIR, 'pca')
+# Prediction csv
+PREDICTIONS_CSV = os.path.join(ROOT_DIR, '../predictions.csv')
 
 # Static dataset columns
 DATA_TYPE_COL = "data_type"
