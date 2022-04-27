@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   feature_set:
-    value: small
+    value: top_250_features_with_target_corr
   sample_4th_era:
     value: True
   aux_target_cols:
@@ -15,9 +15,9 @@ parameters:
     value: 4000
   # model config
   model_name:
-    value: AUTO
+    value: AE_CONV
   dimensions:
-    value: [38,20, 1]
+    value: [250,5, 1]
   dropout:
     min: 0.2
     max: 0.3
@@ -30,7 +30,7 @@ parameters:
     max: 0.003
   wd:
     min: 0.04
-    max: 0.045
+    max: 0.06
   # trainer config
   max_epochs:
-    value: 20
+    value: 50
