@@ -1,5 +1,5 @@
 # data config
-pca: null
+pca: 0.9
 feature_set: medium
 sample_4th_era: True
 aux_target_cols: [ ]
