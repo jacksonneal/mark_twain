@@ -6,7 +6,7 @@ import wandb
 import yaml
 from yaml import SafeLoader
 
-from numerai.definitions import CONF_DIR, WANDB_LOG_DIR
+from numerai.definitions import CONF_DIR, WANDB_LOG_DIR, LOG_DIR
 from numerai.train.trainer import MarkTwainTrainer
 
 
@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument('--sweep_count', type=int, default=1)
     parser.add_argument('--num_workers', type=int, default=1)
     parser.add_argument('--config', type=str, required=True)
+    parser.add_argument('--predict', type=str, required=False, help="ckpt filepath")
     args = parser.parse_args()
     return args
 
@@ -26,10 +27,12 @@ def main():
     args = parse_args()
     torch.multiprocessing.freeze_support()
     trainer = MarkTwainTrainer(args)
-    fp = os.path.join(CONF_DIR, args.config)
+    fp = os.path.join(CONF_DIR, args.config) if not args.predict else os.path.join(LOG_DIR, args.config)
     with open(fp) as f:
         config = yaml.load(f, Loader=SafeLoader)
-        if args.run_sweep:
+        if args.predict:
+            trainer.run_single(config, args.predict)
+        elif args.run_sweep:
             os.environ["WANDB_DIR"] = os.path.abspath(WANDB_LOG_DIR)
             if not os.path.isdir(WANDB_LOG_DIR):
                 os.makedirs(WANDB_LOG_DIR)

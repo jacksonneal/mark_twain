@@ -1,3 +1,4 @@
+import os
 import pprint
 import traceback
 import torch
@@ -7,10 +8,8 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, ModelSum
 from pytorch_lightning.utilities.seed import seed_everything
 import gc
 import wandb
-
-from numerai.data import preprocessing
 from numerai.data.data_module import NumeraiDataModule
-from numerai.definitions import LOG_DIR, WANDB_LOG_DIR
+from numerai.definitions import LOG_DIR, WANDB_LOG_DIR, PREDICTIONS_CSV
 from numerai.model.lit import NumeraiLit
 
 
@@ -18,7 +17,7 @@ class MarkTwainTrainer:
     def __init__(self, args):
         self.args = args
 
-    def run_single(self, run_conf=None):
+    def run_single(self, run_conf=None, ckpt=None):
         gc.collect()
         torch.cuda.empty_cache()
         pprint.pprint(run_conf)
@@ -39,25 +38,42 @@ class MarkTwainTrainer:
                                dropout=run_conf['dropout'],
                                initial_bn=run_conf['initial_bn'],
                                learning_rate=run_conf['learning_rate'],
-                               wd=run_conf['wd'])
+                               wd=run_conf['wd']) if ckpt is None else NumeraiLit.load_from_checkpoint(
+                checkpoint_path=os.path.join(LOG_DIR, ckpt))
+
             model_summary_callback = ModelSummary(max_depth=25)
-            checkpoint_callback = ModelCheckpoint(monitor="val/spearman", mode="max")
-            early_stopping_callback = EarlyStopping("val_corr", patience=3, mode="max")
-            callbacks = [model_summary_callback, checkpoint_callback, early_stopping_callback]
+            callbacks = [model_summary_callback]
+            if ckpt is None:
+                checkpoint_callback = ModelCheckpoint(monitor="val/spearman", mode="max", save_weights_only=True)
+                early_stopping_callback = EarlyStopping("val_corr", patience=3, mode="max")
+                callbacks += [checkpoint_callback, early_stopping_callback]
+
             gpus = 1 if self.args.gpu else 0
+            max_epochs = run_conf['max_epochs'] if ckpt is None else 0
             trainer = Trainer(gpus=gpus,
-                              max_epochs=run_conf['max_epochs'],
+                              max_epochs=max_epochs,
                               callbacks=callbacks)
+
             logger = WandbLogger(save_dir=WANDB_LOG_DIR) if self.args.run_sweep else TensorBoardLogger(save_dir=LOG_DIR)
             trainer.logger = logger
-            trainer.fit(model, datamodule=data_module)
+
+            if ckpt is None:
+                trainer.fit(model, datamodule=data_module)
+            else:
+                predictions = trainer.predict(model, datamodule=data_module)
+                predictions = torch.cat(predictions).squeeze()
+                out_df = data_module.test_data.df
+                out_df.loc[:, "prediction"] = predictions
+                out_df["prediction"].to_csv(PREDICTIONS_CSV)
+
         except Exception as e:
             print(e)
             traceback.print_exc()
         del model
         del model_summary_callback
-        del checkpoint_callback
-        del early_stopping_callback
+        if ckpt is None:
+            del checkpoint_callback
+            del early_stopping_callback
         del logger
         del trainer
         gc.collect()

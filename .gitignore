@@ -146,3 +146,6 @@ wandb_logs/
 # Discovery cluster
 srun
 module
+
+# Predictions
+predictions.csv

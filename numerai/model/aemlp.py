@@ -11,7 +11,7 @@ class AEMLP(LightningModule, ABC):
 
     def __init__(self, params):
         super().__init__()
-        dimensions = params.dimensions
+        dimensions = params.dimensions.copy()
         dimensions.insert(0, params.num_features)
 
         encoder_layers = [GaussianNoise(), nn.Linear(dimensions[0], dimensions[1]), nn.BatchNorm1d(dimensions[1]),
