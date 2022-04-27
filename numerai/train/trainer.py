@@ -60,13 +60,16 @@ class MarkTwainTrainer:
             if ckpt is None:
                 trainer.fit(model, datamodule=data_module)
             else:
+                print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
                 if run_conf['model_name'] == 'AE-MLP':
                     predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df
                 out_df.loc[:, "prediction"] = predictions
+                print('Saving predictions...')
                 out_df["prediction"].to_csv(PREDICTIONS_CSV)
+                print('Predictions saved!')
 
         except Exception as e:
             print(e)
