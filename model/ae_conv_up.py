@@ -81,7 +81,7 @@ class AEUP(LightningModule, ABC):
         out = self.conv_out(up_scaled)
 
         print('OUT SIZE')
-        print(out.size)
+        print(out.shape)
         linear = nn.Linear(40, self.features)
         out = out.transpose(0, 1)
         out = linear(out)
