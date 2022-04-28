@@ -97,8 +97,8 @@ class AEConv(LightningModule, ABC):
 
         x = x.squeeze()
 
-        first, second = x.shape
-        x = x.reshape(second, first)
+        # first, second = x.shape
+        # x = x.reshape(second, first)
         #
         x = self.linear1(x)
         print('first linear')
