@@ -29,7 +29,7 @@ class AEUP(LightningModule, ABC):
         # starting with kernel of 1 for simplicity
         #TODO: Adjust kernel size
         self.conv1 = nn.Conv1d(features, 40, 1, stride=1)
-        self.max_pool1 = nn.MaxPool1d(kernel_size=60, stride=1)
+        self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
 
         # decoding
         self.conv_out = nn.Conv1d(40, 40, 1)
@@ -55,7 +55,7 @@ class AEUP(LightningModule, ABC):
 
         # upscaling step
 
-        pool_shape = max_pool_shape(x, 60, 1)
+        pool_shape = max_pool_shape(x, 5, 1)
         target = x.shape[1]
         scale = target / pool_shape
         unsqueezed = encode_pool.unsqueeze(dim=2)
