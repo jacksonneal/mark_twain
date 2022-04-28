@@ -92,4 +92,4 @@ class AEUP(LightningModule, ABC):
 
         out = linear(out)
 
-        return encode_pool
+        return out
