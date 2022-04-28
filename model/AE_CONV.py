@@ -110,7 +110,7 @@ class AEConv(LightningModule, ABC):
 
 
         x = self.max_pool1(x)
-        x = self.rel(x)
+        # x = self.rel(x)
         # x = m(x)
         x = self.conv2(x)
         x = self.max_pool2(x)
