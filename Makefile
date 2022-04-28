@@ -3,7 +3,7 @@
 # Custom Training configurations
 # ------------------------------
 # Name used for wandb sweep
-sweep_name = "mark_twain_sweep_milestone_2"
+sweep_name = "mark_twain_sweep_final"
 # number of wandb runs to explore during sweep
 sweep_count = 2
 # Workers used for parallel processing
