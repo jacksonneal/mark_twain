@@ -83,3 +83,19 @@ make sweep-gpu
 ```
 
 3. View sweep results at [https://wandb.ai/cs7150-jn](https://wandb.ai/cs7150-jn)
+
+### Predictions From Model Checkpoint
+
+Load saved model configs and weights to execute predictions.  File paths are relative to `lightning_logs`
+
+```bash
+make predict ckpt=path/to/.ckpt hparams=path/to/.yaml
+```
+
+### Submit Predictions to Numerai
+
+> __NOTE__: Submission requires api keys in local `.env` file
+
+```bash
+make submit model=BASE
+```
