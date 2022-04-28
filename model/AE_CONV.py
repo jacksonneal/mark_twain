@@ -95,6 +95,8 @@ class AEConv(LightningModule, ABC):
 
         print('done with encoding')
 
+        x = x.squeeze()
+
         first, second = x.shape
         x = x.reshape(second, first)
         #
