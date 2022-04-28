@@ -6,21 +6,16 @@ metric:
 parameters:
   # data config
   pca:
-    values:
-      - null
-      - 0.95
-      - 0.99
+    value: null
   feature_set:
     values:
       - top_250_features_with_target
       - top_500_features_with_target
+      - top_750_features_with_target
       - top_100_most_volatile_features
       - top_250_most_volatile_features
       - top_500_most_volatile_features
-      - top_100_least_volatile_features
-      - top_250_least_volatile_features
-      - top_500_least_volatile_features
-      - small
+      - top_750_least_volatile_features
       - medium
       - full
   sample_4th_era:
@@ -31,10 +26,11 @@ parameters:
     values:
       - [ ]
       - [ target_nomi_60 ]
-      - [ target_nomi_60, "target_jerome_20"]
+      - [ target_nomi_60, target_jerome_20 ]
+      - [ target_nomi_60, target_jerome_20, target_jerome_60 ]
+      - [ target_nomi_60, target_jerome_20, target_janet_20 ]
   batch_size:
     values:
-      - 2000
       - 3000
       - 4000
       - 5000
@@ -45,20 +41,21 @@ parameters:
     values:
       - [ 512, 1024, 512, 256 ]
       - [ 1024, 1536, 1024, 512 ]
-      - [ 1536, 1536, 1536, 1024]
+      - [ 1536, 1536, 1536, 1024 ]
+      - [ 1536, 2048, 1536, 1024, 1024 ]
   dropout:
-    min: 0.0
+    min: 0.12
     max: 0.3
   initial_bn:
     values:
       - true
       - false
   learning_rate:
-    min: 0.001
-    max: 0.003
+    min: 0.0013
+    max: 0.0028
   wd:
-    min: 0.01
+    min: 0.02
     max: 0.1
   # trainer config
   max_epochs:
-    value: 15
+    value: 20
