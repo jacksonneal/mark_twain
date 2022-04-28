@@ -110,10 +110,11 @@ class AEConv(LightningModule, ABC):
 
 
         x = self.max_pool1(x)
-        x = nn.ReLU(x)
+        m = nn.ReLU()
+        x = m(x)
         x = self.conv2(x)
         x = self.max_pool2(x)
-        x = nn.ReLU(x)
+        x = m(x)
         x = self.conv3(x)
         x = self.max_pool3(x)
 
@@ -121,14 +122,14 @@ class AEConv(LightningModule, ABC):
         x = self.convmid1(x)
         x = self.convmid2(x)
         x = self.convmid3(x)
-        x = nn.ReLU(x)
+        x = m(x)
 
 
 
         x = x.squeeze()
 
         x = self.linear1(x)
-        x = nn.ReLU(x)
+        x = m(x)
 
         x = x.unsqueeze(dim=2)
         x = self.mid1(x)
