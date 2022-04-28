@@ -103,8 +103,7 @@ class AEConv(LightningModule, ABC):
         x = self.linear1(x)
         print('first linear')
 
-        # first, second = x.shape
-        # x = x.reshape(second, first)
+
 
         x = x.unsqueeze(dim=2)
         x = self.mid1(x)
@@ -114,27 +113,34 @@ class AEConv(LightningModule, ABC):
 
 
         print('done with mids')
-        first, second = x.shape
-        x = x.reshape(second, first)
+        x = x.squeeze()
+        # first, second = x.shape
+        # x = x.reshape(second, first)
 
 
         x = self.linear2(x)
-        first, second = x.shape
-        x = x.reshape(second,first)
+
+        x = x.unsqueeze(dim=2)
+        # first, second = x.shape
+        # x = x.reshape(second,first)
 
         x = self.convdecode1(x)
         # print('FINE')
-        first, second = x.shape
-        x = x.reshape(second, first)
+
+        # first, second = x.shape
+        # x = x.reshape(second, first)
+        x = x.squeeze()
         x = self.linear3(x)
 
         print('linear 3 good')
 
-        first, second = x.shape
-        x = x.reshape(second, first)
+        # first, second = x.shape
+        # x = x.reshape(second, first)
         x = self.convdecode2(x)
+        x = x.unsqueeze(dim=2)
         first, second = x.shape
         x = x.reshape(second, first)
+        x = x.squeeze()
         x = self.linear4(x)
         # first, second = x.shape
         # x = x.reshape(second, first)
