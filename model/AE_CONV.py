@@ -36,14 +36,16 @@ class AEConv(LightningModule, ABC):
 
 
         self.num_feats = self.dimensions[0]
+
+
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, 40, self.kernel)
+        self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
 
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
         # Second Down
-        self.conv2 = nn.Conv1d(40, 20, self.kernel)
+        self.conv2 = nn.Conv1d(40, 20, 1)
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
 
         # Third Down
