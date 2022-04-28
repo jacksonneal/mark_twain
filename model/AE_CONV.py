@@ -81,7 +81,9 @@ class AEConv(LightningModule, ABC):
         #
         first, second = x.shape
         x = x.reshape(second,first)
+        x = x.unsqueeze(dim=2)
         x = self.conv1(x)
+        x = x.squeeze()
         x = self.max_pool1(x)
         x = self.conv2(x)
         x = self.max_pool2(x)
