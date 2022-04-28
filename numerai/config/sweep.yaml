@@ -1,33 +1,64 @@
 # sweep configuration
-method: bayes
+method: grid
 metric:
   name: val/spearman
   goal: maximize
 parameters:
   # data config
   pca:
-    values: [ 0.99, null ]
+    values:
+      - null
+      - 0.95
+      - 0.99
   feature_set:
-    value: top_750_most_volatile_features
+    values:
+      - top_250_features_with_target
+      - top_500_features_with_target
+      - top_100_most_volatile_features
+      - top_250_most_volatile_features
+      - top_500_most_volatile_features
+      - top_100_least_volatile_features
+      - top_250_least_volatile_features
+      - top_500_least_volatile_features
+      - small
+      - medium
+      - full
   sample_4th_era:
-    value: True
+    values:
+      - true
+      - false
   aux_target_cols:
-    value: [ ]
+    values:
+      - [ ]
+      - [ target_nomi_60 ]
+      - [ target_nomi_60, "target_jerome_20"]
   batch_size:
-    value: 5000
+    values:
+      - 2000
+      - 3000
+      - 4000
+      - 5000
   # model config
   model_name:
     value: BASE
   dimensions:
-    value: [ 1536, 1536, 1536, 1024 ]
+    values:
+      - [ 512, 1024, 512, 256 ]
+      - [ 1024, 1536, 1024, 512 ]
+      - [ 1536, 1536, 1536, 1024]
   dropout:
-    value: 0.15
+    min: 0.0
+    max: 0.3
   initial_bn:
-    value: true
+    values:
+      - true
+      - false
   learning_rate:
-    value: 0.0015
+    min: 0.001
+    max: 0.003
   wd:
-    value: 0.09
+    min: 0.01
+    max: 0.1
   # trainer config
   max_epochs:
-    value: 10
+    value: 15

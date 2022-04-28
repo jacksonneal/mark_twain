@@ -1,15 +1,15 @@
 # data config
-pca: 0.9
-feature_set: medium
+pca: null
+feature_set: top_250_features_with_target
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 4000
 # model config
-model_name: AE-MLP
-dimensions: [ 20, 38, 50, 50, 50 ]
-dropout: 0.001
+model_name: BASE
+dimensions: [ 512, 1024, 512, 256 ]
+dropout: 0.015
 initial_bn: True
-learning_rate: 0.002
-wd: 0.05
+learning_rate: 0.0015
+wd: 0.09
 # trainer config
-max_epochs: 1
+max_epochs: 10
