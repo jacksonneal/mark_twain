@@ -6,9 +6,9 @@ metric:
 parameters:
   # data config
   pca:
-    values: [ 0.85, 0.9, 0.95, 0.99, null]
+    value: null
   feature_set:
-    value: full
+    values: [ top_750_least_volatile_features, top_750_most_volatile_features, top_750_features_with_target, full ]
   sample_4th_era:
     value: True
   aux_target_cols:
@@ -19,7 +19,7 @@ parameters:
   model_name:
     value: BASE
   dimensions:
-    value: [ 1024, 1536, 1536, 1024 ]
+    value: [ 1536, 1536, 1536, 1024 ]
   dropout:
     value: 0.15
   initial_bn:
