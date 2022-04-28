@@ -62,7 +62,7 @@ class AEUP(LightningModule, ABC):
 
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
-        encode_con = encode_con.unsqueeze(dim=2)
+        encode_con = encode_con.unsqueeze(dim=1)
         encode_pool = self.max_pool1(encode_con)
         encode_pool = encode_pool.squeeze()
 
