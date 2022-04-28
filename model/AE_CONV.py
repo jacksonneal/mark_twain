@@ -48,16 +48,16 @@ class AEConv(LightningModule, ABC):
 
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
+        self.conv1 = nn.Conv1d(self.num_feats, 400, 1)
 
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
         # Second Down
-        self.conv2 = nn.Conv1d(40, 20, 1)
+        self.conv2 = nn.Conv1d(400, 100, 1)
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(20, 5, 1)
+        self.conv3 = nn.Conv1d(100, 5, 1)
         self.max_pool3 = nn.MaxPool1d(1, stride=1)
 
         ## Middle Portion
@@ -77,17 +77,17 @@ class AEConv(LightningModule, ABC):
         self.mid3 = nn.Conv1d(5,5, 1)
 
         # upsample Convolution
-        self.linear2 = nn.Linear(5,10)
-        self.convdecode1 = nn.Conv1d(10, 10, 1)
+        self.linear2 = nn.Linear(5,100)
+        self.convdecode1 = nn.Conv1d(100, 400, 1)
 
         #upsample Convolution
-        self.linear3 = nn.Linear(10, 20)
-        self.convdecode2 = nn.Conv1d(20, 20, 1)
+        self.linear3 = nn.Linear(400, 400)
+        self.convdecode2 = nn.Conv1d(400, 400, 1)
 
 
         # upsample Convolution
 
-        self.linear4 = nn.Linear(20, self.num_feats)
+        self.linear4 = nn.Linear(400, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
