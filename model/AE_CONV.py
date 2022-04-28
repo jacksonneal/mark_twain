@@ -136,10 +136,11 @@ class AEConv(LightningModule, ABC):
 
         # first, second = x.shape
         # x = x.reshape(second, first)
-        x = self.convdecode2(x)
         x = x.unsqueeze(dim=2)
-        first, second = x.shape
-        x = x.reshape(second, first)
+        x = self.convdecode2(x)
+
+        # first, second = x.shape
+        # x = x.reshape(second, first)
         x = x.squeeze()
         x = self.linear4(x)
         # first, second = x.shape
