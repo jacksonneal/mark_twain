@@ -23,10 +23,21 @@ class AEConv(LightningModule, ABC):
         The idea is to go around the dimensions
         The dimensions should dip down in the middle and then output 1
         """
+        def dimension_calc(input, kernel, stride=1, padding=0, dilation=1):
+            shape = input.shape
+            last_dim = shape[-1]
+
+            out = ((last_dim + 2 * padding - dilation*(kernel - 1) -1 ) / stride) + 1
+
+            return out
+
+
+
         self.num_feats = self.dimensions[0]
         self.encoder = []
         # First down
         self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
+
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
         # Second Down
@@ -77,18 +88,18 @@ class AEConv(LightningModule, ABC):
         Current problem: Sizes do not fit for the validation set
         """
 
-        # print(x.size())
-        #
-        # first, second = x.shape
-        # x = x.reshape(second,first)
+        #Encoding
+
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
-        # x = x.squeeze()
+
         x = self.max_pool1(x)
         x = self.conv2(x)
         x = self.max_pool2(x)
         x = self.conv3(x)
         x = self.max_pool3(x)
+
+        # middle Section
         x = self.convmid1(x)
         x = self.convmid2(x)
         x = self.convmid3(x)
@@ -97,35 +108,23 @@ class AEConv(LightningModule, ABC):
 
         x = x.squeeze()
 
-
         x = self.linear1(x)
-
-
-
 
         x = x.unsqueeze(dim=2)
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
 
+        # Decoding
+
         x = x.squeeze()
-
-
-
         x = self.linear2(x)
-
         x = x.unsqueeze(dim=2)
-
-
         x = self.convdecode1(x)
-
         x = x.squeeze()
         x = self.linear3(x)
-
         x = x.unsqueeze(dim=2)
         x = self.convdecode2(x)
-
-
         x = x.squeeze()
         x = self.linear4(x)
 
@@ -133,6 +132,9 @@ class AEConv(LightningModule, ABC):
         return x
 
 
-
+#TODO: 1. Make Calculatable Dimensions
+#TODO: 2. Make sure outputing correct shape for preds
+#TODO: 3. Potentially add Relu Layers
+#TODO: 4. Make encoder / decoder more modular
 
 
