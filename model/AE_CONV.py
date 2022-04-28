@@ -135,7 +135,7 @@ class AEConv(LightningModule, ABC):
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
-        x = nn.x(x)
+        x = m(x)
 
         # Decoding
 
