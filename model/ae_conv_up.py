@@ -79,9 +79,10 @@ class AEUP(LightningModule, ABC):
         ## decoding
 
         out = self.conv_out(up_scaled)
-
+        out = out.squeeze()
         print('OUT SIZE')
         print(out.shape)
+
         linear = nn.Linear(40, self.features)
         out = out.transpose(0, 1)
         out = linear(out)
