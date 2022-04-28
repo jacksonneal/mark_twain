@@ -28,6 +28,9 @@ single:
 single-gpu:
 	python -m numerai --gpu --num_workers ${num_workers} --config ${single_conf}
 
+tb-logs:
+	python -m numerai.log --num_workers ${num_workers}
+
 sweep:
 	python -m numerai --run_sweep --sweep_name ${sweep_name} --sweep_count ${sweep_count} --num_workers ${num_workers} \
 		--config ${sweep_conf}
@@ -43,9 +46,6 @@ predict:
 
 predict-gpu:
 	python -m numerai --gpu --predict $(ckpt) --config $(hparams)
-
-tb-logs:
-	python -m numerai.log --num_workers ${num_workers}
 
 submit:
 	# model: name
