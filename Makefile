@@ -48,4 +48,5 @@ tb-logs:
 	python -m numerai.log --num_workers ${num_workers}
 
 submit:
+	# model: name
 	python -m numerai.submit $(model)
