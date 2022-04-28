@@ -38,6 +38,10 @@ class AEUP(LightningModule, ABC):
 
 
     def forward(self, x):
+        print('*'*50)
+        print(x.shape)
+
+        print('*' * 50)
 
         """
         Current problem: Sizes do not fit for the validation set
@@ -50,6 +54,9 @@ class AEUP(LightningModule, ABC):
         # x = x.transpose(0,1)
         x = x.unsqueeze(dim=2)
         encode_con = self.conv1(x)
+
+        print('ENCODED CON')
+        print(encode_con.shape)
         encode_pool = self.max_pool1(encode_con)
         x = x.squeeze()
 
