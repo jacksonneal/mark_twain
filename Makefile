@@ -9,9 +9,9 @@ sweep_conf = "sweep.yaml"
 # Name used for wandb sweep
 sweep_name = "mark_twain_sweep_final"
 # number of wandb runs to explore during sweep
-sweep_count = 20
+sweep_count = 10
 # Workers used for parallel processing
-num_workers = 14
+num_workers = 8
 # ------------------------------
 
 SHELL := /bin/bash

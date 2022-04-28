@@ -6,9 +6,9 @@ metric:
 parameters:
   # data config
   pca:
-    value: null
+    values: [ 0.99, null ]
   feature_set:
-    values: [ top_750_least_volatile_features, top_750_most_volatile_features, top_750_features_with_target, full ]
+    value: top_750_most_volatile_features
   sample_4th_era:
     value: True
   aux_target_cols:
