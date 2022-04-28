@@ -74,9 +74,10 @@ class AEUP(LightningModule, ABC):
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.permute(0, 2, 1)
-        up_scaled = up_scaled.squeeze()
+        # up_scaled = up_scaled.squeeze()
 
         ## decoding
+
         out = self.conv_out(up_scaled)
         linear = nn.Linear(40, self.features)
         out = out.transpose(0, 1)
