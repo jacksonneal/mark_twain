@@ -45,7 +45,7 @@ predict-gpu:
 	python -m numerai --gpu --predict $(ckpt) --config $(hparams)
 
 tb-logs:
-	python -m numerai/log --num_workers ${num_workers}
+	python -m numerai.log --num_workers ${num_workers}
 
 submit:
-	python -m numerai/submit $(model)
+	python -m numerai.submit $(model)
