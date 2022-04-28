@@ -75,7 +75,7 @@ class AEUP(LightningModule, ABC):
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.permute(0, 2, 1)
         # up_scaled = up_scaled.squeeze()
-
+        up_scaled = up_scaled.permute(1,0,2)
         ## decoding
 
         out = self.conv_out(up_scaled)
