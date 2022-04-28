@@ -5,6 +5,7 @@ from pytorch_lightning import LightningModule
 from torch import nn
 from model.autoencoder import AutoEncoder
 from model.ae import AE
+from model.base import Base
 nn = torch.nn
 
 
@@ -14,6 +15,7 @@ class AEConv(LightningModule, ABC):
         print(params)
         # setting up - dimensions
         self.dimensions = params.dimensions
+        self.base = Base(params)
         # self.num_features = params.dimensions[0]
         #
         # layers = []
@@ -140,7 +142,7 @@ class AEConv(LightningModule, ABC):
         x = x.squeeze()
         x = self.linear4(x)
 
-
+        x = self.base(x)
         return x
 
 

@@ -15,7 +15,7 @@ parameters:
     value: 4000
   # model config
   model_name:
-    value: AEUP
+    value: AECONV
   dimensions:
     ## must be multiples of 3
     value: [750,20, 20, 5, 20, 20, 20]

@@ -35,6 +35,28 @@ class AEUP(LightningModule, ABC):
         self.conv_out = nn.Conv1d(40, 40, 1)
         self.linear = nn.Linear(40, features)
 
+        #TODO: Define Kernel
+        #TODO: Define Stride
+            #Conv
+            # Max pooling
+        # Encoder
+            # 3 Convolutional Layers
+            # 3 max pooling layers
+
+        # middle
+        # 3 middle
+        # 1 up sample
+        # 3 more middle
+
+
+        # Decoder
+            # upsample
+            #3 convolutional
+
+        # One Linear out
+        # also switch out for base
+
+
 
 
     def forward(self, x):
@@ -57,8 +79,7 @@ class AEUP(LightningModule, ABC):
         x = x.permute(0, 2, 1)
         encode_con = self.conv1(x)
 
-        print('ENCODED CON')
-        print(encode_con.shape)
+
 
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
@@ -82,11 +103,15 @@ class AEUP(LightningModule, ABC):
         up_scaled = up_scaled.permute(1,0,2)
         ## decoding
 
+
+
+
+
+        ## Convolutional out
+
         out = self.conv_out(up_scaled)
         out = out.squeeze()
 
-        print('OUT SIZE')
-        print(out.shape)
 
         linear = nn.Linear(40, self.features)
 
