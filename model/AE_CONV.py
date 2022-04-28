@@ -37,7 +37,7 @@ class AEConv(LightningModule, ABC):
         self.conv3 = nn.Conv1d(20, 5, 1)
         self.max_pool3 = nn.MaxPool1d(1, stride=1)
 
-
+        ## Middle Portion
         # Three Convolutions
         self.convmid1 = nn.Conv1d(5,2, 1)
         self.convmid2 = nn.Conv1d(2, 2, 1)
@@ -54,18 +54,18 @@ class AEConv(LightningModule, ABC):
         self.mid3 = nn.Conv1d(5,5, 1)
 
         # upsample Convolution
-        self.linear2 = nn.Linear(5,5)
-        self.convdecode1 = nn.Conv1d(5, 5, 1)
+        self.linear2 = nn.Linear(5,10)
+        self.convdecode1 = nn.Conv1d(10, 10, 1)
 
         #upsample Convolution
-        self.linear3 = nn.Linear(5, 20)
+        self.linear3 = nn.Linear(10, 20)
         self.convdecode2 = nn.Conv1d(20, 20, 1)
 
 
         # upsample Convolution
 
-        self.linear4 = nn.Linear(5, 38)
-        self.convdecode3 = nn.Conv1d(38, 38, 1)
+        self.linear4 = nn.Linear(20, self.num_feats)
+        self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
 
@@ -114,27 +114,33 @@ class AEConv(LightningModule, ABC):
 
 
         x = self.linear2(x)
+        first, second = x.shape
+        x = x.reshape(second,first)
+        # print('#'*20)
+        # print(x.shape)
+        # print(x)
+        #
+        x = self.convdecode1(x)
+        # print('FINE')
+        first, second = x.shape
+        x = x.reshape(second, first)
+        x = self.linear3(x)
+
+        print('linear 3 good')
+
+        first, second = x.shape
+        x = x.reshape(second, first)
+        x = self.convdecode2(x)
+        first, second = x.shape
+        x = x.reshape(second, first)
+        x = self.linear4(x)
         # first, second = x.shape
         # x = x.reshape(second, first)
-        # print(x.shape)
-        # x = self.convdecode1(x)
-
-        # x = self.linear3(x)
-        # x = self.convdecode2(x)
-        # x = self.linear4(x)
         # x = self.convdecode3(x)
 
-
-
-
-
-
-
-
-
-
-
-
+    # TODO: Figure out why sweep doesnt work
+#Implement Decoder
+        # make modular
 
         return x
 
