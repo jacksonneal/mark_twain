@@ -52,18 +52,22 @@ class AEUP(LightningModule, ABC):
 
         # encoding step
         # x = x.transpose(0,1)
-        x = x.unsqueeze(dim=2)
+
+        x = x.unsqueeze(dim=1)
+        x = x.permute(0, 2, 1)
         encode_con = self.conv1(x)
 
         print('ENCODED CON')
         print(encode_con.shape)
+
+        encode_con = encode_con.squeeze()
+        encode_con = encode_con.transpose(0, 1)
         encode_pool = self.max_pool1(encode_con)
-        x = x.squeeze()
 
         # upscaling step
 
-        pool_shape = max_pool_shape(x, 5, 1)
-        target = x.shape[1]
+        pool_shape = max_pool_shape(x.transpose(0,1), 5, 1)
+        target = x.shape[0]
         scale = target / pool_shape
         unsqueezed = encode_pool.unsqueeze(dim=2)
         unsqueezed = unsqueezed.permute(0, 2, 1)
