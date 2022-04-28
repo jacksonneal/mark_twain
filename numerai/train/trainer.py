@@ -9,7 +9,7 @@ from pytorch_lightning.utilities.seed import seed_everything
 import gc
 import wandb
 from numerai.data.data_module import NumeraiDataModule
-from numerai.definitions import LOG_DIR, WANDB_LOG_DIR, PREDICTIONS_CSV
+from numerai.definitions import LOG_DIR, WANDB_LOG_DIR, PREDICTIONS_CSV, ROOT_DIR
 from numerai.model.lit import NumeraiLit
 
 
@@ -39,7 +39,7 @@ class MarkTwainTrainer:
                                initial_bn=run_conf['initial_bn'],
                                learning_rate=run_conf['learning_rate'],
                                wd=run_conf['wd']) if ckpt is None else NumeraiLit.load_from_checkpoint(
-                checkpoint_path=os.path.join(LOG_DIR, ckpt))
+                checkpoint_path=os.path.join(ROOT_DIR, ckpt))
 
             model_summary_callback = ModelSummary(max_depth=25)
             callbacks = [model_summary_callback]
