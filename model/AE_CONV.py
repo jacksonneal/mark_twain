@@ -93,15 +93,13 @@ class AEConv(LightningModule, ABC):
         x = self.convmid2(x)
         x = self.convmid3(x)
 
-        print('done with encoding')
+
 
         x = x.squeeze()
 
-        # first, second = x.shape
-        # x = x.reshape(second, first)
-        #
+
         x = self.linear1(x)
-        print('first linear')
+
 
 
 
@@ -110,50 +108,30 @@ class AEConv(LightningModule, ABC):
         x = self.mid2(x)
         x = self.mid3(x)
 
-
-
-        print('done with mids')
         x = x.squeeze()
-        # first, second = x.shape
-        # x = x.reshape(second, first)
+
 
 
         x = self.linear2(x)
 
         x = x.unsqueeze(dim=2)
-        # first, second = x.shape
-        # x = x.reshape(second,first)
+
 
         x = self.convdecode1(x)
-        # print('FINE')
 
-        # first, second = x.shape
-        # x = x.reshape(second, first)
         x = x.squeeze()
         x = self.linear3(x)
 
-        print('linear 3 good')
-
-        # first, second = x.shape
-        # x = x.reshape(second, first)
         x = x.unsqueeze(dim=2)
         x = self.convdecode2(x)
 
-        # first, second = x.shape
-        # x = x.reshape(second, first)
+
         x = x.squeeze()
         x = self.linear4(x)
-        # first, second = x.shape
-        # x = x.reshape(second, first)
-        # x = self.convdecode3(x)
 
-    # TODO: Figure out why sweep doesnt work
-#Implement Decoder
-        # make modular
 
         return x
 
-        # return up
 
 
 

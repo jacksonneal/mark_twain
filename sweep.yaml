@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   feature_set:
-    value: top_250_features_with_target_corr
+    value: top_750_features_with_target_corr
   sample_4th_era:
     value: True
   aux_target_cols:
@@ -18,7 +18,7 @@ parameters:
     value: AECONV
   dimensions:
     ## must be multiples of 3
-    value: [250,20, 20, 5, 20, 20, 20]
+    value: [750,20, 20, 5, 20, 20, 20]
   dropout:
     min: 0.2
     max: 0.3
@@ -34,4 +34,4 @@ parameters:
     max: 0.06
   # trainer config
   max_epochs:
-    value: 5
+    value: 50
