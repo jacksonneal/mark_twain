@@ -11,7 +11,7 @@ sweep_name = "mark_twain_sweep_final"
 # number of wandb runs to explore during sweep
 sweep_count = 30
 # Workers used for parallel processing
-num_workers = 10
+num_workers = 20
 # ------------------------------
 
 SHELL := /bin/bash
