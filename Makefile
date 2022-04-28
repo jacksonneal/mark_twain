@@ -7,7 +7,7 @@ single_conf = "single.yaml"
 # File used for sweep run
 sweep_conf = "sweep.yaml"
 # Name used for wandb sweep
-sweep_name = "mark_twain_sweep_milestone_2"
+sweep_name = "mark_twain_sweep_final"
 # number of wandb runs to explore during sweep
 sweep_count = 2
 # Workers used for parallel processing
@@ -45,4 +45,8 @@ predict-gpu:
 	python -m numerai --gpu --predict $(ckpt) --config $(hparams)
 
 tb-logs:
-	python -m numerai/log --num_workers ${num_workers}
+	python -m numerai.log --num_workers ${num_workers}
+
+submit:
+	# model: name
+	python -m numerai.submit $(model)
