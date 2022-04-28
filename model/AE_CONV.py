@@ -79,8 +79,8 @@ class AEConv(LightningModule, ABC):
 
         # print(x.size())
         #
-        first, second = x.shape
-        x = x.reshape(second,first)
+        # first, second = x.shape
+        # x = x.reshape(second,first)
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
         x = x.squeeze()
