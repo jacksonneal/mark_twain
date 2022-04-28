@@ -66,30 +66,30 @@ class AEUP(LightningModule, ABC):
         encode_pool = self.max_pool1(encode_con)
         encode_pool = encode_pool.squeeze()
 
-        print(encode_pool.shape)
+        # print(encode_pool.shape)
 
         # upscaling step
 
-        # pool_shape = max_pool_shape(x.transpose(0,1), 5, 1)
-        # target = x.shape[0]
-        # scale = target / pool_shape
-        # unsqueezed = encode_pool.unsqueeze(dim=2)
-        # unsqueezed = unsqueezed.permute(0, 2, 1)
-        # up = nn.Upsample(scale_factor=scale)
-        # up_scaled = up(unsqueezed)
-        # up_scaled = up_scaled.permute(0, 2, 1)
-        # # up_scaled = up_scaled.squeeze()
-        # up_scaled = up_scaled.permute(1,0,2)
-        # ## decoding
-        #
-        # out = self.conv_out(up_scaled)
-        # out = out.squeeze()
-        #
-        # print('OUT SIZE')
-        # print(out.shape)
-        #
-        # linear = nn.Linear(40, self.features)
-        #
-        # out = linear(out)
+        pool_shape = max_pool_shape(x.transpose(0,1), 5, 1)
+        target = x.shape[0]
+        scale = target / pool_shape
+        unsqueezed = encode_pool.unsqueeze(dim=2)
+        unsqueezed = unsqueezed.permute(0, 2, 1)
+        up = nn.Upsample(scale_factor=scale)
+        up_scaled = up(unsqueezed)
+        up_scaled = up_scaled.permute(0, 2, 1)
+        # up_scaled = up_scaled.squeeze()
+        up_scaled = up_scaled.permute(1,0,2)
+        ## decoding
+
+        out = self.conv_out(up_scaled)
+        out = out.squeeze()
+
+        print('OUT SIZE')
+        print(out.shape)
+
+        linear = nn.Linear(40, self.features)
+
+        out = linear(out)
 
         return encode_pool
