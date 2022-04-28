@@ -33,14 +33,22 @@ class AEConv(LightningModule, ABC):
 
             return out
 
+        #TODO: Cite this work
+        def conv_output_shape(h_w, kernel_size=1, stride=1, pad=0, dilation=1):
+            from math import floor
+            if type(kernel_size) is not tuple:
+                kernel_size = (kernel_size, kernel_size)
+            w = floor(((h_w[1] + (2 * pad) - (dilation * (kernel_size[1] - 1)) - 1) / stride) + 1)
+            return w
 
+        kernel_size = 4
 
         self.num_feats = self.dimensions[0]
 
 
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
+        self.conv1 = nn.Conv1d(self.num_feats, 40, kernel_size)
 
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
