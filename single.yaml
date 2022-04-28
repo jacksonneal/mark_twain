@@ -10,6 +10,7 @@ dimensions: [ 250,10, 5, 10, 38]
 dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
+#kernel: 6
 wd: 0.05
 # trainer config
 max_epochs: 1
