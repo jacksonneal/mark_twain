@@ -93,7 +93,7 @@ class AEConv(LightningModule, ABC):
         self.linear4 = nn.Linear(40, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
-
+        self.rel = nn.ReLU()
 
 
 
@@ -110,7 +110,7 @@ class AEConv(LightningModule, ABC):
 
 
         x = self.max_pool1(x)
-        # m = nn.ReLU()
+        x = self.rel(x)
         # x = m(x)
         x = self.conv2(x)
         x = self.max_pool2(x)
