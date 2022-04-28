@@ -1,5 +1,5 @@
 # sweep configuration
-method: grid
+method: bayes
 metric:
   name: val/spearman
   goal: maximize
