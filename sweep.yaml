@@ -12,7 +12,7 @@ parameters:
   aux_target_cols:
     value:
   batch_size:
-    value: 5000
+    value: 10000
   # model config
   model_name:
     value: AECONV
