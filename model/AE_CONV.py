@@ -87,7 +87,7 @@ class AEConv(LightningModule, ABC):
 
         # upsample Convolution
 
-        self.linear4 = nn.Linear(400, self.num_feats)
+        self.linear4 = nn.Linear(40, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
