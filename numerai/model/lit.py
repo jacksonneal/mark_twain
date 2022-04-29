@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import torch
 from pytorch_lightning import LightningModule
-from torch import nn, optim
+from torch import optim
 import torch.nn.functional as F
 
 from numerai.model.model_factory import build_model
