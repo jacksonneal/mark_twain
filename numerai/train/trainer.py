@@ -67,6 +67,8 @@ class MarkTwainTrainer:
                 print('Completed predictions')
                 predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df
+                print(out_df.shape)
+                print(out_df.head())
                 out_df.loc[:, "prediction"] = predictions
                 print('Saving predictions...')
                 out_df["prediction"].to_csv(PREDICTIONS_CSV)
