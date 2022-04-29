@@ -151,8 +151,8 @@ class AEConv(LightningModule, ABC):
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
-        x = self.batch_normMID(x)
-        x = self.silu(x)
+        # x = self.batch_normMID(x)
+        # x = self.silu(x)
 
         # x = m(x)
 
