@@ -144,7 +144,7 @@ class AEUP(LightningModule, ABC):
         encode_pool = self.max_pool3(encode_con)
 
         #### first drop out layer
-        encode_pool = self.dropout(encode_pool)
+        # encode_pool = self.dropout(encode_pool)
 
         encode_pool = encode_pool.permute(2,0,1)
 
