@@ -139,7 +139,7 @@ class AEConvPOOL(LightningModule, ABC):
         x = self.max_pool1(x)
 
         # x = x.unsqueeze(dim=2)
-        x = x.permute(1,0,2)
+        # x = x.permute(1,0,2)
         x = self.conv2(x)
         x = self.batch_norm2(x)
         x = self.silu(x)
