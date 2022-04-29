@@ -29,10 +29,10 @@ class AEUP(LightningModule, ABC):
         # starting with kernel of 1 for simplicity
         #TODO: Adjust kernel size
 
-
+        dim1 = 100
         # decoding
-        self.conv_out = nn.Conv1d(40, 40, 1)
-        self.linear = nn.Linear(40, features)
+        self.conv_out = nn.Conv1d(dim1, dim1, 1)
+        self.linear = nn.Linear(dim1, features)
 
         #TODO: Define Kernel
         #TODO: Define Stride
@@ -41,10 +41,10 @@ class AEUP(LightningModule, ABC):
         # Encoder
             # 3 Convolutional Layers
             # 3 max pooling layers
-        self.conv1 = nn.Conv1d(features, 40, 1, stride=1)
+        self.conv1 = nn.Conv1d(features, dim1, 1, stride=1)
         self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
 
-        self.conv2 = nn.Conv1d(40, 20,1, stride=1)
+        self.conv2 = nn.Conv1d(dim1, 20,1, stride=1)
         self.max_pool2 = nn.MaxPool1d(kernel_size=5,stride=1)
 
         self.conv3 = nn.Conv1d(20, 5, 1, stride=1)
@@ -69,12 +69,12 @@ class AEUP(LightningModule, ABC):
         self.mid3 = nn.Conv1d(5,5, 1)
 
         self.convdecode1 = nn.Conv1d(5,20,1)
-        self.convdecode2 = nn.Conv1d(20, 40, 1)
-        self.convdecode3 = nn.Conv1d(40, 40, 1)
+        self.convdecode2 = nn.Conv1d(20, dim1, 1)
+        self.convdecode3 = nn.Conv1d(dim1, dim1, 1)
 
         # One Linear out
         # also switch out for base
-        self.linear = nn.Linear(40, self.features)
+        self.linear = nn.Linear(dim1, self.features)
 
 
 
