@@ -94,6 +94,10 @@ Load saved model configs and weights to execute predictions.  File paths are rel
 make predict ckpt=path/to/.ckpt hparams=path/to/.yaml
 ```
 
+```bash
+make predict-gpu ckpt=path/to/.ckpt hparams=path/to/.yaml
+```
+
 ### Submit Predictions to Numerai
 
 > __NOTE__: Submission requires api keys in local `.env` file
