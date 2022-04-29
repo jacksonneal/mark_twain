@@ -2,7 +2,7 @@
 feature_set: top_750_features_with_target_corr
 sample_4th_era: True
 aux_target_cols: [ ]
-batch_size: 4000
+batch_size: 1000
 # model config
 model_name: AEUP
 #auto_dimensions: [38,4,1]
