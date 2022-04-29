@@ -45,11 +45,13 @@ class AEUP(LightningModule, ABC):
         self.conv1 = nn.Conv1d(features, dim1, 1, stride=1)
         self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
 
-        self.batch_norm = nn.BatchNorm1d(dim1)
+        self.batch_norm1 = nn.BatchNorm1d(dim1)
         self.silu = nn.SiLU(inplace=True)
 
         self.conv2 = nn.Conv1d(dim1, dim2,1, stride=1)
         self.max_pool2 = nn.MaxPool1d(kernel_size=5,stride=1)
+
+        self.batch_norm2 = nn.BatchNorm1d(dim2)
 
         self.conv3 = nn.Conv1d(dim2, 5, 1, stride=1)
         self.max_pool3 = nn.MaxPool1d(kernel_size=5, stride=1)
@@ -105,7 +107,7 @@ class AEUP(LightningModule, ABC):
         x = x.permute(0, 2, 1)
 
         encode_con = self.conv1(x)
-        encode_pool = self.batch_norm(encode_con)
+        encode_pool = self.batch_norm1(encode_con)
         encode_con = self.silu(encode_pool)
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
@@ -117,11 +119,13 @@ class AEUP(LightningModule, ABC):
 
 
         # x = encode_pool.unsqueeze(dim=1)
-        print(encode_pool.shape)
+
         encode_pool = encode_pool.permute(2, 0,1)
-        print(encode_pool.shape)
+
         target3 = encode_pool.shape[0]
         encode_con = self.conv2(encode_pool)
+        encode_con = self.batch_norm2(encode_con)
+        encode_con = self.silu(encode_con)
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)
@@ -129,22 +133,21 @@ class AEUP(LightningModule, ABC):
         # encode_pool = encode_pool.squeeze()
 
 
-        print(encode_pool.shape)
+
         encode_pool = encode_pool.permute(2, 0,1)
-        print(encode_pool.shape)
+
         target2 = encode_pool.shape[0]
         encode_con = self.conv3(encode_pool)
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)
         encode_pool = self.max_pool3(encode_con)
-        encode_pool = self.dropout(encode_pool)
-        # x = encode_pool.squeeze()
 
-        ## This is MID - LIKE REALLY MID
+        #### first drop out layer
+        encode_pool = self.dropout(encode_pool)
+
         encode_pool = encode_pool.permute(2,0,1)
-        print('BEFORE MID')
-        print(encode_pool.shape)
+
         ## First Target
         target1 = encode_pool.shape[0]
         x = self.convmid1(encode_pool)
@@ -154,18 +157,14 @@ class AEUP(LightningModule, ABC):
         # Must Squeeze for up sample
 
         x = x.squeeze()
-        print('THIS IS SQUEEZE')
-        print(x.shape)
+
 
         pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
-        print('POOOLLLL SHAPE', pool_shape)
-        print(pool_shape)
+
         scale = target1 / pool_shape
-        print('THIS IS SCALE')
-        print(scale)
 
         unsqueezed = encode_pool.unsqueeze(dim=2)
-        print(unsqueezed.shape)
+
         unsqueezed = unsqueezed.permute(1,2,3,0)
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
@@ -184,91 +183,70 @@ class AEUP(LightningModule, ABC):
 
         pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
         scale = target2 / pool_shape
-        print('THIS IS SCALE')
-        print(scale)
+
 
         unsqueezed = encode_pool.unsqueeze(dim=2)
-        print(unsqueezed.shape)
+
         unsqueezed = unsqueezed.permute(1,2,3,0)
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.squeeze()
-
-        print('FIRST UP SCALED SHAPE')
-        print(up_scaled.shape)
-
-        # up_scaled = up_scaled.transpose(0,1)
         up_scaled = up_scaled.unsqueeze(dim=2)
-        print(up_scaled)
+        # print(up_scaled)
         up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode1(up_scaled)
-        print(x.shape)
+        # print(x.shape)
         x = x.squeeze()
 
         ### Next Upscale -
 
         # pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
         scale = target3 / x.shape[1]
-        print('POOOLL SHAPE', pool_shape)
-        print('THIS IS SCALE')
-        print(scale)
+        # print('POOOLL SHAPE', pool_shape)
+        # print('THIS IS SCALE')
+        # print(scale)
         #
         unsqueezed = x.unsqueeze(dim=2)
-        print(unsqueezed.shape)
+        # print(unsqueezed.shape)
         unsqueezed = unsqueezed.permute(0,2,1)
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.squeeze()
         #
-        print(target3)
-        print(up_scaled.shape)
+        # print(target3)
+        # print(up_scaled.shape)
         #
         # # up_scaled = up_scaled.transpose(0,1)
         up_scaled = up_scaled.unsqueeze(dim=2)
-        print(up_scaled)
+        # print(up_scaled)
         up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode2(up_scaled)
         x = x.squeeze()
 
         scale = target / x.shape[1]
-        print('POOOLL SHAPE', pool_shape)
-        print('THIS IS SCALE')
-        print(scale)
+        # print('POOOLL SHAPE', pool_shape)
+        # print('THIS IS SCALE')
+        # print(scale)
         #
         unsqueezed = x.unsqueeze(dim=2)
-        print(unsqueezed.shape)
+        # print(unsqueezed.shape)
         unsqueezed = unsqueezed.permute(0,2,1)
 
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.squeeze()
         #
-        print(target)
-        print(up_scaled.shape)
+        # print(target)
+        # print(up_scaled.shape)
         #
         # # up_scaled = up_scaled.transpose(0,1)
         up_scaled = up_scaled.unsqueeze(dim=2)
-        print(up_scaled)
+        # print(up_scaled)
         up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode3(up_scaled)
         x = x.squeeze()
 
-        print(x.shape)
 
-        # ## decoding
-        #
-        #
-        #
-        #
-        #
-        # ## Convolutional out
-        #
-        # out = self.conv_out(up_scaled)
-        # out = out.squeeze()
-        #
-        #
-        #
-        #
         x = x.transpose(0,1)
         out = self.linear(x)
 
