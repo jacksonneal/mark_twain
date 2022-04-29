@@ -28,8 +28,7 @@ class AEUP(LightningModule, ABC):
         self.features = features
         # starting with kernel of 1 for simplicity
         #TODO: Adjust kernel size
-        self.conv1 = nn.Conv1d(features, 40, 1, stride=1)
-        self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
+
 
         # decoding
         self.conv_out = nn.Conv1d(40, 40, 1)
@@ -42,20 +41,40 @@ class AEUP(LightningModule, ABC):
         # Encoder
             # 3 Convolutional Layers
             # 3 max pooling layers
+        self.conv1 = nn.Conv1d(features, 40, 1, stride=1)
+        self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
+
+        self.conv2 = nn.Conv1d(40, 20,1, stride=1)
+        self.max_pool2 = nn.MaxPool1d(kernel_size=5,stride=1)
+
+        self.conv3 = nn.Conv1d(20, 5, 1, stride=1)
+        self.max_pool3 = nn.MaxPool1d(kernel_size=5, stride=1)
 
         # middle
         # 3 middle
         # 1 up sample
         # 3 more middle
 
+        self.convmid1 = nn.Conv1d(5,2, 1)
+        self.convmid2 = nn.Conv1d(2, 2, 1)
+        self.convmid3 = nn.Conv1d(2, 2, 1)
+
 
         # Decoder
             # upsample
             #3 convolutional
 
+        self.mid1 = nn.Conv1d(5, 5, 1)
+        self.mid2 = nn.Conv1d(5, 5, 1)
+        self.mid3 = nn.Conv1d(5,5, 1)
+
+        self.convdecode1 = nn.Conv1d(5,20,1)
+        self.convdecode2 = nn.Conv1d(20, 40, 1)
+        self.convdecode3 = nn.Conv1d(40, 40, 1)
+
         # One Linear out
         # also switch out for base
-
+        self.linear = nn.Linear(40, self.features)
 
 
 
@@ -74,47 +93,159 @@ class AEUP(LightningModule, ABC):
 
         # encoding step
         # x = x.transpose(0,1)
-
+        target = x.shape[0]
+        # First Convolution
         x = x.unsqueeze(dim=1)
         x = x.permute(0, 2, 1)
+
         encode_con = self.conv1(x)
-
-
-
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)
         encode_pool = self.max_pool1(encode_con)
-        encode_pool = encode_pool.squeeze()
+        # encode_pool = encode_pool.squeeze()
 
-        # print(encode_pool.shape)
 
-        # upscaling step
 
-        pool_shape = max_pool_shape(x.transpose(0,1), 5, 1)
-        target = x.shape[0]
-        scale = target / pool_shape
+        # x = encode_pool.unsqueeze(dim=1)
+        print(encode_pool.shape)
+        encode_pool = encode_pool.permute(2, 0,1)
+        print(encode_pool.shape)
+        target3 = encode_pool.shape[0]
+        encode_con = self.conv2(encode_pool)
+        encode_con = encode_con.squeeze()
+        encode_con = encode_con.transpose(0, 1)
+        encode_con = encode_con.unsqueeze(dim=1)
+        encode_pool = self.max_pool2(encode_con)
+        # encode_pool = encode_pool.squeeze()
+
+
+        print(encode_pool.shape)
+        encode_pool = encode_pool.permute(2, 0,1)
+        print(encode_pool.shape)
+        target2 = encode_pool.shape[0]
+        encode_con = self.conv3(encode_pool)
+        encode_con = encode_con.squeeze()
+        encode_con = encode_con.transpose(0, 1)
+        encode_con = encode_con.unsqueeze(dim=1)
+        encode_pool = self.max_pool3(encode_con)
+        # x = encode_pool.squeeze()
+
+        ## This is MID - LIKE REALLY MID
+        encode_pool = encode_pool.permute(2,0,1)
+        print('BEFORE MID')
+        print(encode_pool.shape)
+        ## First Target
+        target1 = encode_pool.shape[0]
+        x = self.convmid1(encode_pool)
+        x = self.convmid2(x)
+        x = self.convmid3(x)
+
+        # Must Squeeze for up sample
+
+        x = x.squeeze()
+        print('THIS IS SQUEEZE')
+        print(x.shape)
+
+        pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
+        print('POOOLLLL SHAPE', pool_shape)
+        print(pool_shape)
+        scale = target1 / pool_shape
+        print('THIS IS SCALE')
+        print(scale)
+
         unsqueezed = encode_pool.unsqueeze(dim=2)
-        unsqueezed = unsqueezed.permute(0, 2, 1)
+        print(unsqueezed.shape)
+        unsqueezed = unsqueezed.permute(1,2,3,0)
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
-        up_scaled = up_scaled.permute(0, 2, 1)
-        # up_scaled = up_scaled.squeeze()
-        up_scaled = up_scaled.permute(1,0,2)
-        ## decoding
 
 
+        up_scaled = up_scaled.squeeze()
 
 
+        x = up_scaled.unsqueeze(dim=2)
+        x= x.permute(1,0,2)
+        x = self.mid1(x)
+        x = self.mid2(x)
+        x = self.mid3(x)
 
-        ## Convolutional out
+        x = x.squeeze()
 
-        out = self.conv_out(up_scaled)
-        out = out.squeeze()
+        pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
+        scale = target2 / pool_shape
+        print('THIS IS SCALE')
+        print(scale)
 
+        unsqueezed = encode_pool.unsqueeze(dim=2)
+        print(unsqueezed.shape)
+        unsqueezed = unsqueezed.permute(1,2,3,0)
+        up = nn.Upsample(scale_factor=scale)
+        up_scaled = up(unsqueezed)
+        up_scaled = up_scaled.squeeze()
 
-        linear = nn.Linear(40, self.features)
+        print(up_scaled.shape)
 
-        out = linear(out)
+        # up_scaled = up_scaled.transpose(0,1)
+        x = self.convdecode1(up_scaled)
+        print(x.shape)
+
+        ### Next Upscale -
+
+        # pool_shape = max_pool_shape(x.transpose(0, 1), 5, 1)
+        scale = target3 / x.shape[1]
+        print('POOOLL SHAPE', pool_shape)
+        print('THIS IS SCALE')
+        print(scale)
+        #
+        unsqueezed = x.unsqueeze(dim=2)
+        print(unsqueezed.shape)
+        unsqueezed = unsqueezed.permute(0,2,1)
+        up = nn.Upsample(scale_factor=scale)
+        up_scaled = up(unsqueezed)
+        up_scaled = up_scaled.squeeze()
+        #
+        print(target3)
+        print(up_scaled.shape)
+        #
+        # # up_scaled = up_scaled.transpose(0,1)
+        x = self.convdecode2(up_scaled)
+
+        scale = target / x.shape[1]
+        print('POOOLL SHAPE', pool_shape)
+        print('THIS IS SCALE')
+        print(scale)
+        #
+        unsqueezed = x.unsqueeze(dim=2)
+        print(unsqueezed.shape)
+        unsqueezed = unsqueezed.permute(0,2,1)
+        up = nn.Upsample(scale_factor=scale)
+        up_scaled = up(unsqueezed)
+        up_scaled = up_scaled.squeeze()
+        #
+        print(target)
+        print(up_scaled.shape)
+        #
+        # # up_scaled = up_scaled.transpose(0,1)
+        x = self.convdecode3(up_scaled)
+
+        print(x.shape)
+
+        # ## decoding
+        #
+        #
+        #
+        #
+        #
+        # ## Convolutional out
+        #
+        # out = self.conv_out(up_scaled)
+        # out = out.squeeze()
+        #
+        #
+        #
+        #
+        x = x.transpose(0,1)
+        out = self.linear(x)
 
         return out
