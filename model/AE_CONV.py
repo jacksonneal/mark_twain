@@ -175,7 +175,7 @@ class AEConv(LightningModule, ABC):
 
         # x = self.dropout(x)
         x = self.linear4(x)
-        x = x.sigmoid(x)
+        x = self.sigmoid(x)
 
         return x
 
