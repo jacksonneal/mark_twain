@@ -84,6 +84,7 @@ class AEConv(LightningModule, ABC):
         self.mid1 = nn.Conv1d(self.dim3, self.dim3, 1)
         self.mid2 = nn.Conv1d(self.dim3, self.dim3, 1)
         self.mid3 = nn.Conv1d(self.dim3,self.dim3, 1)
+        self.batch_normMID = nn.BatchNorm1d(self.dim3)
 
         # upsample Convolution
         self.linear2 = nn.Linear(self.dim3,self.dim2)
@@ -150,10 +151,12 @@ class AEConv(LightningModule, ABC):
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
+        x = self.batch_normMID(x)
+        x = self.silu(x)
+
         # x = m(x)
 
         # Decoding
-
         x = x.squeeze()
         x = self.linear2(x)
         x = x.unsqueeze(dim=2)
