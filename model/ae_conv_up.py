@@ -218,6 +218,7 @@ class AEUP(LightningModule, ABC):
         print(up_scaled)
         up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode2(up_scaled)
+        x = x.squeeze()
 
         scale = target / x.shape[1]
         print('POOOLL SHAPE', pool_shape)
@@ -227,6 +228,7 @@ class AEUP(LightningModule, ABC):
         unsqueezed = x.unsqueeze(dim=2)
         print(unsqueezed.shape)
         unsqueezed = unsqueezed.permute(0,2,1)
+
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.squeeze()
@@ -239,6 +241,7 @@ class AEUP(LightningModule, ABC):
         print(up_scaled)
         up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode3(up_scaled)
+        x = x.squeeze()
 
         print(x.shape)
 
