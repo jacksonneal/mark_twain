@@ -109,7 +109,7 @@ class AEConv(LightningModule, ABC):
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
         x = self.batch_norm1(x)
-        x = self.SiLU(x)
+        x = self.silu(x)
 
 
         x = self.max_pool1(x)
