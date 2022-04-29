@@ -30,16 +30,17 @@ parameters:
       - [ 512, 1920, 1920, 1920, 1920, 1024 ]
       - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
   dropout:
-    min: 0.15
-    max: 0.22
+    min: 0.18
+    max: 0.21
   initial_bn:
     value: true
   learning_rate:
-    min: 0.0014
+    min: 0.002
     max: 0.0028
   wd:
-    min: 0.04
+    min: 0.06
     max: 0.1
   # trainer config
   max_epochs:
-    value: 10
+    min: 8
+    max: 10
