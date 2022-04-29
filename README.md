@@ -103,5 +103,5 @@ make predict-gpu ckpt=path/to/.ckpt hparams=path/to/.yaml
 > __NOTE__: Submission requires api keys in local `.env` file
 
 ```bash
-make submit model=BASE
+make submit model=(BASE|AEMLP)
 ```
