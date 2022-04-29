@@ -45,24 +45,26 @@ class AEConv(LightningModule, ABC):
         kernel_size = 4
 
         self.num_feats = self.dimensions[0]
+        self.dim1 = self.dimensions[1]
+        self.dim2 = self.dimensions[2]
 
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
-        self.batch_norm1 = nn.BatchNorm1d(40)
+        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 1)
+        self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(40, 20, 1)
-        self.batch_norm2 = nn.BatchNorm1d(20)
+        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1)
+        self.batch_norm2 = nn.BatchNorm1d(self.dim2)
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(20, 5, 1)
+        self.conv3 = nn.Conv1d(self.dim2, 5, 1)
         self.batch_norm3 = nn.BatchNorm1d(5)
         self.max_pool3 = nn.MaxPool1d(1, stride=1)
 
@@ -83,17 +85,17 @@ class AEConv(LightningModule, ABC):
         self.mid3 = nn.Conv1d(5,5, 1)
 
         # upsample Convolution
-        self.linear2 = nn.Linear(5,20)
-        self.convdecode1 = nn.Conv1d(20, 40, 1)
+        self.linear2 = nn.Linear(5,self.dim2)
+        self.convdecode1 = nn.Conv1d(self.dim2, self.dim1, 1)
 
         #upsample Convolution
-        self.linear3 = nn.Linear(40, 40)
-        self.convdecode2 = nn.Conv1d(40, 40, 1)
+        self.linear3 = nn.Linear(self.dim1, self.dim1)
+        self.convdecode2 = nn.Conv1d(self.dim1, self.dim1, 1)
 
 
         # upsample Convolution
 
-        self.linear4 = nn.Linear(40, self.num_feats)
+        self.linear4 = nn.Linear(self.dim1, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
         self.rel = nn.ReLU()
