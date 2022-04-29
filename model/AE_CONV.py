@@ -53,7 +53,7 @@ class AEConv(LightningModule, ABC):
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 1, stride=stride)
+        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 4, stride=stride)
         self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
@@ -61,13 +61,13 @@ class AEConv(LightningModule, ABC):
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1)
+        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1,stride=stride)
         self.batch_norm2 = nn.BatchNorm1d(self.dim2)
 
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(self.dim2, self.dim3, 1)
+        self.conv3 = nn.Conv1d(self.dim2, self.dim3,1, stride=stride)
         self.batch_norm3 = nn.BatchNorm1d(self.dim3)
         self.max_pool3 = nn.MaxPool1d(1, stride=1)
 

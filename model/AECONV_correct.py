@@ -57,7 +57,10 @@ class AEConvPOOL(LightningModule, ABC):
         self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
-        self.max_pool1 = nn.MaxPool1d(1, stride=stride)
+
+
+
+        self.max_pool1 = nn.MaxPool1d(3, stride=stride)
 
 
         # Second Down
@@ -69,7 +72,7 @@ class AEConvPOOL(LightningModule, ABC):
         # Third Down
         self.conv3 = nn.Conv1d(self.dim2, self.dim3, 1)
         self.batch_norm3 = nn.BatchNorm1d(self.dim3)
-        self.max_pool3 = nn.MaxPool1d(5, stride=1)
+        self.max_pool3 = nn.MaxPool1d(1, stride=1)
 
         ## Middle Portion
         # Three Convolutions
@@ -118,17 +121,23 @@ class AEConvPOOL(LightningModule, ABC):
 
         #Encoding
 
-        _, target = x.shape
+        target, _ = x.shape
 
         x = x.unsqueeze(dim=2)
+
         x = self.conv1(x)
         print(x.shape)
         x = self.batch_norm1(x)
         x = self.silu(x)
         # x = self.dropout(x)
 
+        x = x.squeeze()
 
+        x = x.transpose(0,1)
         x = self.max_pool1(x)
+
+        x = x.unsqueeze(dim=2)
+        x = x.permute(1,0,2)
         x = self.conv2(x)
         x = self.batch_norm2(x)
         x = self.silu(x)
@@ -164,9 +173,37 @@ class AEConvPOOL(LightningModule, ABC):
         print(x.shape)
 
 
+        lin1 = nn.Linear(self.dim3, target)
+
+        lin2 = nn.Linear(target, self.num_feats)
 
 
-        return x
+
+        # we want 1000 x 38
+
+        print('this is target')
+
+        print(target)
+        print(x.shape)
+        x = lin1(x)
+
+        print(x.shape)
+
+        # x = x.transpose(0, 1)
+        # out = lin2(x)
+
+        not_t, target = x.shape
+
+        lin3 = nn.Linear(not_t, self.num_feats)
+        x = x.transpose(0,1)
+        out = lin3(x)
+
+        print(out.shape)
+
+
+
+
+        return out
 
 
 # add silu and dropout and batch nor
