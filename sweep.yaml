@@ -25,7 +25,7 @@ parameters:
     values:
       - True
       - False
-  learning_rate:git
+  learning_rate:
     min: 0.002
     max: 0.0025
   wd:
