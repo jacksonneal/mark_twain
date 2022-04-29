@@ -5,7 +5,7 @@ sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
 batch_size: 5000
 # model config
-model_name: AE-MLP
+model_name: AEMLP
 dimensions: [ 512, 1920, 1920, 1920, 1920, 1024 ]
 dropout: 0.1955
 initial_bn: True
