@@ -140,6 +140,7 @@ class AEConvPOOL(LightningModule, ABC):
 
         # x = x.unsqueeze(dim=2)
         # x = x.permute(1,0,2)
+        print(x.shape)
         x = self.conv2(x)
         x = self.batch_norm2(x)
         x = self.silu(x)
