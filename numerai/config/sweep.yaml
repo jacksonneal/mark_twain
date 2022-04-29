@@ -25,18 +25,18 @@ parameters:
   model_name:
     value: BASE
   dimensions:
-    value: [ 2048, 2048, 2048, 1536, 1024 ]
+    value: [ 1920, 1920, 1920, 1024 ]
   dropout:
     min: 0.15
-    max: 0.28
+    max: 0.22
   initial_bn:
     value: true
   learning_rate:
-    min: 0.0015
-    max: 0.0020
+    min: 0.0014
+    max: 0.0028
   wd:
     min: 0.04
     max: 0.1
   # trainer config
   max_epochs:
-    value: 25
+    value: 10
