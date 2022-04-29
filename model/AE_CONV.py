@@ -43,6 +43,7 @@ class AEConv(LightningModule, ABC):
             return w
 
         kernel_size = 4
+        stride = 5
 
         self.num_feats = self.dimensions[0]
         self.dim1 = self.dimensions[1]
@@ -52,7 +53,7 @@ class AEConv(LightningModule, ABC):
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 1)
+        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, stride)
         self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
@@ -116,6 +117,8 @@ class AEConv(LightningModule, ABC):
 
         #Encoding
 
+        _, target = x.shape
+
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
         x = self.batch_norm1(x)
@@ -172,10 +175,22 @@ class AEConv(LightningModule, ABC):
         x = x.squeeze()
         # x = self.batch_normEND(x)
 
+        scale = target / x.shape[1]
+        print('POOOLL SHAPE', pool_shape)
+        print('THIS IS SCALE')
+        print(scale)
+        #
+        unsqueezed = x.unsqueeze(dim=2)
+        print(unsqueezed.shape)
+        unsqueezed = unsqueezed.permute(0,2,1)
+        up = nn.Upsample(scale_factor=scale)
+        up_scaled = up(unsqueezed)
+        x = up_scaled.squeeze()
+
 
         # x = self.dropout(x)
         x = self.linear4(x)
-        x = self.sigmoid(x)
+        # x = self.sigmoid(x)
 
         return x
 
