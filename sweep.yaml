@@ -28,7 +28,7 @@ parameters:
       - False
   learning_rate:
     min: 0.002
-    max: 0.003
+    max: 0.0025
   wd:
     min: 0.04
     max: 0.06
