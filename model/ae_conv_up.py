@@ -188,6 +188,7 @@ class AEUP(LightningModule, ABC):
 
         # up_scaled = up_scaled.transpose(0,1)
         up_scaled = up_scaled.unsqueeze(dim=1)
+        up_scaled = up_scaled.permute(2,0,1)
         x = self.convdecode1(up_scaled)
         print(x.shape)
 
