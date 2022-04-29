@@ -133,19 +133,20 @@ class AEConv(LightningModule, ABC):
         x = self.max_pool3(x)
 
         # middle Section
-        x = self.convmid1(x)
-        x = self.convmid2(x)
-        x = self.convmid3(x)
+        #TODO: Removing the middle for one minute
+        # x = self.convmid1(x)
+        # x = self.convmid2(x)
+        # x = self.convmid3(x)
         # x = m(x)
 
 
 
-        x = x.squeeze()
-
-        x = self.linear1(x)
-        # x = m(x)
-
-        x = x.unsqueeze(dim=2)
+        # x = x.squeeze()
+        #
+        # x = self.linear1(x)
+        # # x = m(x)
+        #
+        # x = x.unsqueeze(dim=2)
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
