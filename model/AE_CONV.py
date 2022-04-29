@@ -50,7 +50,8 @@ class AEConv(LightningModule, ABC):
         self.encoder = []
         # First down
         self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
-        self.batch_norm = nn.BatchNorm1d(40)
+        self.batch_norm1 = nn.BatchNorm1d(40)
+        self.silu = nn.SiLU(inplace=True)
 
         self.max_pool1 = nn.MaxPool1d(1, stride=1)
 
@@ -107,7 +108,8 @@ class AEConv(LightningModule, ABC):
 
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
-        x = self.batch_norm(x)
+        x = self.batch_norm1(x)
+        x = self.SiLU(x)
 
 
         x = self.max_pool1(x)
