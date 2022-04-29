@@ -12,7 +12,7 @@ parameters:
   aux_target_cols:
     value:
   batch_size:
-    value: 500
+    value: 4000
   # model config
   model_name:
     value: AECONV
@@ -34,4 +34,4 @@ parameters:
     max: 0.06
   # trainer config
   max_epochs:
-    value: 8
+    value: 15
