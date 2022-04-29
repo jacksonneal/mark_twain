@@ -65,7 +65,7 @@ class MarkTwainTrainer:
                 if run_conf['model_name'] == 'AEMLP':
                     predictions = list(map(lambda preds: preds[2], predictions))
                 if len(run_conf['aux_target_cols']) > 0:
-                    predictions = list(map(lambda preds: preds[0], predictions))
+                    predictions = predictions[:, 0]
                 print('Completed predictions')
                 predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df
