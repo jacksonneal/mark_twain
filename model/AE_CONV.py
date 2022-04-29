@@ -62,6 +62,7 @@ class AEConv(LightningModule, ABC):
         # Second Down
         self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1)
         self.batch_norm2 = nn.BatchNorm1d(self.dim2)
+
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
 
         # Third Down
@@ -102,8 +103,9 @@ class AEConv(LightningModule, ABC):
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
-        self.rel = nn.ReLU()
+        # self.rel = nn.ReLU()
 
+        self.sigmoid = nn.Sigmoid()
 
 
     def forward(self, x):
@@ -173,7 +175,7 @@ class AEConv(LightningModule, ABC):
 
         # x = self.dropout(x)
         x = self.linear4(x)
-
+        # x = x.sigmoid(x)
 
         return x
 
