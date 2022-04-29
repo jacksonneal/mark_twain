@@ -62,12 +62,12 @@ class MarkTwainTrainer:
             else:
                 print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
+                print('Completed predictions')
                 if run_conf['model_name'] == 'AEMLP':
                     predictions = list(map(lambda preds: preds[2], predictions))
+                predictions = torch.cat(predictions).squeeze()
                 if len(run_conf['aux_target_cols']) > 0:
                     predictions = predictions[:, 0]
-                print('Completed predictions')
-                predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df
                 out_df.loc[:, "prediction"] = predictions
                 print('Saving predictions...')
