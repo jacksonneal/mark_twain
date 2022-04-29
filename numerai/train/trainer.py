@@ -70,7 +70,10 @@ class MarkTwainTrainer:
                 print(out_df.shape)
                 print(out_df.head())
                 print(out_df.columns)
-                out_df.loc[:, "prediction"] = predictions
+                if "prediction" not in out_df:
+                    out_df["prediction"] = predictions
+                else:
+                    out_df.loc[:, "prediction"] = predictions
                 print('Saving predictions...')
                 out_df["prediction"].to_csv(PREDICTIONS_CSV)
                 print('Predictions saved!')
