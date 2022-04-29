@@ -54,6 +54,7 @@ class AEUP(LightningModule, ABC):
         self.batch_norm2 = nn.BatchNorm1d(dim2)
 
         self.conv3 = nn.Conv1d(dim2, 5, 1, stride=1)
+        self.batch_norm3 = nn.Conv1d(5)
         self.max_pool3 = nn.MaxPool1d(kernel_size=5, stride=1)
 
         # middle
@@ -138,6 +139,8 @@ class AEUP(LightningModule, ABC):
 
         target2 = encode_pool.shape[0]
         encode_con = self.conv3(encode_pool)
+        encode_con = self.batch_norm3(encode_con)
+        encode_con = self.silu(encode_con)
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)

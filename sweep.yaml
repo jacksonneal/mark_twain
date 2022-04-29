@@ -33,4 +33,4 @@ parameters:
     max: 0.06
   # trainer config
   max_epochs:
-    value: 10
+    value: 50
