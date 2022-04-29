@@ -78,7 +78,7 @@ class AEConv(LightningModule, ABC):
 
         # Upsample + 3 Convolutions
 
-        self.linear1 = nn.Linear(2, 5)
+        self.linear1 = nn.Linear(2, self.dim3)
 
 
         self.mid1 = nn.Conv1d(self.dim3, self.dim3, 1)
@@ -132,8 +132,8 @@ class AEConv(LightningModule, ABC):
         # x = self.silu(x)
         x = self.dropout(x)
         x = self.max_pool3(x)
-
-        # middle Section
+        #TODO: Check if getting rid of middle is the right thing
+        # # middle Section
         x = self.convmid1(x)
         x = self.convmid2(x)
         x = self.convmid3(x)
