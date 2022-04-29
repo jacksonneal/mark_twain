@@ -15,7 +15,7 @@ parameters:
     value: 4000
   # model config
   model_name:
-    value: AECONV
+    value: AEUP
   dimensions:
     value: [1050,50, 20, 5]
   dropout:

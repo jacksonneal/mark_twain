@@ -45,6 +45,9 @@ class AEUP(LightningModule, ABC):
         self.conv1 = nn.Conv1d(features, dim1, 1, stride=1)
         self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
 
+        self.batch_norm = nn.BatchNorm1d(dim1)
+        self.silu = nn.SiLU(inplace=True)
+
         self.conv2 = nn.Conv1d(dim1, dim2,1, stride=1)
         self.max_pool2 = nn.MaxPool1d(kernel_size=5,stride=1)
 
@@ -100,10 +103,13 @@ class AEUP(LightningModule, ABC):
         x = x.permute(0, 2, 1)
 
         encode_con = self.conv1(x)
+        encode_pool = self.batch_norm(encode_con)
+        encode_con = self.silu(encode_pool)
         encode_con = encode_con.squeeze()
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)
         encode_pool = self.max_pool1(encode_con)
+
         # encode_pool = encode_pool.squeeze()
 
 
