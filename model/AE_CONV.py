@@ -63,6 +63,7 @@ class AEConv(LightningModule, ABC):
 
         # Third Down
         self.conv3 = nn.Conv1d(20, 5, 1)
+        self.batch_norm3 = nn.BatchNorm1d(5)
         self.max_pool3 = nn.MaxPool1d(1, stride=1)
 
         ## Middle Portion
@@ -120,6 +121,8 @@ class AEConv(LightningModule, ABC):
         x = self.max_pool2(x)
         # x = m(x)
         x = self.conv3(x)
+        x = self.batch_norm3(x)
+        x = self.silu(x)
         x = self.max_pool3(x)
 
         # middle Section
