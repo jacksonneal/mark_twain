@@ -9,7 +9,7 @@ from model.base import Base
 nn = torch.nn
 
 
-class AEConv(LightningModule, ABC):
+class AEConvPOOL(LightningModule, ABC):
     def __init__(self, params):
         super().__init__()
         print(params)
@@ -43,7 +43,7 @@ class AEConv(LightningModule, ABC):
             return w
 
         kernel_size = 4
-        stride = 5
+        stride = 6
 
         self.num_feats = self.dimensions[0]
         self.dim1 = self.dimensions[1]
@@ -53,15 +53,15 @@ class AEConv(LightningModule, ABC):
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 1, stride=stride)
+        self.conv1 = nn.Conv1d(self.num_feats, self.dim1,1, stride=stride)
         self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
-        self.max_pool1 = nn.MaxPool1d(1, stride=1)
+        self.max_pool1 = nn.MaxPool1d(1, stride=stride)
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1)
+        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1, stride=stride)
         self.batch_norm2 = nn.BatchNorm1d(self.dim2)
 
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
@@ -69,7 +69,7 @@ class AEConv(LightningModule, ABC):
         # Third Down
         self.conv3 = nn.Conv1d(self.dim2, self.dim3, 1)
         self.batch_norm3 = nn.BatchNorm1d(self.dim3)
-        self.max_pool3 = nn.MaxPool1d(1, stride=1)
+        self.max_pool3 = nn.MaxPool1d(5, stride=1)
 
         ## Middle Portion
         # Three Convolutions
@@ -101,6 +101,7 @@ class AEConv(LightningModule, ABC):
         # upsample Convolution
 
         self.linear4 = nn.Linear(self.dim1, self.num_feats)
+        # self.linearOut = nn.Linear(self.dim1, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
@@ -117,8 +118,11 @@ class AEConv(LightningModule, ABC):
 
         #Encoding
 
+        _, target = x.shape
+
         x = x.unsqueeze(dim=2)
         x = self.conv1(x)
+        print(x.shape)
         x = self.batch_norm1(x)
         x = self.silu(x)
         # x = self.dropout(x)
@@ -156,31 +160,13 @@ class AEConv(LightningModule, ABC):
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
-        # x = self.batch_normMID(x)
-        # x = self.silu(x)
-
-        # x = m(x)
-
-        # Decoding
         x = x.squeeze()
-        x = self.linear2(x)
-        x = x.unsqueeze(dim=2)
-        x = self.convdecode1(x)
-        x = x.squeeze()
-        x = self.linear3(x)
-        x = x.unsqueeze(dim=2)
-        x = self.convdecode2(x)
-        x = x.squeeze()
-        # x = self.batch_normEND(x)
+        print(x.shape)
 
 
-        # x = self.dropout(x)
-        x = self.linear4(x)
-        # x = self.sigmoid(x)
+
 
         return x
 
 
 # add silu and dropout and batch nor
-
-
