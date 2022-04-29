@@ -9,19 +9,13 @@ parameters:
     value: null
   feature_set:
     values:
-      - top_250_features_with_target
-      - top_500_features_with_target
       - top_750_features_with_target
       - top_100_most_volatile_features
       - top_250_most_volatile_features
       - top_500_most_volatile_features
-      - top_750_least_volatile_features
-      - medium
       - full
   sample_4th_era:
-    values:
-      - true
-      - false
+    value: true
   aux_target_cols:
     values:
       - [ ]
@@ -30,28 +24,21 @@ parameters:
       - [ target_nomi_60, target_jerome_20, target_jerome_60 ]
       - [ target_nomi_60, target_jerome_20, target_janet_20 ]
   batch_size:
-    values:
-      - 3000
-      - 4000
-      - 5000
+    value: 5000
   # model config
   model_name:
     value: BASE
   dimensions:
     values:
-      - [ 512, 1024, 512, 256 ]
-      - [ 1024, 1536, 1024, 512 ]
-      - [ 1536, 1536, 1536, 1024 ]
       - [ 1536, 2048, 1536, 1024, 1024 ]
+      - [ 2048, 2048, 1536, 1536, 1024, 1024 ]
   dropout:
-    min: 0.12
-    max: 0.3
+    min: 0.15
+    max: 0.28
   initial_bn:
-    values:
-      - true
-      - false
+    value: true
   learning_rate:
-    min: 0.0013
+    min: 0.0015
     max: 0.0028
   wd:
     min: 0.02

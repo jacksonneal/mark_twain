@@ -45,7 +45,7 @@ class MarkTwainTrainer:
             callbacks = [model_summary_callback]
             if ckpt is None:
                 checkpoint_callback = ModelCheckpoint(monitor="val/spearman", mode="max", save_weights_only=True)
-                early_stopping_callback = EarlyStopping("train_loss", patience=10, mode="min")
+                early_stopping_callback = EarlyStopping("train_loss", patience=15, mode="min")
                 callbacks += [checkpoint_callback, early_stopping_callback]
 
             gpus = 1 if self.args.gpu else 0
