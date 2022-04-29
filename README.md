@@ -2,7 +2,7 @@
 
 CS7150 Deep Learning Final Project
 
-Applying Deep Learning to the Numerai data science competition.
+Applying Deep Learning to the [Numerai](https://numer.ai/tournament) data science competition.
 
 Code authors
 ------------
