@@ -89,12 +89,15 @@ make sweep-gpu
 ### Predictions From Model Checkpoint
 
 Load saved model configs and weights to execute predictions.  File paths are relative to project root.
+Run predictions with one of:
 
 ```bash
+# no GPU
 make predict ckpt=path/to/.ckpt hparams=path/to/.yaml
 ```
 
 ```bash
+# use GPU
 make predict-gpu ckpt=path/to/.ckpt hparams=path/to/.yaml
 ```
 
