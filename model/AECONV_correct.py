@@ -64,7 +64,7 @@ class AEConvPOOL(LightningModule, ABC):
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1, stride=stride)
+        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1, stride=1)
         self.batch_norm2 = nn.BatchNorm1d(self.dim2)
 
         self.max_pool2 = nn.MaxPool1d(1, stride=1)
