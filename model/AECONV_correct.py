@@ -166,7 +166,7 @@ class AEConvPOOL(LightningModule, ABC):
 
 
         x = x.squeeze()
-
+        x = x.transpose(0,1)
         x = self.linear1(x)
         # x = m(x)
 
