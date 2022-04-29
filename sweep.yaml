@@ -17,7 +17,7 @@ parameters:
   model_name:
     value: AECONV
   dimensions:
-    value: [1050,50, 20, 5]
+    value: [1050,100, 50, 10]
   dropout:
     min: 0.2
     max: 0.3
