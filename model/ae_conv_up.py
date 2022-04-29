@@ -184,6 +184,7 @@ class AEUP(LightningModule, ABC):
         up_scaled = up(unsqueezed)
         up_scaled = up_scaled.squeeze()
 
+        print('FIRST UP SCALED SHAPE')
         print(up_scaled.shape)
 
         # up_scaled = up_scaled.transpose(0,1)
