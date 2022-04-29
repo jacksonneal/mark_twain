@@ -23,7 +23,7 @@ parameters:
     value: 5000
   # model config
   model_name:
-    value: AEMLP
+    value: AE-MLP
   dimensions:
     values:
       - [ 256, 1920, 1920, 1920, 1920, 1024 ]
