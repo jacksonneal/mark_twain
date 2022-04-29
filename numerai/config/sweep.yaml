@@ -9,7 +9,7 @@ parameters:
     value: null
   feature_set:
     values:
-      - top_250_most_volatile_features
+      - full
       - top_500_most_volatile_features
       - top_750_most_volatile_features
   sample_4th_era:
@@ -17,8 +17,7 @@ parameters:
   aux_target_cols:
     values:
       - [ ]
-      - [ target_nomi_60, target_jerome_20, target_jerome_60 ]
-      - [ target_nomi_60, target_jerome_20, target_janet_20 ]
+      - [ target_nomi_60 ]
       - [ target_nomi_60, target_jerome_20, target_jerome_60, target_janet_20 ]
   batch_size:
     value: 5000
@@ -34,7 +33,7 @@ parameters:
     value: true
   learning_rate:
     min: 0.0015
-    max: 0.0028
+    max: 0.0020
   wd:
     min: 0.04
     max: 0.1
