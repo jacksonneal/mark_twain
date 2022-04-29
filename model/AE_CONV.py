@@ -168,7 +168,7 @@ class AEConv(LightningModule, ABC):
         x = x.unsqueeze(dim=2)
         x = self.convdecode2(x)
         x = x.squeeze()
-        x = self.batch_normEND(x)
+        # x = self.batch_normEND(x)
 
 
         # x = self.dropout(x)
