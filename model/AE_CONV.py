@@ -46,7 +46,7 @@ class AEConv(LightningModule, ABC):
 
         self.num_feats = self.dimensions[0]
 
-
+        self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
         self.conv1 = nn.Conv1d(self.num_feats, 40, 1)
@@ -112,6 +112,7 @@ class AEConv(LightningModule, ABC):
         x = self.conv1(x)
         x = self.batch_norm1(x)
         x = self.silu(x)
+        x = x.dropout(x)
 
 
         x = self.max_pool1(x)
@@ -121,8 +122,10 @@ class AEConv(LightningModule, ABC):
         x = self.max_pool2(x)
         # x = m(x)
         x = self.conv3(x)
-        x = self.batch_norm3(x)
-        x = self.silu(x)
+        # Notice: Adding batch Norm to the  third convolution
+        # this actually reduced the correlation
+        # x = self.batch_norm3(x)
+        # x = self.silu(x)
         x = self.max_pool3(x)
 
         # middle Section
