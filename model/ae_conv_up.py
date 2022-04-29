@@ -80,6 +80,8 @@ class AEUP(LightningModule, ABC):
         # also switch out for base
         self.linear = nn.Linear(dim1, self.features)
 
+        self.dropout = nn.Dropout(params.dropout)
+
 
 
     def forward(self, x):
@@ -136,6 +138,7 @@ class AEUP(LightningModule, ABC):
         encode_con = encode_con.transpose(0, 1)
         encode_con = encode_con.unsqueeze(dim=1)
         encode_pool = self.max_pool3(encode_con)
+        encode_pool = self.dropout(encode_pool)
         # x = encode_pool.squeeze()
 
         ## This is MID - LIKE REALLY MID
