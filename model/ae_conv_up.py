@@ -29,7 +29,8 @@ class AEUP(LightningModule, ABC):
         # starting with kernel of 1 for simplicity
         #TODO: Adjust kernel size
 
-        dim1 = 100
+        dim1 = 30
+        dim2 = 10
         # decoding
         self.conv_out = nn.Conv1d(dim1, dim1, 1)
         self.linear = nn.Linear(dim1, features)
@@ -44,10 +45,10 @@ class AEUP(LightningModule, ABC):
         self.conv1 = nn.Conv1d(features, dim1, 1, stride=1)
         self.max_pool1 = nn.MaxPool1d(kernel_size=5, stride=1)
 
-        self.conv2 = nn.Conv1d(dim1, 20,1, stride=1)
+        self.conv2 = nn.Conv1d(dim1, dim2,1, stride=1)
         self.max_pool2 = nn.MaxPool1d(kernel_size=5,stride=1)
 
-        self.conv3 = nn.Conv1d(20, 5, 1, stride=1)
+        self.conv3 = nn.Conv1d(dim2, 5, 1, stride=1)
         self.max_pool3 = nn.MaxPool1d(kernel_size=5, stride=1)
 
         # middle
@@ -68,8 +69,8 @@ class AEUP(LightningModule, ABC):
         self.mid2 = nn.Conv1d(5, 5, 1)
         self.mid3 = nn.Conv1d(5,5, 1)
 
-        self.convdecode1 = nn.Conv1d(5,20,1)
-        self.convdecode2 = nn.Conv1d(20, dim1, 1)
+        self.convdecode1 = nn.Conv1d(5,dim2,1)
+        self.convdecode2 = nn.Conv1d(dim2, dim1, 1)
         self.convdecode3 = nn.Conv1d(dim1, dim1, 1)
 
         # One Linear out
