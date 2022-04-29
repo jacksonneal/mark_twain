@@ -53,7 +53,7 @@ class AEConv(LightningModule, ABC):
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, stride)
+        self.conv1 = nn.Conv1d(self.num_feats, self.dim1,1, stride=stride)
         self.batch_norm1 = nn.BatchNorm1d(self.dim1)
         self.silu = nn.SiLU(inplace=True)
 
@@ -101,6 +101,7 @@ class AEConv(LightningModule, ABC):
         # upsample Convolution
 
         self.linear4 = nn.Linear(self.dim1, self.num_feats)
+        # self.linearOut = nn.Linear(self.dim1, self.num_feats)
         self.convdecode3 = nn.Conv1d(self.num_feats, self.num_feats, 1)
 
 
@@ -176,21 +177,28 @@ class AEConv(LightningModule, ABC):
         # x = self.batch_normEND(x)
 
         scale = target / x.shape[1]
-        print('POOOLL SHAPE', pool_shape)
-        print('THIS IS SCALE')
-        print(scale)
+
         #
         unsqueezed = x.unsqueeze(dim=2)
-        print(unsqueezed.shape)
+        # print(unsqueezed.shape)
         unsqueezed = unsqueezed.permute(0,2,1)
         up = nn.Upsample(scale_factor=scale)
         up_scaled = up(unsqueezed)
-        x = up_scaled.squeeze()
+        # up_scaled = up_scaled.unsqueeze(dim=2)
+        # print(up_scaled.shape)
+        up_scaled = up_scaled.permute(0,2,1)
+        x = self.convdecode3(up_scaled)
+        x = x.squeeze()
+        # print('X HAS BEEN SQUEEZE')
+        # print(x.shape)
 
-
+        # x = x.transpose(0,1)
         # x = self.dropout(x)
-        x = self.linear4(x)
+        out = nn.Linear(target, self.num_feats)
+        # x = self.linear4(x)
         # x = self.sigmoid(x)
+
+        x = out(x)
 
         return x
 
