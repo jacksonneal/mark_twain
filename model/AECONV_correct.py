@@ -136,6 +136,8 @@ class AEConvPOOL(LightningModule, ABC):
         # x = x.transpose(0,1)
         print('THIS IS WHAT GOES INTO MAX POOL')
         print(x.shape)
+
+        x = x.permute(2,1,0)
         x = self.max_pool1(x)
 
         # x = x.unsqueeze(dim=2)
