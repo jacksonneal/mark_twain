@@ -54,7 +54,7 @@ class AEUP(LightningModule, ABC):
         self.batch_norm2 = nn.BatchNorm1d(dim2)
 
         self.conv3 = nn.Conv1d(dim2, 5, 1, stride=1)
-        self.batch_norm3 = nn.Conv1d(5)
+        self.batch_norm3 = nn.BatchNorm1d(5)
         self.max_pool3 = nn.MaxPool1d(kernel_size=5, stride=1)
 
         # middle
