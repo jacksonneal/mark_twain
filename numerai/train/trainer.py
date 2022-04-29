@@ -68,6 +68,7 @@ class MarkTwainTrainer:
                 predictions = torch.cat(predictions).squeeze()
                 out_df = data_module.test_data.df.copy()
                 print(out_df.shape)
+                print(predictions.shape)
                 print(out_df.head())
                 print(out_df.columns)
                 if "prediction" not in out_df:
