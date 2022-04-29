@@ -3,11 +3,11 @@
 # Custom Training configurations
 # ------------------------------
 # Name used for wandb sweep
-sweep_name = "mark_twain_sweep_final"
+sweep_name = "quay_sweep"
 # number of wandb runs to explore during sweep
-sweep_count = 2
+sweep_count = 4
 # Workers used for parallel processing
-num_workers = 2
+num_workers = 3
 # ------------------------------
 
 SHELL := /bin/bash

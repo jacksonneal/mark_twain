@@ -125,7 +125,7 @@ class AEConv(LightningModule, ABC):
         x = self.conv3(x)
         # Notice: Adding batch Norm to the  third convolution
         # this actually reduced the correlation
-        # x = self.batch_norm3(x)
+        x = self.batch_norm3(x)
         # x = self.silu(x)
         x = self.max_pool3(x)
 
