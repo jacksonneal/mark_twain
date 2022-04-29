@@ -10,22 +10,25 @@ parameters:
   feature_set:
     values:
       - full
-      - top_500_most_volatile_features
       - top_750_most_volatile_features
   sample_4th_era:
     value: true
   aux_target_cols:
     values:
-      - [ ]
       - [ target_nomi_60 ]
+      - [ target_jerome_20 ]
+      - [ target_nomi_60, target_jerome_20 ]
       - [ target_nomi_60, target_jerome_20, target_jerome_60, target_janet_20 ]
   batch_size:
     value: 5000
   # model config
   model_name:
-    value: BASE
+    value: AEMLP
   dimensions:
-    value: [ 1920, 1920, 1920, 1024 ]
+    values:
+      - [ 256, 1920, 1920, 1920, 1920, 1024 ]
+      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
+      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
   dropout:
     min: 0.15
     max: 0.22
