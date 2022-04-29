@@ -6,7 +6,7 @@ metric:
 parameters:
   # data config
   feature_set:
-    value: top_750_features_with_target_corr
+    value:
   sample_4th_era:
     value: True
   aux_target_cols:
@@ -18,7 +18,7 @@ parameters:
     value: AECONV
   dimensions:
     ## must be multiples of 3
-    value: [750,30, 10]
+    value: [1050,50, 20]
   dropout:
     min: 0.2
     max: 0.3
