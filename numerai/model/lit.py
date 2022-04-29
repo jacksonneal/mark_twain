@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import torch
 from pytorch_lightning import LightningModule
-from torch import nn, optim
+from torch import optim
 import torch.nn.functional as F
 
 from numerai.model.model_factory import build_model
@@ -35,7 +35,7 @@ class NumeraiLit(LightningModule, ABC):
         self.save_hyperparameters(ignore="model")
         self.model = build_model(self.hparams)
         self.loss = F.mse_loss
-        self.ae_mlp_architecture = model_name == "AE-MLP"
+        self.ae_mlp_architecture = model_name == "AEMLP"
 
     def forward(self, x):
         return self.model(x)

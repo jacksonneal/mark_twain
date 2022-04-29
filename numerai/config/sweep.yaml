@@ -6,33 +6,41 @@ metric:
 parameters:
   # data config
   pca:
-    value: 0.95
+    value: null
   feature_set:
-    value: medium
+    values:
+      - full
+      - top_750_most_volatile_features
   sample_4th_era:
-    value: True
+    value: true
   aux_target_cols:
-    value: [ ]
+    values:
+      - [ target_nomi_60 ]
+      - [ target_jerome_20 ]
+      - [ target_nomi_60, target_jerome_20 ]
+      - [ target_nomi_60, target_jerome_20, target_jerome_60, target_janet_20 ]
   batch_size:
     value: 5000
   # model config
   model_name:
-    value: AE-MLP
+    value: AEMLP
   dimensions:
-    value: [ 20, 38, 50, 50, 50 ]
-  dropout:
-    min: 0.0
-    max: 0.3
-  initial_bn:
     values:
-      - True
-      - False
+      - [ 256, 1920, 1920, 1920, 1920, 1024 ]
+      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
+      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
+  dropout:
+    min: 0.18
+    max: 0.21
+  initial_bn:
+    value: true
   learning_rate:
-    min: 0.001
-    max: 0.003
+    min: 0.002
+    max: 0.0028
   wd:
-    min: 0.01
+    min: 0.06
     max: 0.1
   # trainer config
   max_epochs:
-    value: 2
+    min: 8
+    max: 10

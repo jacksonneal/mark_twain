@@ -9,7 +9,7 @@ from pytorch_lightning.utilities.seed import seed_everything
 import gc
 import wandb
 from numerai.data.data_module import NumeraiDataModule
-from numerai.definitions import LOG_DIR, WANDB_LOG_DIR, PREDICTIONS_CSV
+from numerai.definitions import LOG_DIR, WANDB_LOG_DIR, PREDICTIONS_CSV, ROOT_DIR
 from numerai.model.lit import NumeraiLit
 
 
@@ -39,13 +39,13 @@ class MarkTwainTrainer:
                                initial_bn=run_conf['initial_bn'],
                                learning_rate=run_conf['learning_rate'],
                                wd=run_conf['wd']) if ckpt is None else NumeraiLit.load_from_checkpoint(
-                checkpoint_path=os.path.join(LOG_DIR, ckpt))
+                checkpoint_path=os.path.join(ROOT_DIR, ckpt))
 
             model_summary_callback = ModelSummary(max_depth=25)
             callbacks = [model_summary_callback]
             if ckpt is None:
                 checkpoint_callback = ModelCheckpoint(monitor="val/spearman", mode="max", save_weights_only=True)
-                early_stopping_callback = EarlyStopping("val_corr", patience=3, mode="max")
+                early_stopping_callback = EarlyStopping("train_loss", patience=5, mode="min")
                 callbacks += [checkpoint_callback, early_stopping_callback]
 
             gpus = 1 if self.args.gpu else 0
@@ -62,9 +62,12 @@ class MarkTwainTrainer:
             else:
                 print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
-                if run_conf['model_name'] == 'AE-MLP':
+                print('Completed predictions')
+                if run_conf['model_name'] == 'AEMLP':
                     predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
+                if len(run_conf['aux_target_cols']) > 0:
+                    predictions = predictions[:, 0]
                 out_df = data_module.test_data.df
                 out_df.loc[:, "prediction"] = predictions
                 print('Saving predictions...')

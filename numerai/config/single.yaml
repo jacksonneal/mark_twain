@@ -1,15 +1,15 @@
 # data config
-pca: 0.9
-feature_set: medium
+pca: null
+feature_set: top_750_most_volatile_features
 sample_4th_era: True
-aux_target_cols: [ ]
-batch_size: 4000
+aux_target_cols: [ target_jerome_20 ]
+batch_size: 5000
 # model config
-model_name: AE-MLP
-dimensions: [ 20, 38, 50, 50, 50 ]
-dropout: 0.001
+model_name: BASE
+dimensions: [ 1920, 1920, 1920, 1024 ]
+dropout: 0.1955
 initial_bn: True
-learning_rate: 0.002
-wd: 0.05
+learning_rate: 0.002604
+wd: 0.07866
 # trainer config
-max_epochs: 1
+max_epochs: 9

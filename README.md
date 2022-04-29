@@ -2,6 +2,8 @@
 
 CS7150 Deep Learning Final Project
 
+Applying Deep Learning to the Numerai data science competition.
+
 Code authors
 ------------
 Jackson Neal  
@@ -59,7 +61,7 @@ make single
 make single-gpu
 ```
 
-3. View Tensorboard logs in `lightning_logs`
+3. View Tensorboard logs
 
 ```bash
 make tb-logs
@@ -86,7 +88,7 @@ make sweep-gpu
 
 ### Predictions From Model Checkpoint
 
-Load saved model configs and weights to execute predictions.  File paths are relative to `lightning_logs`
+Load saved model configs and weights to execute predictions.  File paths are relative to project root.
 
 ```bash
 make predict ckpt=path/to/.ckpt hparams=path/to/.yaml

@@ -183,7 +183,8 @@ def to_pca(df: pd.DataFrame, feature_comp: float, fp: str) -> pd.DataFrame:
     # Create .parquet file for temp to load next time
     if not os.path.isdir(PCA_DIR):
         os.makedirs(PCA_DIR)
-    temp.to_parquet(fp, index=True)
+    if not os.path.isfile(fp):
+        temp.to_parquet(fp, index=True)
 
     return df_pca
 
