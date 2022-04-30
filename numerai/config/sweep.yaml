@@ -26,15 +26,15 @@ parameters:
     value: CAE
   dimensions:
     values:
-      - [750, 1920, 750,1920]
+      - [750, 1900, 750,1900]
 #      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
 #      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
   kernel:
-    value: 2
+    value: 300
   stride:
     value: 1
   pool_kernel:
-    value: 1
+    value: 7
   dropout:
     min: 0.18
     max: 0.21
