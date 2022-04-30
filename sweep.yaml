@@ -18,7 +18,7 @@ parameters:
     value: AECONV
   dimensions:
     ## using the last three as kernel sizes
-    value: [1050,50, 20, 5, 800, 225, 10]
+    value: [1050,50, 20, 5, 900, 150, 10]
   dropout:
     min: 0.2
     max: 0.3
