@@ -1,15 +1,18 @@
 # data config
 pca: null
-feature_set: top_750_most_volatile_features
+feature_set: small
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
 batch_size: 5000
 # model config
-model_name: BASE
-dimensions: [ 1920, 1920, 1920, 1024 ]
+model_name: TMLP
+dimensions: [ 50, 50, 50, 50, 25 ]
 dropout: 0.1955
-initial_bn: True
+initial_bn: false
 learning_rate: 0.002604
 wd: 0.07866
+# transformer config
+num_enc_layers: 1
+num_dec_layers: 1
 # trainer config
 max_epochs: 9
