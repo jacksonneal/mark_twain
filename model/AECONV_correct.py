@@ -60,7 +60,7 @@ class AEConvPOOL(LightningModule, ABC):
 
 
 
-        self.max_pool1 = nn.MaxPool1d(3, stride=stride)
+        self.max_pool1 = nn.MaxPool1d(1, stride=stride)
 
 
         # Second Down
