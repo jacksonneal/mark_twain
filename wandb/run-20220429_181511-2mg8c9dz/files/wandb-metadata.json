@@ -1,0 +1,32 @@
+{
+    "os": "Linux-3.10.0-1160.25.1.el7.x86_64-x86_64-with-centos-7.9.2009-Core",
+    "python": "3.7.11",
+    "heartbeatAt": "2022-04-29T22:15:13.243147",
+    "startedAt": "2022-04-29T22:15:11.099610",
+    "docker": null,
+    "gpu": "Tesla V100-SXM2-32GB",
+    "gpu_count": 1,
+    "cpu_count": 28,
+    "cuda": null,
+    "args": [
+        "--run_sweep",
+        "--sweep_name",
+        "quay_sweep",
+        "--sweep_count",
+        "4",
+        "--num_workers",
+        "3"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "git@github.com:jacksonneal/mark_twain.git",
+        "commit": "7e4f71aa11906c727b161fdc304c9a9b7147e05a"
+    },
+    "email": null,
+    "root": "/home/dragon.r/mark_twain",
+    "host": "d1012",
+    "username": "dragon.r",
+    "executable": "/shared/centos7/anaconda3/2022.01/envs/pytorch_env_training/bin/python"
+}

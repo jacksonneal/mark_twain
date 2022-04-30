@@ -1,0 +1,30 @@
+wandb_version: 1
+
+aux_target_cols:
+  value: null
+batch_size:
+  value: 4000
+dimensions:
+  value:
+  - 38
+  - 20
+  - 38
+  - 50
+  - 50
+  - 50
+dropout:
+  value: 0.2575208416849889
+feature_set:
+  value: small
+initial_bn:
+  value: false
+learning_rate:
+  value: 0.0026116072692398615
+max_epochs:
+  value: 20
+model_name:
+  value: AE
+sample_4th_era:
+  value: true
+wd:
+  value: 0.04352108635618304

@@ -1,0 +1,31 @@
+wandb_version: 1
+
+aux_target_cols:
+  value: null
+batch_size:
+  value: 4000
+dimensions:
+  value:
+  - 750
+  - 20
+  - 20
+  - 5
+  - 20
+  - 20
+  - 20
+dropout:
+  value: 0.23945527070588524
+feature_set:
+  value: top_750_features_with_target_corr
+initial_bn:
+  value: true
+learning_rate:
+  value: 0.002748235509341627
+max_epochs:
+  value: 500
+model_name:
+  value: AEUP
+sample_4th_era:
+  value: true
+wd:
+  value: 0.04674899898655496

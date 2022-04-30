@@ -1,0 +1,31 @@
+wandb_version: 1
+
+aux_target_cols:
+  value: null
+batch_size:
+  value: 4000
+dimensions:
+  value:
+  - 250
+  - 20
+  - 20
+  - 5
+  - 20
+  - 20
+  - 20
+dropout:
+  value: 0.2958635570201395
+feature_set:
+  value: top_250_features_with_target_corr
+initial_bn:
+  value: true
+learning_rate:
+  value: 0.002304622961267594
+max_epochs:
+  value: 5
+model_name:
+  value: AECONV
+sample_4th_era:
+  value: true
+wd:
+  value: 0.0536454544232748

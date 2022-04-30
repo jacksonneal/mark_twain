@@ -1,0 +1,28 @@
+wandb_version: 1
+
+aux_target_cols:
+  value: null
+batch_size:
+  value: 4000
+dimensions:
+  value:
+  - 1050
+  - 50
+  - 20
+  - 5
+dropout:
+  value: 0.20856011216085543
+feature_set:
+  value: null
+initial_bn:
+  value: false
+learning_rate:
+  value: 0.0022938191976286477
+max_epochs:
+  value: 50
+model_name:
+  value: AECONVPOOL
+sample_4th_era:
+  value: true
+wd:
+  value: 0.051247763183516565

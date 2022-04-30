@@ -1,0 +1,22 @@
+wandb_version: 1
+
+aux_target_cols:
+  value:
+  - target_nomi_60
+  - target_william_20
+batch_size:
+  value: 4000
+dropout:
+  value: 0.09746409746978586
+feature_set:
+  value: SMALL
+initial_bn:
+  value: false
+learning_rate:
+  value: 0.002261946511673923
+max_epochs:
+  value: 2
+sample_4th_era:
+  value: true
+wd:
+  value: 0.04087783063263279
