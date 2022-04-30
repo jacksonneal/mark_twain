@@ -200,6 +200,7 @@ class AEConvPOOL(LightningModule, ABC):
 
         print(target)
         print(x.shape)
+        x = x.squeeze()
         x = lin1(x)
 
         print(x.shape)
