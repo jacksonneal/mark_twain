@@ -1,16 +1,18 @@
 # data config
-feature_set:
+feature_set: small
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 1000
 # model config
-model_name: AECONV
+model_name: CAE
 #auto_dimensions: [38,4,1]
-dimensions: [1050,50, 20, 5, 950, 75, 10]
+dimensions: [38, 10, 50,50]
 dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
-kernel: 6
+kernel: 2
+stride: 1
+pool_kernel: 1
 wd: 0.05
 # trainer config
 max_epochs: 1

@@ -34,6 +34,7 @@ class NumeraiLit(LightningModule, ABC):
         self.model = model or build_model(self.hparams)
         self.loss = nn.MSELoss()
         self.ae_architecture = model_name == "AE"
+        self.cae = model_name == 'CAE'
 
     def forward(self, x):
         return self.model(x)
@@ -43,7 +44,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine correlation of preds to targets
         preds = self.model(inputs)
-        if self.ae_architecture:
+        if self.ae_architecture or self.cae:
             decoded, ae_out, preds = preds
         else:
             decoded = None
@@ -54,7 +55,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine primary and auxiliary target loss
         loss = self.loss(preds[:, 0], targets)
-        if self.ae_architecture:
+        if self.ae_architecture or self.cae:
             loss += self.loss(ae_out[:, 0], targets)
             loss += self.loss(decoded, inputs)
         aux_loss = 0.0
@@ -82,7 +83,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine correlation of pred to targets
         preds = self.model(inputs)
-        if self.ae_architecture:
+        if self.ae_architecture or self.cae:
             _, _, preds = preds
         rank_pred = pd.Series(preds[:, 0].cpu()).rank(pct=True, method='first')
         corr = np.corrcoef(targets.cpu(), rank_pred)[0, 1]

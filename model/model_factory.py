@@ -5,6 +5,7 @@ from model.ae_test import AE
 from model.AE_CONV import AEConv
 from model.AECONV_correct import AEConvPOOL
 from model.ae_conv_up import AEUP
+from model.cae import CAE
 
 
 def build_model(params):
@@ -20,5 +21,7 @@ def build_model(params):
         return AEUP(params)
     elif params.model_name == "AECONVPOOL":
         return AEConvPOOL(params)
+    elif params.model_name == "CAE":
+        return CAE(params)
     else:
         raise Exception(f"unsupported model name {params.model_name}")
