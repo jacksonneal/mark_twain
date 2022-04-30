@@ -131,7 +131,7 @@ class AEConv(LightningModule, ABC):
         x = self.batch_norm1(x)
         x = self.silu(x)
         #TODO: First Test
-        # x = self.dropout(x)
+        x = self.dropout(x)
 
         # print(x.shape)
 
