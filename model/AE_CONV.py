@@ -131,7 +131,7 @@ class AEConv(LightningModule, ABC):
         x = self.batch_norm1(x)
         x = self.silu(x)
         #TODO: First Test
-        x = self.dropout(x)
+        # x = self.dropout(x)
 
         # print(x.shape)
 
@@ -150,7 +150,7 @@ class AEConv(LightningModule, ABC):
         # TODO: Third test
         # x = self.batch_norm3(x)
         # x = self.silu(x)
-        # x = self.dropout(x)
+        x = self.dropout(x)
         x = self.max_pool3(x)
         #TODO: Check if getting rid of middle is the right thing
         # # middle Section
