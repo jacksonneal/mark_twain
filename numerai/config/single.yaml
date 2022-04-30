@@ -3,10 +3,10 @@ pca: null
 feature_set: top_750_most_volatile_features
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
-batch_size: 1000
+batch_size: 500
 # model config
 model_name: TMLP
-dimensions: [ 1920, 1920, 1920, 1920, 1024 ]
+dimensions: [ 1920, 1920, 1920, 1024 ]
 dropout: 0.1955
 initial_bn: false
 learning_rate: 0.002604
