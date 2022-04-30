@@ -7,7 +7,7 @@ single_conf = "single.yaml"
 # File used for sweep run
 sweep_conf = "sweep.yaml"
 # Name used for wandb sweep
-sweep_name = "mark_twain_sweep_final"
+sweep_name = "quay_sweep"
 # number of wandb runs to explore during sweep
 sweep_count = 30
 # Workers used for parallel processing

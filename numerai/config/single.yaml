@@ -1,12 +1,15 @@
 # data config
 pca: null
-feature_set: top_750_most_volatile_features
+feature_set: small
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
 batch_size: 5000
 # model config
-model_name: BASE
-dimensions: [ 1920, 1920, 1920, 1024 ]
+model_name: CAE
+dimensions: [38, 10, 38,50]
+kernel: 2
+stride: 1
+pool_kernel: 1
 dropout: 0.1955
 initial_bn: True
 learning_rate: 0.002604

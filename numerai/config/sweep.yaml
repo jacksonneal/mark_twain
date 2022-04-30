@@ -23,12 +23,18 @@ parameters:
     value: 5000
   # model config
   model_name:
-    value: AEMLP
+    value: CAE
   dimensions:
     values:
-      - [ 256, 1920, 1920, 1920, 1920, 1024 ]
-      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
-      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
+      - [38, 10, 38,50]
+#      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
+#      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
+  kernel:
+    value: 2
+  stride:
+    value: 1
+  pool_kernel:
+    value: 1
   dropout:
     min: 0.18
     max: 0.21

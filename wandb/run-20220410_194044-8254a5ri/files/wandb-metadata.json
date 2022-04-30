@@ -1,0 +1,30 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.9.5",
+    "heartbeatAt": "2022-04-10T23:40:45.691610",
+    "startedAt": "2022-04-10T23:40:44.165098",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--run_sweep",
+        "--sweep_name",
+        "mark_twain_sweep_milestone_2",
+        "--sweep_count",
+        "2",
+        "--num_workers",
+        "2"
+    ],
+    "state": "running",
+    "program": "/Users/quaydragon/PyCharmProjects/mark_twain/mark_twain/main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/jacksonneal/mark_twain.git",
+        "commit": "8b22bc472b5e36db368cfe08866159c73b67529d"
+    },
+    "email": null,
+    "root": "/Users/quaydragon/PyCharmProjects/mark_twain/mark_twain",
+    "host": "Quays-MacBook-Pro.local",
+    "username": "quaydragon",
+    "executable": "/Users/quaydragon/opt/miniconda3/bin/python"
+}
