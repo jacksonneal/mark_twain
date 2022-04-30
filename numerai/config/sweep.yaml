@@ -9,7 +9,6 @@ parameters:
     value: null
   feature_set:
     values:
-      - full
       - top_750_most_volatile_features
   sample_4th_era:
     value: true
