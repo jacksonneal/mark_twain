@@ -1,16 +1,16 @@
 # data config
-feature_set: top_250_features_with_target_corr
+feature_set: top_750_features_with_target_corr
 sample_4th_era: True
 aux_target_cols: [ ]
 batch_size: 1000
 # model config
 model_name: AECONV
 #auto_dimensions: [38,4,1]
-dimensions: [ 250,10, 5, 10, 38]
+dimensions: [ 750,100, 20, 10, 38]
 dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
-#kernel: 6
+kernel: 6
 wd: 0.05
 # trainer config
 max_epochs: 1
