@@ -69,7 +69,7 @@ class AEConv(LightningModule, ABC):
         self.max_pool2 = nn.MaxPool1d(pool_kernel, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(1, 1,kernel_size, stride=stride)
+        self.conv3 = nn.Conv1d(1, 1,10, stride=stride)
         dim = after_conv(dim, kernel_size, stride)
         self.batch_norm3 = nn.BatchNorm1d(1)
         self.max_pool3 = nn.MaxPool1d(pool_kernel, stride=1)
