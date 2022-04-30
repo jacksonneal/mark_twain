@@ -188,7 +188,7 @@ class AEConvPOOL(LightningModule, ABC):
         x = self.convdecode2(x)
 
 
-        lin1 = nn.Linear(self.dim3, target)
+        lin1 = nn.Linear(self.dim1, target)
 
         lin2 = nn.Linear(target, self.num_feats)
 
