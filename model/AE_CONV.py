@@ -39,9 +39,9 @@ class AEConv(LightningModule, ABC):
         def after_conv(input, kernel, stride=1):
             return int((input + 2 * 0 - 1 * (kernel - 1) - 1) / stride + 1)
 
-        kernel_size = 20
+        kernel_size = 50
         stride = 1
-        pool_kernel = 5
+        pool_kernel = 10
         dim = None
 
         self.num_feats = self.dimensions[0]
@@ -84,7 +84,7 @@ class AEConv(LightningModule, ABC):
 
 
 
-        self.linear1 = nn.Linear(dim, self.dim3)
+        self.linear1 = nn.LazyLinear(self.dim3)
 
 
         self.mid1 = nn.Conv1d(self.dim3, self.dim3, 1)

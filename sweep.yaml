@@ -5,7 +5,7 @@ metric:
   goal: maximize
 parameters:
   # data config
-  feature_set:
+  feature_set: top_750_features_with_target_corr
     value:
   sample_4th_era:
     value: True
@@ -17,7 +17,7 @@ parameters:
   model_name:
     value: AECONV
   dimensions:
-    value: [1050,50, 20, 5]
+    value: [750,50, 20, 5]
   dropout:
     min: 0.2
     max: 0.3
