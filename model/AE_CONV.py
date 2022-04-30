@@ -35,15 +35,14 @@ class AEConv(LightningModule, ABC):
             return out
 
         #TODO: Cite this work
-        def conv_output_shape(h_w, kernel_size=1, stride=1, pad=0, dilation=1):
-            from math import floor
-            if type(kernel_size) is not tuple:
-                kernel_size = (kernel_size, kernel_size)
-            w = floor(((h_w[1] + (2 * pad) - (dilation * (kernel_size[1] - 1)) - 1) / stride) + 1)
-            return w
 
-        kernel_size = 4
-        stride = 5
+        def after_conv(input, kernel, stride=1):
+            return int((input + 2 * 0 - 1 * (kernel - 1) - 1) / stride + 1)
+
+        kernel_size = 2
+        stride = 1
+        pool_kernel = 1
+        dim = None
 
         self.num_feats = self.dimensions[0]
         self.dim1 = self.dimensions[1]
@@ -53,40 +52,45 @@ class AEConv(LightningModule, ABC):
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(self.num_feats, self.dim1, 4, stride=stride)
-        self.batch_norm1 = nn.BatchNorm1d(self.dim1)
+        self.conv1 = nn.Conv1d(1, 1, kernel_size, stride=stride)
+        dim = after_conv(self.num_feats, kernel_size, stride)
+        self.batch_norm1 = nn.BatchNorm1d(1)
         self.silu = nn.SiLU(inplace=True)
 
-        self.max_pool1 = nn.MaxPool1d(1, stride=1)
+        self.max_pool1 = nn.MaxPool1d(pool_kernel, stride=1)
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(self.dim1, self.dim2 , 1,stride=stride)
-        self.batch_norm2 = nn.BatchNorm1d(self.dim2)
+        self.conv2 = nn.Conv1d(1, 1, kernel_size,stride=stride)
+        dim = after_conv(dim, kernel_size, stride)
 
-        self.max_pool2 = nn.MaxPool1d(1, stride=1)
+        self.batch_norm2 = nn.BatchNorm1d(1)
+
+        self.max_pool2 = nn.MaxPool1d(pool_kernel, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(self.dim2, self.dim3,1, stride=stride)
-        self.batch_norm3 = nn.BatchNorm1d(self.dim3)
-        self.max_pool3 = nn.MaxPool1d(1, stride=1)
+        self.conv3 = nn.Conv1d(1, 1,kernel_size, stride=stride)
+        dim = after_conv(dim, kernel_size, stride)
+        self.batch_norm3 = nn.BatchNorm1d(1)
+        self.max_pool3 = nn.MaxPool1d(pool_kernel, stride=1)
 
         ## Middle Portion
         # Three Convolutions
-        self.convmid1 = nn.Conv1d(self.dim3,2, 1)
-        self.convmid2 = nn.Conv1d(2, 2, 1)
-        self.convmid3 = nn.Conv1d(2, 2, 1)
-
+        self.convmid1 = nn.Conv1d(1,1, 1)
+        self.convmid2 = nn.Conv1d(1, 1, 1)
+        self.convmid3 = nn.Conv1d(1, 1, 1)
 
         # Upsample + 3 Convolutions
 
-        self.linear1 = nn.Linear(2, self.dim3)
+
+
+        self.linear1 = nn.Linear(dim, self.dim3)
 
 
         self.mid1 = nn.Conv1d(self.dim3, self.dim3, 1)
         self.mid2 = nn.Conv1d(self.dim3, self.dim3, 1)
         self.mid3 = nn.Conv1d(self.dim3,self.dim3, 1)
-        self.batch_normMID = nn.BatchNorm1d(self.dim3)
+        # self.batch_normMID = nn.BatchNorm1d(self.dim3)
 
         # upsample Convolution
         self.linear2 = nn.Linear(self.dim3,self.dim2)
@@ -118,10 +122,13 @@ class AEConv(LightningModule, ABC):
         #Encoding
 
         x = x.unsqueeze(dim=2)
+        x = x.permute(0, 2,1)
         x = self.conv1(x)
         x = self.batch_norm1(x)
         x = self.silu(x)
         # x = self.dropout(x)
+
+        print(x.shape)
 
 
         x = self.max_pool1(x)
@@ -158,7 +165,7 @@ class AEConv(LightningModule, ABC):
         x = self.mid3(x)
         # x = self.batch_normMID(x)
         # x = self.silu(x)
-
+        print(x.shape)
         # x = m(x)
 
         # Decoding

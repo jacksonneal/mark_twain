@@ -42,6 +42,8 @@ class AEConvPOOL(LightningModule, ABC):
             w = floor(((h_w[1] + (2 * pad) - (dilation * (kernel_size[1] - 1)) - 1) / stride) + 1)
             return w
 
+
+
         kernel_size = 4
         stride = 6
 
