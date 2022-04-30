@@ -39,7 +39,7 @@ class AEConv(LightningModule, ABC):
         def after_conv(input, kernel, stride=1):
             return int((input + 2 * 0 - 1 * (kernel - 1) - 1) / stride + 1)
 
-        kernel_size = 200
+        kernel_size = 400
         stride = 1
         pool_kernel = 50
         dim = None
