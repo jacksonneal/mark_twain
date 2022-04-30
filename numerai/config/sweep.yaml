@@ -27,14 +27,19 @@ parameters:
   dimensions:
     values:
       - [750, 1900, 750,1900]
+      -  [750, 1000, 750,1000]
+      - [750, 400, 750, 400]
 #      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
 #      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
   kernel:
-    value: 300
+    min: 50
+    max: 500
   stride:
-    value: 1
+    min: 1
+    max: 5
   pool_kernel:
-    value: 7
+    min: 7
+    max: 15
   dropout:
     min: 0.18
     max: 0.21

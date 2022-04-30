@@ -1,13 +1,13 @@
 # data config
 pca: null
-feature_set: top_750_most_volatile_features
+feature_set: small
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
 batch_size: 5000
 # model config
 model_name: CAE
-dimensions: [750, 1920, 750,1920]
-kernel: 300
+dimensions: [38, 40, 38,40]
+kernel: 5
 stride: 1
 pool_kernel: 1
 dropout: 0.1955

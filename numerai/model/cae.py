@@ -20,8 +20,8 @@ class CAE(LightningModule, ABC):
         encoder_layers = [GaussianNoise(),
                           nn.Conv1d(1,1,kernel,stride),
                           nn.MaxPool1d(pool_kernel, stride=1),
-                          # nn.BatchNorm1d(1),
-                          # nn.SiLU(inplace=True),
+                          nn.BatchNorm1d(1),
+                          nn.SiLU(inplace=True),
                           nn.LazyLinear(dimensions[1])]
 
         decoder_layers = []
