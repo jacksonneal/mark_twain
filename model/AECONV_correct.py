@@ -161,7 +161,8 @@ class AEConvPOOL(LightningModule, ABC):
         x = self.convmid1(x)
         x = self.convmid2(x)
         x = self.convmid3(x)
-        # x = m(x)
+        # x = m(x
+
 
 
 
@@ -176,6 +177,15 @@ class AEConvPOOL(LightningModule, ABC):
         x = self.mid3(x)
         x = x.squeeze()
         print(x.shape)
+
+        # x = x.squeeze()
+        x = self.linear2(x)
+        x = x.unsqueeze(dim=2)
+        x = self.convdecode1(x)
+        x = x.squeeze()
+        x = self.linear3(x)
+        x = x.unsqueeze(dim=2)
+        x = self.convdecode2(x)
 
 
         lin1 = nn.Linear(self.dim3, target)
