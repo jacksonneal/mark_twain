@@ -6,7 +6,7 @@ batch_size: 1000
 # model config
 model_name: AECONV
 #auto_dimensions: [38,4,1]
-dimensions: [750,50, 20, 5, 450, 200, 10]
+dimensions: [750,50, 20, 5, 475, 200, 10]
 dropout: 0.001
 initial_bn: True
 learning_rate: 0.002
