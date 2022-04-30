@@ -3,7 +3,7 @@ pca: null
 feature_set: small
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
-batch_size: 5000
+batch_size: 1000
 # model config
 model_name: TMLP
 dimensions: [ 50, 50, 50, 50, 25 ]
