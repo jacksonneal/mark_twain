@@ -46,22 +46,14 @@ class TransformerMLP(LightningModule, ABC):
     def forward(self, x):
         if self.initial_bn is not None:
             x = self.initial_bn(x)
-        # print(x.shape)
-        x = x.unsqueeze(2)
-        # print(x.shape)
-        src = x
-        # src_pos = self.pos_encoder(src)
-        src_pos = src
+        src = x.unsqueeze(2)
+        src_pos = self.pos_encoder(src)
         tgt_pos = src_pos
         encoded = self.transformer_encoder(src_pos)
         decoded = self.transformer_decoder(tgt_pos, src_pos)
-        # print(decoded.shape)
         decoded = decoded.squeeze()
-        # print(decoded.shape)
         ae_out = self.ae(decoded)
         src_pos = src_pos.squeeze()
         encoded = encoded.squeeze()
-        # print(f"src_pos.shape {src_pos.shape}")
-        # print(f"encoded.shape {encoded.shape}")
         mlp_out = self.mlp(torch.cat((src_pos, encoded), dim=1).to(self.device))
         return decoded, ae_out, mlp_out

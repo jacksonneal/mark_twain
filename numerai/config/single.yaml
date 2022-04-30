@@ -1,9 +1,9 @@
 # data config
 pca: null
-feature_set: small
+feature_set: top_750_most_volatile_features
 sample_4th_era: True
 aux_target_cols: [ target_jerome_20 ]
-batch_size: 1000
+batch_size: 2500
 # model config
 model_name: TMLP
 dimensions: [ 50, 50, 50, 50, 25 ]
@@ -15,4 +15,4 @@ wd: 0.07866
 num_enc_layers: 1
 num_dec_layers: 1
 # trainer config
-max_epochs: 9
+max_epochs: 3
