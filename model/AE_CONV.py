@@ -129,7 +129,7 @@ class AEConv(LightningModule, ABC):
         x = self.conv1(x)
         x = self.batch_norm1(x)
         x = self.silu(x)
-        # x = self.dropout(x)
+        x = self.dropout(x)
 
         print(x.shape)
 
@@ -138,14 +138,14 @@ class AEConv(LightningModule, ABC):
         x = self.conv2(x)
         x = self.batch_norm2(x)
         x = self.silu(x)
-        # x = self.dropout(x)
+
         x = self.max_pool2(x)
         # x = m(x)
         x = self.conv3(x)
         # Notice: Adding batch Norm to the  third convolution
-        # # this actually reduced the correlation
-        # x = self.batch_norm3(x)
-        # x = self.silu(x)
+        # # this actually reduced the correlation  - Trying again with kernel size changes
+        x = self.batch_norm3(x)
+        x = self.silu(x)
         x = self.dropout(x)
         x = self.max_pool3(x)
         #TODO: Check if getting rid of middle is the right thing
@@ -167,7 +167,7 @@ class AEConv(LightningModule, ABC):
         x = self.mid1(x)
         x = self.mid2(x)
         x = self.mid3(x)
-        # x = self.batch_normMID(x)
+        x = self.batch_normMID(x)
         # x = self.silu(x)
         print(x.shape)
         # x = m(x)
