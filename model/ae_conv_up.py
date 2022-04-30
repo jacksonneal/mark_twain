@@ -104,10 +104,12 @@ class AEUP(LightningModule, ABC):
         # x = x.transpose(0,1)
         target = x.shape[0]
         # First Convolution
-        x = x.unsqueeze(dim=1)
-        x = x.permute(0, 2, 1)
 
         encode_con = self.conv1(x)
+
+
+        x = x.unsqueeze(dim=1)
+        x = x.permute(0, 2, 1)
         encode_pool = self.batch_norm1(encode_con)
         encode_con = self.silu(encode_pool)
         encode_con = encode_con.squeeze()
