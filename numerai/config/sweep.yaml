@@ -8,27 +8,18 @@ parameters:
   pca:
     value: null
   feature_set:
-    values:
-      - full
-      - top_750_most_volatile_features
+    value: top_750_most_volatile_features
   sample_4th_era:
     value: true
   aux_target_cols:
-    values:
-      - [ target_nomi_60 ]
-      - [ target_jerome_20 ]
-      - [ target_nomi_60, target_jerome_20 ]
-      - [ target_nomi_60, target_jerome_20, target_jerome_60, target_janet_20 ]
+    value: [ target_jerome_20 ]
   batch_size:
-    value: 5000
+    value: 500
   # model config
   model_name:
-    value: AEMLP
+    value: TMLP
   dimensions:
-    values:
-      - [ 256, 1920, 1920, 1920, 1920, 1024 ]
-      - [ 512, 1920, 1920, 1920, 1920, 1024 ]
-      - [ 1024, 1920, 1920, 1920, 1920, 1024 ]
+    value: [ 1920, 1920, 1920, 1024 ]
   dropout:
     min: 0.18
     max: 0.21
@@ -40,6 +31,11 @@ parameters:
   wd:
     min: 0.06
     max: 0.1
+  # transformer config
+  num_enc_layers:
+    value: 1
+  num_dec_layers:
+    value: 1
   # trainer config
   max_epochs:
     min: 8
