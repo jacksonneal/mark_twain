@@ -41,7 +41,7 @@ class AEConv(LightningModule, ABC):
 
         kernel_size = 400
         stride = 1
-        pool_kernel = 50
+        pool_kernel = 20
         dim = None
 
         self.num_feats = self.dimensions[0]
