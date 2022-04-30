@@ -48,12 +48,15 @@ class AEConv(LightningModule, ABC):
         self.dim1 = self.dimensions[1]
         self.dim2 = self.dimensions[2]
         self.dim3 = self.dimensions[3]
+        self.kernel1 = self.dimensions[4]
+        self.kernel2 = self.dimensions[5]
+        self.kernel3 = self.dimensions[6]
 
         self.dropout = nn.Dropout(p=params.dropout)
         self.encoder = []
         # First down
-        self.conv1 = nn.Conv1d(1, 1, kernel_size, stride=stride)
-        dim = after_conv(self.num_feats, kernel_size, stride)
+        self.conv1 = nn.Conv1d(1, 1, self.kernel1, stride=stride)
+        dim = after_conv(self.num_feats, self.kernel1, stride)
         self.batch_norm1 = nn.BatchNorm1d(1)
         self.silu = nn.SiLU(inplace=True)
 
@@ -61,16 +64,16 @@ class AEConv(LightningModule, ABC):
 
 
         # Second Down
-        self.conv2 = nn.Conv1d(1, 1, kernel_size,stride=stride)
-        dim = after_conv(dim, kernel_size, stride)
+        self.conv2 = nn.Conv1d(1, 1, self.kernel2 ,stride=stride)
+        dim = after_conv(dim, self.kernel2 , stride)
 
         self.batch_norm2 = nn.BatchNorm1d(1)
 
         self.max_pool2 = nn.MaxPool1d(pool_kernel, stride=1)
 
         # Third Down
-        self.conv3 = nn.Conv1d(1, 1,10, stride=stride)
-        dim = after_conv(dim, kernel_size, stride)
+        self.conv3 = nn.Conv1d(1, 1,self.kernel3, stride=stride)
+        dim = after_conv(dim, self.kernel3, stride)
         self.batch_norm3 = nn.BatchNorm1d(1)
         self.max_pool3 = nn.MaxPool1d(pool_kernel, stride=1)
 
