@@ -128,12 +128,12 @@ class AEConv(LightningModule, ABC):
         x = x.permute(0, 2,1)
         x = self.conv1(x)
         #TODO: Test 0
-        # x = self.batch_norm1(x)
-        # x = self.silu(x)
+        x = self.batch_norm1(x)
+        x = self.silu(x)
         #TODO: First Test
         # x = self.dropout(x)
 
-        print(x.shape)
+        # print(x.shape)
 
 
         x = self.max_pool1(x)
@@ -157,7 +157,7 @@ class AEConv(LightningModule, ABC):
         x = self.convmid1(x)
         x = self.convmid2(x)
         x = self.convmid3(x)
-        print(x.shape)
+        # print(x.shape)
         # x = m(x)
 
 
@@ -174,7 +174,7 @@ class AEConv(LightningModule, ABC):
         #Todo: Fourth Test
         # x = self.batch_normMID(x)
         # x = self.silu(x)
-        print(x.shape)
+        # print(x.shape)
         # x = m(x)
 
         # Decoding
