@@ -69,7 +69,7 @@ class MarkTwainTrainer:
                 print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
                 print('Completed predictions')
-                if run_conf['model_name'] == 'AEMLP' or run_conf['model_name'] == 'TMLP' or run_conf['model_name'] == 'CAE':
+                if run_conf['model_name'] == 'AEMLP' or run_conf['model_name'] == 'TMLP' or run_conf['model_name'] == 'CAE' or run_conf['model_name'] == "AE-MLP":
                     predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
                 if len(run_conf['aux_target_cols']) > 0:
