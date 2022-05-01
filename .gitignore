@@ -137,8 +137,12 @@ datasets/pca/
 # Pytorch Lightning logs
 lightning_logs/
 
+# Sweep logs
+*sweep*/
+
 # wandb logs
 wandb_logs/
+wandb/
 
 # IDEA
 .idea/
