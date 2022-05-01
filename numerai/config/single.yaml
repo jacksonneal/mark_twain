@@ -2,21 +2,21 @@
 pca: null
 feature_set: top_750_most_volatile_features
 sample_4th_era: true
-aux_target_cols: [ target_nomi_60 ]
+aux_target_cols: [ target_nomi_60, target_jerome_20 ]
 batch_size: 5000
 # model config
-model_name: BASE
-dimensions: [ 1920, 1920, 1920, 1024 ]
-dropout: 0.1968
+model_name: CAE
+dimensions: [ 750, 400, 750, 400 ]
+dropout: 0.1925
 initial_bn: true
-learning_rate: 0.002644
-wd: 0.09582
+learning_rate: 0.002184
+wd: 0.06451
 # transformer config
 num_enc_layers: 1
 num_dec_layers: 1
 # conv config
-kernel: 5
-stride: 1
-pool_kernel: 1
+kernel: 260
+stride: 5
+pool_kernel: 11
 # trainer config
 max_epochs: 10
