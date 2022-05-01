@@ -25,7 +25,10 @@ def evaluate(outputs):
 
 class NumeraiLit(LightningModule, ABC):
     def __init__(self, model=None, model_name=None, feature_set="small", num_features=38, dimensions=None,
-                 aux_target_cols=None, dropout=0, initial_bn=False, learning_rate=0.003, wd=5e-2):
+                 aux_target_cols=None, dropout=0, initial_bn=False, learning_rate=0.003, wd=5e-2,
+                 kernel=1,
+                 stride=1,
+                 pool_kernel=1):
         super().__init__()
         if dimensions is None:
             dimensions = [20, 10, 10]
@@ -36,6 +39,7 @@ class NumeraiLit(LightningModule, ABC):
         self.model = build_model(self.hparams)
         self.loss = F.mse_loss
         self.ae_mlp_architecture = model_name == "AEMLP"
+        self.cae = model_name == "CAE"
 
     def forward(self, x):
         return self.model(x)
@@ -45,7 +49,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine correlation of preds to targets
         preds = self.model(inputs)
-        if self.ae_mlp_architecture:
+        if self.ae_mlp_architecture or self.cae:
             decoded, ae_out, preds = preds
         else:
             decoded = None
@@ -56,13 +60,13 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine primary and auxiliary target loss
         loss = self.loss(preds[:, 0], targets)
-        if self.ae_mlp_architecture:
+        if self.ae_mlp_architecture or self.cae:
             loss += self.loss(ae_out[:, 0], targets)
             loss += self.loss(decoded, inputs)
         aux_loss = 0.0
         for i in range(len(self.hparams.aux_target_cols)):
             aux_loss += self.loss(preds[:, i + 1], aux_targets[:, i])
-            if self.ae_mlp_architecture:
+            if self.ae_mlp_architecture or self.cae:
                 aux_loss += self.loss(ae_out[:, i + 1], aux_targets[:, i])
 
         self.log("train_loss", loss)
@@ -84,7 +88,7 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine correlation of pred to targets
         preds = self.model(inputs)
-        if self.ae_mlp_architecture:
+        if self.ae_mlp_architecture or self.cae:
             decoded, ae_out, preds = preds
         else:
             decoded = None
@@ -94,13 +98,13 @@ class NumeraiLit(LightningModule, ABC):
 
         # Determine primary and auxiliary target loss
         loss = self.loss(preds[:, 0], targets)
-        if self.ae_mlp_architecture:
+        if self.ae_mlp_architecture or self.cae:
             loss += self.loss(ae_out[:, 0], targets)
             loss += self.loss(decoded, inputs)
         aux_loss = 0.0
         for i in range(len(self.hparams.aux_target_cols)):
             aux_loss += self.loss(preds[:, i + 1], aux_targets[:, i])
-            if self.ae_mlp_architecture:
+            if self.ae_mlp_architecture or self.cae:
                 aux_loss += self.loss(ae_out[:, i + 1], aux_targets[:, i])
 
         self.log("val_loss", loss)

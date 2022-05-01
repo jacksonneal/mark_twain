@@ -38,7 +38,11 @@ class MarkTwainTrainer:
                                dropout=run_conf['dropout'],
                                initial_bn=run_conf['initial_bn'],
                                learning_rate=run_conf['learning_rate'],
-                               wd=run_conf['wd']) if ckpt is None else NumeraiLit.load_from_checkpoint(
+                               wd=run_conf['wd'],
+                               kernel=run_conf['kernel'],
+                               stride=run_conf['stride'],
+                               pool_kernel=run_conf[
+                                   'pool_kernel']) if ckpt is None else NumeraiLit.load_from_checkpoint(
                 checkpoint_path=os.path.join(ROOT_DIR, ckpt))
 
             model_summary_callback = ModelSummary(max_depth=25)
@@ -63,7 +67,7 @@ class MarkTwainTrainer:
                 print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
                 print('Completed predictions')
-                if run_conf['model_name'] == 'AEMLP':
+                if run_conf['model_name'] == 'AEMLP' or run_conf['model_name'] == 'CAE':
                     predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
                 if len(run_conf['aux_target_cols']) > 0:
