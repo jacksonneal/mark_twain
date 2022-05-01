@@ -18,7 +18,7 @@ class CAE(LightningModule, ABC):
         pool_kernel = params.pool_kernel
 
         encoder_layers = [GaussianNoise(),
-                          nn.Conv1d(1,1,kernel,stride),
+                          nn.Conv1d(1, 1, kernel, stride),
                           nn.MaxPool1d(pool_kernel, stride=1),
                           nn.BatchNorm1d(1),
                           nn.SiLU(inplace=True),
@@ -31,13 +31,11 @@ class CAE(LightningModule, ABC):
 
         decoder_layers.append(nn.Linear(dimensions[1], dimensions[0]))
 
-
         ae_layers = [nn.Linear(dimensions[0], dimensions[2]), nn.BatchNorm1d(dimensions[2]), nn.SiLU(inplace=True)]
         if params.dropout > 0:
             ae_layers.append(nn.Dropout(p=params.dropout))
         ae_layers.append(nn.Linear(dimensions[2], 1 + len(params.aux_target_cols)))
         ae_layers.append(nn.Sigmoid())
-
 
         mlp_layers = [nn.Linear(dimensions[0] + dimensions[1], dimensions[3]), nn.BatchNorm1d(dimensions[3]),
                       nn.SiLU(inplace=True)]
@@ -62,7 +60,6 @@ class CAE(LightningModule, ABC):
         self.ae = nn.Sequential(*ae_layers)
         self.mlp = nn.Sequential(*mlp_layers)
 
-
     def forward(self, x):
         if self.initial_bn is not None:
             x = self.initial_bn(x)
@@ -76,11 +73,11 @@ class CAE(LightningModule, ABC):
         decoded = self.decoder(encoded)
 
         # decoded = decoded.squeeze()
-        print(decoded.shape)
+        # print(decoded.shape)
         ae_out = self.ae(decoded)
         x = x.squeeze()
-        print(x.shape)
-        print(encoded.shape)
+        # print(x.shape)
+        # print(encoded.shape)
 
         mlp_out = self.mlp(torch.cat((x, encoded), dim=1).to(self.device))
         return decoded, ae_out, mlp_out
