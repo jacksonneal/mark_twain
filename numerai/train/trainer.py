@@ -30,31 +30,20 @@ class MarkTwainTrainer:
                                             num_workers=self.args.num_workers,
                                             pca=run_conf['pca'])
             data_module.prepare_data()
-            if run_conf['model_name'] == 'CAE':
-                model = NumeraiLit(model_name=run_conf['model_name'],
-                                   feature_set=run_conf['feature_set'],
-                                   num_features=data_module.num_features,
-                                   dimensions=run_conf['dimensions'],
-                                   aux_target_cols=run_conf['aux_target_cols'],
-                                   dropout=run_conf['dropout'],
-                                   initial_bn=run_conf['initial_bn'],
-                                   learning_rate=run_conf['learning_rate'],
-                                   wd=run_conf['wd'],
-                                   kernel=run_conf['kernel'],
-                                   stride=run_conf['stride'],
-                                   pool_kernel=run_conf['pool_kernel']) if ckpt is None else NumeraiLit.load_from_checkpoint(
-                    checkpoint_path=os.path.join(ROOT_DIR, ckpt))
-            else:
-                model = NumeraiLit(model_name=run_conf['model_name'],
-                                   feature_set=run_conf['feature_set'],
-                                   num_features=data_module.num_features,
-                                   dimensions=run_conf['dimensions'],
-                                   aux_target_cols=run_conf['aux_target_cols'],
-                                   dropout=run_conf['dropout'],
-                                   initial_bn=run_conf['initial_bn'],
-                                   learning_rate=run_conf['learning_rate'],
-                                   wd=run_conf['wd']) if ckpt is None else NumeraiLit.load_from_checkpoint(
-                    checkpoint_path=os.path.join(ROOT_DIR, ckpt))
+            model = NumeraiLit(model_name=run_conf['model_name'],
+                               feature_set=run_conf['feature_set'],
+                               num_features=data_module.num_features,
+                               dimensions=run_conf['dimensions'],
+                               aux_target_cols=run_conf['aux_target_cols'],
+                               dropout=run_conf['dropout'],
+                               initial_bn=run_conf['initial_bn'],
+                               learning_rate=run_conf['learning_rate'],
+                               wd=run_conf['wd'],
+                               kernel=run_conf['kernel'],
+                               stride=run_conf['stride'],
+                               pool_kernel=run_conf[
+                                   'pool_kernel']) if ckpt is None else NumeraiLit.load_from_checkpoint(
+                checkpoint_path=os.path.join(ROOT_DIR, ckpt))
 
             model_summary_callback = ModelSummary(max_depth=25)
             callbacks = [model_summary_callback]

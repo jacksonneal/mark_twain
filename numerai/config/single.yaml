@@ -7,7 +7,6 @@ batch_size: 5000
 # model config
 model_name: CAE
 dimensions: [38, 40, 38,40]
-pool_kernel: 1
 dropout: 0.1955
 initial_bn: True
 learning_rate: 0.002604
@@ -15,5 +14,6 @@ wd: 0.07866
 # conv config
 kernel: 5
 stride: 1
+pool_kernel: 1
 # trainer config
 max_epochs: 10
