@@ -26,9 +26,8 @@ def evaluate(outputs):
 class NumeraiLit(LightningModule, ABC):
     def __init__(self, model=None, model_name=None, feature_set="small", num_features=38, dimensions=None,
                  aux_target_cols=None, dropout=0, initial_bn=False, learning_rate=0.003, wd=5e-2,
-                 kernel=1,
-                 stride=1,
-                 pool_kernel=1):
+                 kernel=1, stride=1, pool_kernel=1,
+                 num_enc_layers=1, num_dec_layers=1):
         super().__init__()
         if dimensions is None:
             dimensions = [20, 10, 10]
@@ -38,7 +37,7 @@ class NumeraiLit(LightningModule, ABC):
         self.save_hyperparameters(ignore="model")
         self.model = build_model(self.hparams)
         self.loss = F.mse_loss
-        self.ae_mlp_architecture = model_name == "AEMLP"
+        self.ae_mlp_architecture = model_name == "AEMLP" or model_name == "TMLP"
         self.cae = model_name == "CAE"
 
     def forward(self, x):

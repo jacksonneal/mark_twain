@@ -11,6 +11,9 @@ dropout: 0.1955
 initial_bn: True
 learning_rate: 0.002604
 wd: 0.07866
+# transformer config
+num_enc_layers: 1
+num_dec_layers: 1
 # conv config
 kernel: 5
 stride: 1

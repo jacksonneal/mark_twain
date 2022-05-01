@@ -39,6 +39,8 @@ class MarkTwainTrainer:
                                initial_bn=run_conf['initial_bn'],
                                learning_rate=run_conf['learning_rate'],
                                wd=run_conf['wd'],
+                               num_enc_layers=run_conf['num_enc_layers'],
+                               num_dec_layers=run_conf['num_dec_layers'],
                                kernel=run_conf['kernel'],
                                stride=run_conf['stride'],
                                pool_kernel=run_conf[
@@ -67,7 +69,7 @@ class MarkTwainTrainer:
                 print('Predicting...')
                 predictions = trainer.predict(model, datamodule=data_module)
                 print('Completed predictions')
-                if run_conf['model_name'] == 'AEMLP' or run_conf['model_name'] == 'CAE':
+                if run_conf['model_name'] == 'AEMLP' or run_conf['model_name'] == 'TMLP' or run_conf['model_name'] == 'CAE':
                     predictions = list(map(lambda preds: preds[2], predictions))
                 predictions = torch.cat(predictions).squeeze()
                 if len(run_conf['aux_target_cols']) > 0:

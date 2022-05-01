@@ -1,5 +1,6 @@
 from numerai.model.aemlp import AEMLP
 from numerai.model.base import Base
+from numerai.model.tmlp import TransformerMLP
 from numerai.model.cae import CAE
 
 
@@ -8,6 +9,8 @@ def build_model(params):
         return Base(params)
     elif params.model_name == "AEMLP":
         return AEMLP(params)
+    elif params.model_name == "TMLP":
+        return TransformerMLP(params)
     elif params.model_name == "CAE":
         return CAE(params)
     else:
