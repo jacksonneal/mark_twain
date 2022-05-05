@@ -46,7 +46,24 @@ make init
 Execution
 ------------
 
-### Single Run Configuration
+### Demo Predictions
+
+Load saved BASE model, load Numerai data, execute predictions.
+Predictions formatted for submission to Numerai and output to ./predictions.csv in project root.
+
+```bash
+# no GPU
+make demo
+```
+
+```bash
+# use GPU
+make demo-gpu
+```
+
+Training walk through with EDA available in [code_walkthrough.ipynb](code%20walkthrough.ipynb)
+
+### Single Run Train Configuration
 
 1. Modify single run hyperparameters in [single.yaml](numerai/config/single.yaml)
 2. Run trainer with one of:
@@ -67,7 +84,7 @@ make single-gpu
 make tb-logs
 ```
 
-### Weights and Biases Sweep Run Configuration
+### Weights and Biases Sweep Run Train Configuration
 
 > __NOTE__: Executing sweep runs requires an api key
 
