@@ -54,5 +54,5 @@ submit:
 demo-base:
 	python -m numerai --predict demo/base/model.ckpt --config demo/base/hparams.yaml
 
-demo-gpu:
+demo-base-gpu:
 	python -m numerai --gpu --predict demo/base/model.ckpt --config demo/base/hparams.yaml
