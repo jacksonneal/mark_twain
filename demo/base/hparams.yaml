@@ -1,0 +1,22 @@
+aux_target_cols:
+- target_nomi_60
+batch_size: 5000
+dimensions:
+- 1920
+- 1920
+- 1920
+- 1024
+dropout: 0.1968
+feature_set: top_750_most_volatile_features
+initial_bn: true
+kernel: 5
+learning_rate: 0.002644
+model_name: BASE
+num_dec_layers: 1
+num_enc_layers: 1
+num_features: 750
+pca: null
+pool_kernel: 1
+sample_4th_era: true
+stride: 1
+wd: 0.09582
