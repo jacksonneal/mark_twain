@@ -4,7 +4,7 @@ import torch
 from pytorch_lightning import LightningModule
 
 """
-Shamelessly taken from PyTorch forum discussion https://discuss.pytorch.org/t/where-is-the-noise-layer-in-pytorch/2887
+Shamelessly adapted from PyTorch forum discussion https://discuss.pytorch.org/t/where-is-the-noise-layer-in-pytorch/2887
 """
 
 
