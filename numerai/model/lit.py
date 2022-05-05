@@ -37,7 +37,7 @@ class NumeraiLit(LightningModule, ABC):
         self.save_hyperparameters(ignore="model")
         self.model = build_model(self.hparams)
         self.loss = F.mse_loss
-        self.ae_mlp_architecture = model_name == "AEMLP" or model_name == "TMLP"
+        self.ae_mlp_architecture = model_name == "AEMLP" or model_name == "AE-MLP" or model_name == "TMLP"
         self.cae = model_name == "CAE"
 
     def forward(self, x):
