@@ -50,3 +50,9 @@ predict-gpu:
 submit:
 	# model: name
 	python -m numerai.submit $(model)
+
+demo:
+	python -m --predict demo/base/model.ckpt --config demo/base/hparams.yaml
+
+demo-gpu:
+	python -m numerai --gpu --predict demo/base/model.ckpt --config demo/base/hparams.yaml
