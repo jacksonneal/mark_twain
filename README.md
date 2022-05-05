@@ -53,12 +53,12 @@ Predictions formatted for submission to Numerai and output to ./predictions.csv 
 
 ```bash
 # no GPU
-make demo-base
+make demo
 ```
 
 ```bash
 # use GPU
-make demo-base-gpu
+make demo-gpu
 ```
 
 Training walk through with EDA available in [code_walkthrough.ipynb](code%20walkthrough.ipynb)
